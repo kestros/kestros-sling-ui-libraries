@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.kestros.commons</groupId>
+    <artifactId>kestros-root-project</artifactId>
+    <version>0.0.2-SNAPSHOT</version>
+    <relativePath/>
+  </parent>
+
+  <groupId>ui.kestros.commons</groupId>
+  <artifactId>uilibraries</artifactId>
+
+  <name>Kestros Commons - UI Libraries</name>
+  <description>Provides UI Libraries to Sling instances, which are used for maintaining and
+    rendering CSS and JavaScript.
+  </description>
+
+  <version>0.0.1-SNAPSHOT</version>
+
+  <packaging>pom</packaging>
+
+  <modules>
+    <module>core</module>
+    <module>frontend</module>
+  </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.kestros.commons</groupId>
+        <artifactId>structured-sling-models</artifactId>
+        <version>0.0.2-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>io.kestros.commons</groupId>
+        <artifactId>kestros-osgi-service-utils</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+</project>
