@@ -11,15 +11,15 @@
     <relativePath/>
   </parent>
 
-  <groupId>ui.kestros.commons</groupId>
-  <artifactId>uilibraries</artifactId>
+  <groupId>io.kestros.commons</groupId>
+  <artifactId>ui-libraries</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
 
   <name>Kestros Commons - UI Libraries</name>
   <description>Provides UI Libraries to Sling instances, which are used for maintaining and
     rendering CSS and JavaScript.
   </description>
 
-  <version>0.0.1-SNAPSHOT</version>
 
   <packaging>pom</packaging>
 
