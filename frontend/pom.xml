@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.kestros.commons</groupId>
+    <artifactId>ui-libraries</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>ui-libraries-frontend</artifactId>
+
+  <name>Kestros Commons - UI Libraries Frontend Package</name>
+  <description>Package that installs the UI Libraries Bundle, and provides HTL templates for adding
+    UiLibrary Scripts to HTML pages.
+  </description>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>src/content/jcr_root</directory>
+      </resource>
+    </resources>
+    <plugins>
+
+      <!-- Builds the content package -->
+      <plugin>
+        <groupId>org.apache.jackrabbit</groupId>
+        <artifactId>filevault-package-maven-plugin</artifactId>
+        <!-- Configuration inherited from kestros-root-project -->
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>installPackage</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>io.wcm.maven.plugins</groupId>
+            <artifactId>wcmio-content-package-maven-plugin</artifactId>
+            <!-- Configuration inherited from kestros-root-project -->
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+</project>
