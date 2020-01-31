@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspaceFilter version="1.0">
+
+  <filter root="/home/users/system/ui-libraries"/>
+  <filter root="/var/cache/ui-libraries"/>
+
+  <filter root="/libs/kestros/commons/ui-libraries.html"/>
+
+  <filter root="/apps/kestros/commons/config"/>
+
+</workspaceFilter>
