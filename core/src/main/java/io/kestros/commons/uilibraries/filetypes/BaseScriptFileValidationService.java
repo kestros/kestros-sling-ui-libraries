@@ -13,7 +13,4 @@ public abstract class BaseScriptFileValidationService extends ModelValidationSer
     addBasicValidator(hasFileExtension(model.getFileType().getExtension(), model, ERROR));
   }
 
-  @Override
-  public void registerDetailedValidators() {
-  }
 }
