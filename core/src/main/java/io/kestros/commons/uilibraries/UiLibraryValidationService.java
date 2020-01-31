@@ -34,7 +34,6 @@ public class UiLibraryValidationService extends ModelValidationService {
 
   @Override
   public void registerDetailedValidators() {
-    return;
   }
 
   ModelValidatorBundle hasCssOrJsDirectory() {

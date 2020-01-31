@@ -31,7 +31,7 @@ public class UiLibraryCacheBuilderJobConsumer implements JobConsumer {
         uiLibraryCacheService.cacheUiLibraryScripts((String) uiLibraryPath, cacheMinified);
         return JobResult.OK;
       } catch (final CacheBuilderException exception) {
-        LOG.error("Unable to cache UiLibrary {}. {}", (String) uiLibraryPath,
+        LOG.error("Unable to cache UiLibrary {}. {}", uiLibraryPath,
             exception.getMessage());
       }
     }

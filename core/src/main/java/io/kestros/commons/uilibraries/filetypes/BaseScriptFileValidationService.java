@@ -15,6 +15,5 @@ public abstract class BaseScriptFileValidationService extends ModelValidationSer
 
   @Override
   public void registerDetailedValidators() {
-    return;
   }
 }
