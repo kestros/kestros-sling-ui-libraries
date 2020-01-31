@@ -23,11 +23,11 @@ public class BaseUiLibraryMinificationService implements UiLibraryMinificationSe
    *
    * @param unminifiedCss unminified CSS to compress.
    * @return Compressed CSS.
-   * @throws JavaScriptCompressionException Thrown when there is an issue compressing the
-   *     JavaScript.
+   * @throws CssCompressionException Thrown when there is an issue compressing the cssScript.
    */
   @SuppressFBWarnings("REC_CATCH_EXCEPTION")
-  private static String getMinifiedCssOutput(final String unminifiedCss) throws CssCompressionException {
+  private static String getMinifiedCssOutput(final String unminifiedCss)
+      throws CssCompressionException {
     try {
       final StringWriter stringWriter = new StringWriter();
       final CssCompressor cssCompressor = new CssCompressor(new StringReader(unminifiedCss));

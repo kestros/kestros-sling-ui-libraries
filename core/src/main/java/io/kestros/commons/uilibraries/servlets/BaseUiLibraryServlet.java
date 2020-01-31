@@ -93,8 +93,8 @@ public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
         return getUiLibraryCacheService().getCachedOutput(uiLibrary, getScriptType(),
             isMinified(request));
       } else {
-        LOG.warn(
-            "Unable to retrieve cached scripts for {}.  UiLibrary cache service not detected.");
+        LOG.warn("Unable to retrieve cached scripts for {}.  UiLibrary cache service not detected.",
+            uiLibrary.getPath());
       }
     } catch (final CacheRetrievalException exception) {
       LOG.debug("Unable to retrieve cached value for {}. {}", uiLibrary.getPath(),

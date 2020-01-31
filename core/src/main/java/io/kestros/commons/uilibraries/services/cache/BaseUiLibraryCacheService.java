@@ -121,9 +121,7 @@ public class BaseUiLibraryCacheService extends JcrFileCacheService
         cacheUiLibraryScripts((UiLibrary) uiLibrary, cacheMinified);
       }
 
-    } catch (final ResourceNotFoundException e) {
-      throw new CacheBuilderException(e.getMessage());
-    } catch (final MatchingResourceTypeNotFoundException e) {
+    } catch (final ResourceNotFoundException | MatchingResourceTypeNotFoundException e) {
       throw new CacheBuilderException(e.getMessage());
     }
   }
