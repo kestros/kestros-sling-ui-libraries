@@ -27,13 +27,13 @@ public class BaseUiLibraryMinificationService implements UiLibraryMinificationSe
    *     JavaScript.
    */
   @SuppressFBWarnings("REC_CATCH_EXCEPTION")
-  private static String getMinifiedCssOutput(String unminifiedCss) throws CssCompressionException {
+  private static String getMinifiedCssOutput(final String unminifiedCss) throws CssCompressionException {
     try {
-      StringWriter stringWriter = new StringWriter();
-      CssCompressor cssCompressor = new CssCompressor(new StringReader(unminifiedCss));
+      final StringWriter stringWriter = new StringWriter();
+      final CssCompressor cssCompressor = new CssCompressor(new StringReader(unminifiedCss));
       cssCompressor.compress(stringWriter, -1);
       return stringWriter.toString();
-    } catch (Exception exception) {
+    } catch (final Exception exception) {
       if (StringUtils.isNotEmpty(exception.getMessage())) {
         throw new CssCompressionException(exception.getMessage());
       } else {
@@ -51,22 +51,22 @@ public class BaseUiLibraryMinificationService implements UiLibraryMinificationSe
    *     JavaScript.
    */
   @SuppressFBWarnings("REC_CATCH_EXCEPTION")
-  private static String getMinifiedJavaScriptOutput(String unminifiedJavascript)
+  private static String getMinifiedJavaScriptOutput(final String unminifiedJavascript)
       throws JavaScriptCompressionException {
     try {
-      StringWriter stringWriter = new StringWriter();
-      JavaScriptCompressor javaScriptCompressor = new JavaScriptCompressor(
+      final StringWriter stringWriter = new StringWriter();
+      final JavaScriptCompressor javaScriptCompressor = new JavaScriptCompressor(
           new StringReader(unminifiedJavascript), null);
       javaScriptCompressor.compress(stringWriter, -1, true, true, true, true);
       return stringWriter.toString();
-    } catch (Exception exception) {
+    } catch (final Exception exception) {
       throw new JavaScriptCompressionException(exception.getMessage());
     }
   }
 
 
   @Override
-  public String getMinifiedOutput(String scriptOutput, ScriptType scriptType)
+  public String getMinifiedOutput(final String scriptOutput, final ScriptType scriptType)
       throws JavaScriptCompressionException, CssCompressionException {
     if (scriptType.equals(JAVASCRIPT)) {
       return getMinifiedJavaScriptOutput(scriptOutput);

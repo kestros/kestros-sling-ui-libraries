@@ -4,11 +4,12 @@ import io.kestros.commons.uilibraries.filetypes.ScriptType;
 
 public class ScriptCompressionException extends Exception {
 
-  public ScriptCompressionException(String message) {
+  public ScriptCompressionException(final String message) {
     super(message);
   }
 
-  public ScriptCompressionException(String resourcePath, ScriptType scriptType, String message) {
+  public ScriptCompressionException(
+      final String resourcePath, final ScriptType scriptType, final String message) {
     super(String.format("Unable to compress %s script for '%s'. %s.", scriptType.getName(),
         resourcePath, message));
   }

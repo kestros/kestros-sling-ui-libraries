@@ -46,7 +46,7 @@ public class UiLibraryJavaScriptServletTest {
   public void testDoGet() throws Exception {
     properties.put("sling:resourceType", "kestros/commons/ui-library");
 
-    Resource resource = context.create().resource("/ui-library", properties);
+    final Resource resource = context.create().resource("/ui-library", properties);
 
     context.request().setResource(resource);
 

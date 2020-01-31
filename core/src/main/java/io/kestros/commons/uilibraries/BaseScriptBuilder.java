@@ -27,7 +27,7 @@ public abstract class BaseScriptBuilder {
    * @return All files that will be used to build the script output.
    */
   @Nonnull
-  public <T extends ScriptFile> List<T> getFiles(UiLibrary uiLibrary) {
+  public <T extends ScriptFile> List<T> getFiles(final UiLibrary uiLibrary) {
     return uiLibrary.getScriptFiles(getScriptType());
   }
 
@@ -38,29 +38,29 @@ public abstract class BaseScriptBuilder {
    * @param <T> extends ScriptFile
    * @return A UiLibrary's uncompiled/raw output for the associated ScriptType.
    */
-  public <T extends ScriptFile> String getUncompiledOutput(UiLibrary uiLibrary) {
-    StringBuilder scriptStringBuilder = new StringBuilder();
-    List<T> files = getFiles(uiLibrary);
+  public <T extends ScriptFile> String getUncompiledOutput(final UiLibrary uiLibrary) {
+    final StringBuilder scriptStringBuilder = new StringBuilder();
+    final List<T> files = getFiles(uiLibrary);
 
-    for (T file : files) {
+    for (final T file : files) {
       appendFileOutputToStringBuilder(file, scriptStringBuilder);
     }
 
     return scriptStringBuilder.toString();
   }
 
-  public static BaseResource getScriptsRootResource(ScriptType scriptType, UiLibrary uiLibrary)
+  public static BaseResource getScriptsRootResource(final ScriptType scriptType, final UiLibrary uiLibrary)
       throws ChildResourceNotFoundException {
     return getChildAsBaseResource(scriptType.getRootResourceName(), uiLibrary);
   }
 
 
-  private <T extends ScriptFile> void appendFileOutputToStringBuilder(T file,
-      StringBuilder stringBuilder) {
+  private <T extends ScriptFile> void appendFileOutputToStringBuilder(final T file,
+      final StringBuilder stringBuilder) {
     try {
       stringBuilder.append(file.getOutput());
       stringBuilder.append("\n");
-    } catch (IOException exception) {
+    } catch (final IOException exception) {
       LOG.error("Unable to append {} file {} to UiLibrary output due to IOException",
           file.getFileType().getFileModelClass(), file.getName());
     }

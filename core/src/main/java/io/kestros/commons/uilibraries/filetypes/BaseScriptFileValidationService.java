@@ -9,7 +9,7 @@ public abstract class BaseScriptFileValidationService extends ModelValidationSer
 
   @Override
   public void registerBasicValidators() {
-    ScriptFile model = getModel();
+    final ScriptFile model = getModel();
     addBasicValidator(hasFileExtension(model.getFileType().getExtension(), model, ERROR));
   }
 

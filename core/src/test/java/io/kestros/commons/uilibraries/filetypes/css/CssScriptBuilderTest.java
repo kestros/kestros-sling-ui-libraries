@@ -52,7 +52,7 @@ public class CssScriptBuilderTest {
     fileProperties.put("jcr:primaryType", "nt:file");
     context.create().resource("/ui-library/css/css.css", fileProperties);
 
-    InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
+    final InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
 
     cssContentProperties.put("jcr:data", cssInputStream);
     cssContentProperties.put("jcr:mimeType", "text/css");
@@ -76,7 +76,7 @@ public class CssScriptBuilderTest {
     fileProperties.put("jcr:primaryType", "nt:file");
     context.create().resource("/ui-library/css/css.css", fileProperties);
 
-    InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
+    final InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
     cssContentProperties.put("jcr:data", cssInputStream);
     cssContentProperties.put("jcr:mimeType", "text/css");
     context.create().resource("/ui-library/css/css.css/jcr:content", cssContentProperties);
@@ -93,16 +93,16 @@ public class CssScriptBuilderTest {
     context.create().resource("/ui-library/css", cssDirectoryProperties);
 
     fileProperties.put("jcr:primaryType", "nt:file");
-    Resource cssFileResource = context.create().resource("/ui-library/css/css.css", fileProperties);
+    final Resource cssFileResource = context.create().resource("/ui-library/css/css.css", fileProperties);
 
-    InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
+    final InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
     cssContentProperties.put("jcr:data", cssInputStream);
     cssContentProperties.put("jcr:mimeType", "text/css");
     context.create().resource("/ui-library/css/css.css/jcr:content", cssContentProperties);
 
-    List<CssFile> cssFileList = new ArrayList<>();
+    final List<CssFile> cssFileList = new ArrayList<>();
 
-    CssFile mockCssFile = spy(new CssFile());
+    final CssFile mockCssFile = spy(new CssFile());
     doThrow(new IOException()).when(mockCssFile).getOutput();
     doReturn("mock-css-file.css").when(mockCssFile).getName();
 

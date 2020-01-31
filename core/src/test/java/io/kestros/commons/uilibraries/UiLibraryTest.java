@@ -160,7 +160,7 @@ public class UiLibraryTest {
     context.create().resource("/ui-library/css", cssFolderProperties);
     context.create().resource("/ui-library/css/file.css", fileProperties);
 
-    InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
+    final InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
 
     fileContentProperties.put("jcr:data", cssInputStream);
     fileContentProperties.put("jcr:mimeType", "text/css");
@@ -186,7 +186,7 @@ public class UiLibraryTest {
     context.create().resource("/ui-library/css", cssFolderProperties);
     context.create().resource("/ui-library/css/file.css", fileProperties);
 
-    InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
+    final InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
 
     fileContentProperties.put("jcr:data", cssInputStream);
     fileContentProperties.put("jcr:mimeType", "text/css");
@@ -210,7 +210,7 @@ public class UiLibraryTest {
     context.create().resource("/ui-library/css", cssFolderProperties);
     context.create().resource("/ui-library/css/file.css", fileProperties);
 
-    InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
+    final InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
 
     fileContentProperties.put("jcr:data", cssInputStream);
     fileContentProperties.put("jcr:mimeType", "text/css");

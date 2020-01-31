@@ -14,7 +14,7 @@ public class CssScriptBuilder extends BaseScriptBuilder {
   }
 
   @Override
-  public String getOutput(UiLibrary uiLibrary) {
+  public String getOutput(final UiLibrary uiLibrary) {
     return getUncompiledOutput(uiLibrary);
   }
 

@@ -30,9 +30,9 @@ public class LessFile extends ScriptFile {
 
   @Override
   public String getOutput() {
-    StringBuilder builder = new StringBuilder();
+    final StringBuilder builder = new StringBuilder();
 
-    BufferedReader bufferedReader = getBufferedReader();
+    final BufferedReader bufferedReader = getBufferedReader();
 
     try {
       String line;
@@ -49,30 +49,30 @@ public class LessFile extends ScriptFile {
 
         firstLine = false;
       }
-    } catch (IOException exception) {
+    } catch (final IOException exception) {
       LOG.error("Unable to build output for LessFile {} due to IOException", getPath());
     }
     return builder.toString();
   }
 
   private String getResolvedImportLine(String line) {
-    String filename = getFileNameFromImport(line);
+    final String filename = getFileNameFromImport(line);
     try {
-      BaseResource parentResource = getParent();
+      final BaseResource parentResource = getParent();
 
-      LessFile importedFile = FileModelUtils.getChildAsFileType(filename, parentResource,
+      final LessFile importedFile = FileModelUtils.getChildAsFileType(filename, parentResource,
           LessFile.class);
 
       line = importedFile.getOutput();
-    } catch (ModelAdaptionException exception) {
+    } catch (final ModelAdaptionException exception) {
       LOG.error("Unable to import Less script {} for {}. {}", filename, getPath(),
           exception.getMessage());
     }
     return line;
   }
 
-  static String getFileNameFromImport(String importLine) {
-    String[] importLineParts = importLine.split("@import \"");
+  static String getFileNameFromImport(final String importLine) {
+    final String[] importLineParts = importLine.split("@import \"");
     if (importLineParts.length == 2) {
       if (importLineParts[1].contains("\";")) {
         return importLineParts[1].split("\";")[0];
@@ -85,7 +85,7 @@ public class LessFile extends ScriptFile {
     return StringUtils.EMPTY;
   }
 
-  static boolean isImportLine(String line) {
+  static boolean isImportLine(final String line) {
     if (line.contains("//")) {
       return false;
     }

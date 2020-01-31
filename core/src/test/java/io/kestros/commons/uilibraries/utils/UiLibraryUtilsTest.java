@@ -41,12 +41,12 @@ public class UiLibraryUtilsTest {
     cssRootProperties.put("include", "my-less.less");
     fileProperties.put("jcr:primaryType", "nt:file");
 
-    InputStream importerInputStream = new ByteArrayInputStream(
+    final InputStream importerInputStream = new ByteArrayInputStream(
         "body{\n\t@import \"import-1.less\";\n}".getBytes());
-    InputStream importedInputStream = new ByteArrayInputStream(
+    final InputStream importedInputStream = new ByteArrayInputStream(
         "div{\n\t@import \"import-2.less\";\n}".getBytes());
 
-    InputStream secondImportedInputStream = new ByteArrayInputStream(
+    final InputStream secondImportedInputStream = new ByteArrayInputStream(
         "div{\n\tcolor: red;\n}".getBytes());
 
     importerContentProperties.put("jcr:data", importerInputStream);
@@ -71,7 +71,7 @@ public class UiLibraryUtilsTest {
     context.create().resource("/ui-library/css/import-2.less/jcr:content",
         importedContentProperties);
 
-    UiLibrary uiLibrary = resource.adaptTo(UiLibrary.class);
+    final UiLibrary uiLibrary = resource.adaptTo(UiLibrary.class);
 
     assertEquals("body div div {\n" + "  color: red;\n" + "}\n",
         UiLibraryUtils.getScriptOutput(ScriptType.CSS, uiLibrary, true));
@@ -83,12 +83,12 @@ public class UiLibraryUtilsTest {
     cssRootProperties.put("include", "my-less.test.less");
     fileProperties.put("jcr:primaryType", "nt:file");
 
-    InputStream importerInputStream = new ByteArrayInputStream(
+    final InputStream importerInputStream = new ByteArrayInputStream(
         "body{\n\t@import \"import-1.test.less\";\n}".getBytes());
-    InputStream importedInputStream = new ByteArrayInputStream(
+    final InputStream importedInputStream = new ByteArrayInputStream(
         "div{\n\t@import \"import-2.test.less\";\n}".getBytes());
 
-    InputStream secondImportedInputStream = new ByteArrayInputStream(
+    final InputStream secondImportedInputStream = new ByteArrayInputStream(
         "div{\n\tcolor: red;\n}".getBytes());
 
     importerContentProperties.put("jcr:data", importerInputStream);
@@ -113,7 +113,7 @@ public class UiLibraryUtilsTest {
     context.create().resource("/ui-library/css/import-2.test.less/jcr:content",
         importedContentProperties);
 
-    UiLibrary uiLibrary = resource.adaptTo(UiLibrary.class);
+    final UiLibrary uiLibrary = resource.adaptTo(UiLibrary.class);
 
     assertEquals("body div div {\n" + "  color: red;\n" + "}\n",
         UiLibraryUtils.getScriptOutput(ScriptType.CSS, uiLibrary, true));
@@ -125,7 +125,7 @@ public class UiLibraryUtilsTest {
     cssRootProperties.put("include", "my-css.css");
     fileProperties.put("jcr:primaryType", "nt:file");
 
-    InputStream inputStream = new ByteArrayInputStream(
+    final InputStream inputStream = new ByteArrayInputStream(
         "body{\n\tcolor: red; \n// @import \"123.less\";\n}".getBytes());
 
     importerContentProperties.put("jcr:data", inputStream);
@@ -138,7 +138,7 @@ public class UiLibraryUtilsTest {
     context.create().resource("/ui-library/css/my-css.css", fileProperties);
     context.create().resource("/ui-library/css/my-css.css/jcr:content", importerContentProperties);
 
-    UiLibrary uiLibrary = resource.adaptTo(UiLibrary.class);
+    final UiLibrary uiLibrary = resource.adaptTo(UiLibrary.class);
 
     assertEquals("body {\n" + "  color: red;\n" + "}\n",
         UiLibraryUtils.getScriptOutput(ScriptType.CSS, uiLibrary, true));
@@ -150,7 +150,7 @@ public class UiLibraryUtilsTest {
     cssRootProperties.put("include", "my-javascript.js");
     fileProperties.put("jcr:primaryType", "nt:file");
 
-    InputStream inputStream = new ByteArrayInputStream("console.log(\"test\");".getBytes());
+    final InputStream inputStream = new ByteArrayInputStream("console.log(\"test\");".getBytes());
 
     importerContentProperties.put("jcr:data", inputStream);
     importerContentProperties.put("jcr:mimeType", "application/javascript");
@@ -163,7 +163,7 @@ public class UiLibraryUtilsTest {
     context.create().resource("/ui-library/js/my-javascript.js/jcr:content",
         importerContentProperties);
 
-    UiLibrary uiLibrary = resource.adaptTo(UiLibrary.class);
+    final UiLibrary uiLibrary = resource.adaptTo(UiLibrary.class);
 
     assertEquals("console.log(\"test\");\n",
         UiLibraryUtils.getScriptOutput(ScriptType.JAVASCRIPT, uiLibrary, true));
@@ -175,12 +175,12 @@ public class UiLibraryUtilsTest {
     cssRootProperties.put("include", "my-less.less");
     fileProperties.put("jcr:primaryType", "nt:file");
 
-    InputStream importerInputStream = new ByteArrayInputStream(
+    final InputStream importerInputStream = new ByteArrayInputStream(
         "body{\n\t@import \"import-1.less\";\n}".getBytes());
-    InputStream importedInputStream = new ByteArrayInputStream(
+    final InputStream importedInputStream = new ByteArrayInputStream(
         "div{\n\t@import \"import-2.less\";\n}".getBytes());
 
-    InputStream secondImportedInputStream = new ByteArrayInputStream(
+    final InputStream secondImportedInputStream = new ByteArrayInputStream(
         "div{\n\tcolor: red;\n}".getBytes());
 
     importerContentProperties.put("jcr:data", importerInputStream);
@@ -205,7 +205,7 @@ public class UiLibraryUtilsTest {
     context.create().resource("/ui-library/css/import-2.less/jcr:content",
         importedContentProperties);
 
-    UiLibrary uiLibrary = resource.adaptTo(UiLibrary.class);
+    final UiLibrary uiLibrary = resource.adaptTo(UiLibrary.class);
 
     assertEquals(31, UiLibraryUtils.getScriptOutput(ScriptType.LESS, uiLibrary, true).length());
     assertEquals("body{\n" + "div{\n" + "div{\n" + "\tcolor: red;\n" + "}\n" + "}\n" + "}",

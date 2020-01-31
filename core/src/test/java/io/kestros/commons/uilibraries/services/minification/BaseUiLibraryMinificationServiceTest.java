@@ -32,8 +32,8 @@ public class BaseUiLibraryMinificationServiceTest {
   public void testGetMinifiedOutputWhenCssAndCssCompressionException() {
     try {
       minificationService.getMinifiedOutput(null, ScriptType.CSS);
-    } catch (JavaScriptCompressionException e) {
-    } catch (CssCompressionException e) {
+    } catch (final JavaScriptCompressionException e) {
+    } catch (final CssCompressionException e) {
       exception = e;
     }
     assertEquals("Unable to minify css script.", exception.getMessage());
@@ -50,9 +50,9 @@ public class BaseUiLibraryMinificationServiceTest {
   public void testGetMinifiedOutputWhenJavascriptAndJavascriptCompressionException() {
     try {
       minificationService.getMinifiedOutput("", ScriptType.JAVASCRIPT);
-    } catch (JavaScriptCompressionException e) {
+    } catch (final JavaScriptCompressionException e) {
       exception = e;
-    } catch (CssCompressionException e) {
+    } catch (final CssCompressionException e) {
     }
     assertTrue(StringUtils.isNotEmpty(exception.getMessage()));
   }

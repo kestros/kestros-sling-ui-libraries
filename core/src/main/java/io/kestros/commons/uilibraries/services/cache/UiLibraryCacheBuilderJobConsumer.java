@@ -18,10 +18,10 @@ public class UiLibraryCacheBuilderJobConsumer implements JobConsumer {
   private UiLibraryCacheService uiLibraryCacheService;
 
   @Override
-  public JobResult process(Job job) {
+  public JobResult process(final Job job) {
 
-    Object uiLibraryPath = job.getProperty("ui-library-path");
-    Object cacheMinifiedProperty = job.getProperty("cache-minified");
+    final Object uiLibraryPath = job.getProperty("ui-library-path");
+    final Object cacheMinifiedProperty = job.getProperty("cache-minified");
     if (uiLibraryPath instanceof String) {
       Boolean cacheMinified = false;
       if (cacheMinifiedProperty instanceof Boolean) {
@@ -30,7 +30,7 @@ public class UiLibraryCacheBuilderJobConsumer implements JobConsumer {
       try {
         uiLibraryCacheService.cacheUiLibraryScripts((String) uiLibraryPath, cacheMinified);
         return JobResult.OK;
-      } catch (CacheBuilderException exception) {
+      } catch (final CacheBuilderException exception) {
         LOG.error("Unable to cache UiLibrary {}. {}", (String) uiLibraryPath,
             exception.getMessage());
       }

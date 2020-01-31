@@ -56,9 +56,9 @@ public class LessFileTest {
   public void testGetOutputWithImportsResolved() throws Exception {
     fileProperties.put("jcr:primaryType", "nt:file");
 
-    InputStream importerInputStream = new ByteArrayInputStream(
+    final InputStream importerInputStream = new ByteArrayInputStream(
         "body{\n\t@import \"import-1.less\";\n}".getBytes());
-    InputStream importedInputStream = new ByteArrayInputStream("div{\n\tcolor: red;\n}".getBytes());
+    final InputStream importedInputStream = new ByteArrayInputStream("div{\n\tcolor: red;\n}".getBytes());
 
     importerContentProperties.put("jcr:data", importerInputStream);
     importedContentProperties.put("jcr:data", importedInputStream);
@@ -85,7 +85,7 @@ public class LessFileTest {
     lessFile = resource.adaptTo(LessFile.class);
 
     lessFile = spy(lessFile);
-    BufferedReader mockBufferedReader = mock(BufferedReader.class);
+    final BufferedReader mockBufferedReader = mock(BufferedReader.class);
 
     when(mockBufferedReader.readLine()).thenThrow(new IOException());
 
@@ -98,7 +98,7 @@ public class LessFileTest {
   public void testGetOutputWithImportsResolvedWhenFileNotFound() throws Exception {
     fileProperties.put("jcr:primaryType", "nt:file");
 
-    InputStream importerInputStream = new ByteArrayInputStream(
+    final InputStream importerInputStream = new ByteArrayInputStream(
         "body{\n\t@import \"import-1.less\";\n}".getBytes());
 
     importerContentProperties.put("jcr:data", importerInputStream);
@@ -116,9 +116,9 @@ public class LessFileTest {
   public void testGetOutputWithImportsResolvedWhenInvalidResourceType() throws Exception {
     fileProperties.put("jcr:primaryType", "nt:file");
 
-    InputStream importerInputStream = new ByteArrayInputStream(
+    final InputStream importerInputStream = new ByteArrayInputStream(
         "body{\n\t@import \"import-1.png\";\n}".getBytes());
-    InputStream importedInputStream = new ByteArrayInputStream("div{\n\tcolor: red;\n}".getBytes());
+    final InputStream importedInputStream = new ByteArrayInputStream("div{\n\tcolor: red;\n}".getBytes());
 
     importerContentProperties.put("jcr:data", importerInputStream);
     importedContentProperties.put("jcr:data", importedInputStream);
@@ -140,12 +140,12 @@ public class LessFileTest {
   public void testGetOutputWithImportsResolvedWhenNestedImports() throws Exception {
     fileProperties.put("jcr:primaryType", "nt:file");
 
-    InputStream importerInputStream = new ByteArrayInputStream(
+    final InputStream importerInputStream = new ByteArrayInputStream(
         "body{\n\t@import \"import-1.less\";\n}".getBytes());
-    InputStream importedInputStream = new ByteArrayInputStream(
+    final InputStream importedInputStream = new ByteArrayInputStream(
         "div{\n\t@import \"import-2.less\";\n}".getBytes());
 
-    InputStream secondImportedInputStream = new ByteArrayInputStream(
+    final InputStream secondImportedInputStream = new ByteArrayInputStream(
         "div{\n\tcolor: red;\n}".getBytes());
 
     importerContentProperties.put("jcr:data", importerInputStream);

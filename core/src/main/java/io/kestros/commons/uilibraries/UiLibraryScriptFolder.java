@@ -41,12 +41,12 @@ public class UiLibraryScriptFolder extends BaseResource {
    * @param <T> extends ScriptType
    * @return List of all ScriptFile resources for the specified ScriptType.
    */
-  public <T extends ScriptFile> List<T> getScriptFiles(ScriptType scriptType) {
-    List<T> scriptFiles = new ArrayList<>();
-    for (String scriptPath : getIncludedScriptNames()) {
+  public <T extends ScriptFile> List<T> getScriptFiles(final ScriptType scriptType) {
+    final List<T> scriptFiles = new ArrayList<>();
+    for (final String scriptPath : getIncludedScriptNames()) {
       try {
         scriptFiles.add(getChildAsFileType(scriptPath, this, scriptType.getFileModelClass()));
-      } catch (ChildResourceNotFoundException | InvalidResourceTypeException exception) {
+      } catch (final ChildResourceNotFoundException | InvalidResourceTypeException exception) {
         LOG.warn("Unable to retrieve {} script files for {}. {}", scriptType.getName(), getPath(),
             exception.getMessage());
       }
@@ -56,11 +56,11 @@ public class UiLibraryScriptFolder extends BaseResource {
 
   @Nonnull
   protected List<BaseResource> getScriptFiles() {
-    List<BaseResource> scriptFiles = new ArrayList<>();
-    for (String scriptPath : getIncludedScriptNames()) {
+    final List<BaseResource> scriptFiles = new ArrayList<>();
+    for (final String scriptPath : getIncludedScriptNames()) {
       try {
         scriptFiles.add(getChildAsBaseResource(scriptPath, this));
-      } catch (ChildResourceNotFoundException exception) {
+      } catch (final ChildResourceNotFoundException exception) {
         LOG.warn("Unable to retrieve script file resource {} for {}. {}", scriptPath, getPath(),
             exception.getMessage());
       }

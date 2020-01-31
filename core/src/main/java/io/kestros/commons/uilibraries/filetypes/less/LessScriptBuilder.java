@@ -23,24 +23,24 @@ public class LessScriptBuilder extends CssScriptBuilder {
   }
 
   @Override
-  public String getOutput(UiLibrary uiLibrary) {
+  public String getOutput(final UiLibrary uiLibrary) {
     return Less.compile(null, getOutputWithResolvedImports(uiLibrary), false);
   }
 
   @Override
-  public String getUncompiledOutput(UiLibrary uiLibrary) {
+  public String getUncompiledOutput(final UiLibrary uiLibrary) {
     return getOutputWithResolvedImports(uiLibrary);
   }
 
-  private String getOutputWithResolvedImports(UiLibrary uiLibrary) {
-    StringBuilder builder = new StringBuilder();
+  private String getOutputWithResolvedImports(final UiLibrary uiLibrary) {
+    final StringBuilder builder = new StringBuilder();
 
-    List<ScriptFile> scriptFiles = getFiles(uiLibrary);
-    for (ScriptFile scriptFile : scriptFiles) {
+    final List<ScriptFile> scriptFiles = getFiles(uiLibrary);
+    for (final ScriptFile scriptFile : scriptFiles) {
       try {
-        LessFile lessFile = adaptToFileType(scriptFile, LessFile.class);
+        final LessFile lessFile = adaptToFileType(scriptFile, LessFile.class);
         builder.append(lessFile.getOutput());
-      } catch (InvalidResourceTypeException e) {
+      } catch (final InvalidResourceTypeException e) {
         LOG.warn("Unable to add script file {} to uiLibrary {}. {}", scriptFile.getPath(),
             uiLibrary.getPath(), e.getMessage());
       }

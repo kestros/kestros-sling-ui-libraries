@@ -28,9 +28,9 @@ public enum ScriptType implements FileType {
   private final Class scriptFileType;
   private BaseScriptBuilder scriptBuilder;
 
-  <T extends BaseScriptBuilder, S extends ScriptFile> ScriptType(String name,
-      String rootResourceName, String outputContentType, List<String> readableContentTypes,
-      Class<T> scriptBuilderType, Class<S> scriptFileType) {
+  <T extends BaseScriptBuilder, S extends ScriptFile> ScriptType(final String name,
+      final String rootResourceName, final String outputContentType, final List<String> readableContentTypes,
+      final Class<T> scriptBuilderType, final Class<S> scriptFileType) {
     this.name = name;
     this.rootResourceName = rootResourceName;
     this.outputContentType = outputContentType;
@@ -40,7 +40,7 @@ public enum ScriptType implements FileType {
 
     try {
       this.scriptBuilder = scriptBuilderType.newInstance();
-    } catch (ReflectiveOperationException exception) {
+    } catch (final ReflectiveOperationException exception) {
       this.scriptBuilder = null;
     }
   }

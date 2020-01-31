@@ -159,7 +159,7 @@ public class UiLibraryValidationServiceTest {
     context.create().resource("/ui-library/css", cssFolderProperties);
     context.create().resource("/ui-library/css/file.css", fileProperties);
 
-    InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
+    final InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
 
     fileContentProperties.put("jcr:data", cssInputStream);
     fileContentProperties.put("jcr:mimeType", "text/css");
@@ -170,7 +170,7 @@ public class UiLibraryValidationServiceTest {
     context.create().resource("/ui-library/js", cssFolderProperties);
     context.create().resource("/ui-library/js/file.js", fileProperties);
 
-    InputStream javascriptInputStream = new ByteArrayInputStream("javascript".getBytes());
+    final InputStream javascriptInputStream = new ByteArrayInputStream("javascript".getBytes());
 
     fileContentProperties.put("jcr:data", javascriptInputStream);
     fileContentProperties.put("jcr:mimeType", "application/javascript");
@@ -194,7 +194,7 @@ public class UiLibraryValidationServiceTest {
     context.create().resource("/ui-library/css", cssFolderProperties);
     context.create().resource("/ui-library/css/file.css", fileProperties);
 
-    InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
+    final InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
 
     fileContentProperties.put("jcr:data", cssInputStream);
     fileContentProperties.put("jcr:mimeType", "text/css");
@@ -218,7 +218,7 @@ public class UiLibraryValidationServiceTest {
     context.create().resource("/ui-library/js", cssFolderProperties);
     context.create().resource("/ui-library/js/file.js", fileProperties);
 
-    InputStream cssInputStream = new ByteArrayInputStream("javascript".getBytes());
+    final InputStream cssInputStream = new ByteArrayInputStream("javascript".getBytes());
 
     fileContentProperties.put("jcr:data", cssInputStream);
     fileContentProperties.put("jcr:mimeType", "application/javascript");
@@ -259,7 +259,7 @@ public class UiLibraryValidationServiceTest {
     context.create().resource("/ui-library/css", cssFolderProperties);
     context.create().resource("/ui-library/css/file.css", fileProperties);
 
-    InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
+    final InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
 
     fileContentProperties.put("jcr:data", cssInputStream);
     fileContentProperties.put("jcr:mimeType", "text/not-css");
@@ -293,7 +293,7 @@ public class UiLibraryValidationServiceTest {
     context.create().resource("/ui-library/js", cssFolderProperties);
     context.create().resource("/ui-library/js/file.js", fileProperties);
 
-    InputStream cssInputStream = new ByteArrayInputStream("javascript".getBytes());
+    final InputStream cssInputStream = new ByteArrayInputStream("javascript".getBytes());
 
     fileContentProperties.put("jcr:data", cssInputStream);
     fileContentProperties.put("jcr:mimeType", "application/not-javascript");
@@ -328,7 +328,7 @@ public class UiLibraryValidationServiceTest {
     context.create().resource("/ui-library/css", cssFolderProperties);
     context.create().resource("/ui-library/css/file.less", fileProperties);
 
-    InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
+    final InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
 
     fileContentProperties.put("jcr:data", cssInputStream);
     fileContentProperties.put("jcr:mimeType", "text/less");
@@ -354,7 +354,7 @@ public class UiLibraryValidationServiceTest {
     context.create().resource("/ui-library/css", cssFolderProperties);
     context.create().resource("/ui-library/css/file.less", fileProperties);
 
-    InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
+    final InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
 
     fileContentProperties.put("jcr:data", cssInputStream);
     fileContentProperties.put("jcr:mimeType", "text/less");

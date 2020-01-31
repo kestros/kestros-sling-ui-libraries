@@ -32,7 +32,7 @@ public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
 
   protected abstract ScriptType getScriptType();
 
-  protected String getOutput(SlingHttpServletRequest request, boolean minify)
+  protected String getOutput(final SlingHttpServletRequest request, final boolean minify)
       throws InvalidResourceTypeException {
     return getUiLibrary(request, getUiLibraryClass()).getOutput(getScriptType(), minify);
   }
@@ -44,8 +44,8 @@ public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
    * @param response SlingHttpServletResponse to write to.
    */
   @Override
-  public void doGet(@Nonnull SlingHttpServletRequest request,
-      @Nonnull SlingHttpServletResponse response) {
+  public void doGet(@Nonnull final SlingHttpServletRequest request,
+      @Nonnull final SlingHttpServletResponse response) {
 
     boolean performCache = false;
     String output = null;
@@ -61,7 +61,7 @@ public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
         output = getOutput(request, isMinified(request));
       }
 
-    } catch (InvalidResourceTypeException exception) {
+    } catch (final InvalidResourceTypeException exception) {
       response.setStatus(400);
       LOG.error("Unable to render script for {} due InvalidResourceTypeException. {}",
           request.getPathInfo(), exception.getMessage());
@@ -71,7 +71,7 @@ public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
       try {
         response.setContentType(getScriptType().getOutputContentType());
         write(output, response);
-      } catch (IOException exception) {
+      } catch (final IOException exception) {
         response.setContentType("text/plain");
         response.setStatus(400);
         LOG.error("Unable to render script for {} due to IOException. {}", request.getPathInfo(),
@@ -81,13 +81,13 @@ public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
     if (getUiLibraryCacheService() != null && performCache && uiLibrary != null) {
       try {
         getUiLibraryCacheService().cacheUiLibraryScripts(uiLibrary, isMinified(request));
-      } catch (CacheBuilderException e) {
+      } catch (final CacheBuilderException e) {
         LOG.warn("Unable to build UiLibrary Cache. {}", e.getMessage());
       }
     }
   }
 
-  String getCachedOutput(UiLibrary uiLibrary, SlingHttpServletRequest request) {
+  String getCachedOutput(final UiLibrary uiLibrary, final SlingHttpServletRequest request) {
     try {
       if (getUiLibraryCacheService() != null) {
         return getUiLibraryCacheService().getCachedOutput(uiLibrary, getScriptType(),
@@ -96,14 +96,14 @@ public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
         LOG.warn(
             "Unable to retrieve cached scripts for {}.  UiLibrary cache service not detected.");
       }
-    } catch (CacheRetrievalException exception) {
+    } catch (final CacheRetrievalException exception) {
       LOG.debug("Unable to retrieve cached value for {}. {}", uiLibrary.getPath(),
           exception.getMessage());
     }
     return StringUtils.EMPTY;
   }
 
-  boolean isMinified(SlingHttpServletRequest request) {
+  boolean isMinified(final SlingHttpServletRequest request) {
     if (getUiLibraryConfigurationService() != null) {
       return getUiLibraryConfigurationService().getMinifiedLibraryPaths().contains(
           request.getResource().getPath());
@@ -114,12 +114,12 @@ public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
     return false;
   }
 
-  <T extends UiLibrary> T getUiLibrary(SlingHttpServletRequest request, Class<T> type)
+  <T extends UiLibrary> T getUiLibrary(final SlingHttpServletRequest request, final Class<T> type)
       throws InvalidResourceTypeException {
     return adaptTo(request.getResource(), type);
   }
 
-  void write(String output, SlingHttpServletResponse response) throws IOException {
+  void write(final String output, final SlingHttpServletResponse response) throws IOException {
     response.getWriter().write(output);
   }
 

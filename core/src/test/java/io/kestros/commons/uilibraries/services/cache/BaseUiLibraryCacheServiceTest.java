@@ -28,7 +28,7 @@ public class BaseUiLibraryCacheServiceTest {
   private UiLibrary uiLibrary;
 
   private Resource resource;
-  private Map<String, Object> uiLibraryProperties = new HashMap<>();
+  private final Map<String, Object> uiLibraryProperties = new HashMap<>();
 
 
   @Before

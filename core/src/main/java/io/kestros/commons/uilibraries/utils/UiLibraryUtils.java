@@ -31,12 +31,12 @@ public class UiLibraryUtils {
    * @return The script output for the specified ScriptType.
    */
   @Nonnull
-  public static <T extends UiLibrary> String getScriptOutput(@Nonnull ScriptType scriptType,
-      @Nonnull T uiLibrary, boolean compiled) {
+  public static <T extends UiLibrary> String getScriptOutput(@Nonnull final ScriptType scriptType,
+      @Nonnull final T uiLibrary, final boolean compiled) {
     if (UiLibraryUtils.getCssScriptTypes().contains(scriptType)) {
 
       String cssOutput = getOutput(uiLibrary, CSS);
-      String lessOutput;
+      final String lessOutput;
 
       if (compiled) {
         lessOutput = getOutput(uiLibrary, LESS);
@@ -60,8 +60,8 @@ public class UiLibraryUtils {
   }
 
 
-  private static <T extends UiLibrary> String getOutput(@Nonnull T uiLibrary,
-      @Nonnull ScriptType scriptType) {
+  private static <T extends UiLibrary> String getOutput(@Nonnull final T uiLibrary,
+      @Nonnull final ScriptType scriptType) {
     return scriptType.getScriptBuilder().getOutput(uiLibrary);
   }
 

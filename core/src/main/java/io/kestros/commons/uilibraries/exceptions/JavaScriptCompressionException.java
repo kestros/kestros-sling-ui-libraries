@@ -2,7 +2,7 @@ package io.kestros.commons.uilibraries.exceptions;
 
 public class JavaScriptCompressionException extends ScriptCompressionException {
 
-  public JavaScriptCompressionException(String message) {
+  public JavaScriptCompressionException(final String message) {
     super(message);
   }
 }

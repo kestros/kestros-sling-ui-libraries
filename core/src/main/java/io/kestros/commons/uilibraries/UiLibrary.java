@@ -72,7 +72,7 @@ public class UiLibrary extends BaseResource {
    * @param <T> extends ScriptFile
    * @return List of all scriptFiles for the specified ScriptType.
    */
-  public <T extends ScriptFile> List<T> getScriptFiles(ScriptType scriptType) {
+  public <T extends ScriptFile> List<T> getScriptFiles(final ScriptType scriptType) {
     if (scriptType.equals(JAVASCRIPT)) {
       return (List<T>) getJavaScriptScriptFiles();
     } else {
@@ -87,7 +87,7 @@ public class UiLibrary extends BaseResource {
    * @param scriptType ScriptType to retrieve.
    * @return The uncached ScriptType output.
    */
-  public String getOutput(ScriptType scriptType, boolean minify)
+  public String getOutput(final ScriptType scriptType, final boolean minify)
       throws InvalidResourceTypeException {
     String output = getDependenciesOutput(scriptType);
     output += getScriptOutput(scriptType, this, false);
@@ -96,7 +96,7 @@ public class UiLibrary extends BaseResource {
       if (uiLibraryMinificationService != null) {
         try {
           return uiLibraryMinificationService.getMinifiedOutput(output, scriptType);
-        } catch (ScriptCompressionException e) {
+        } catch (final ScriptCompressionException e) {
           // todo log.
         }
       }
@@ -112,18 +112,18 @@ public class UiLibrary extends BaseResource {
    * @return All dependency UI Libraries.
    */
   public List<UiLibrary> getDependencies() {
-    List<UiLibrary> dependencies = new ArrayList<>();
+    final List<UiLibrary> dependencies = new ArrayList<>();
 
-    for (String dependencyPath : getDependencyPaths()) {
+    for (final String dependencyPath : getDependencyPaths()) {
       try {
-        UiLibrary dependency = getResourceAsType(dependencyPath, getResourceResolver(),
+        final UiLibrary dependency = getResourceAsType(dependencyPath, getResourceResolver(),
             UiLibrary.class);
         dependencies.add(dependency);
-      } catch (InvalidResourceTypeException exception) {
+      } catch (final InvalidResourceTypeException exception) {
         LOG.warn(
             "Unable to adapt dependency {} to UiLibrary for {} due to InvalidResourceTypeException",
             dependencyPath, getPath());
-      } catch (ResourceNotFoundException exception) {
+      } catch (final ResourceNotFoundException exception) {
         LOG.warn(
             "Unable to adapt dependency {} to UiLibrary for {} due to ResourceNotFoundException",
             dependencyPath, getPath());
@@ -139,27 +139,27 @@ public class UiLibrary extends BaseResource {
    * @return All supported scriptTypes.
    */
   public List<ScriptType> getSupportedScriptTypes() {
-    List<ScriptType> supportedScriptTypes = new ArrayList<>();
+    final List<ScriptType> supportedScriptTypes = new ArrayList<>();
     supportedScriptTypes.add(JAVASCRIPT);
 
-    List<ScriptType> supportableCssScriptTypes = new ArrayList<>();
-    List<ScriptType> unsupportedCssScriptTypes = new ArrayList<>();
+    final List<ScriptType> supportableCssScriptTypes = new ArrayList<>();
+    final List<ScriptType> unsupportedCssScriptTypes = new ArrayList<>();
 
     try {
-      for (BaseResource cssScriptResource : getCssScriptsFolder().getScriptFiles()) {
-        for (ScriptType cssScriptType : UiLibraryUtils.getCssScriptTypes()) {
+      for (final BaseResource cssScriptResource : getCssScriptsFolder().getScriptFiles()) {
+        for (final ScriptType cssScriptType : UiLibraryUtils.getCssScriptTypes()) {
           try {
             adaptToFileType(cssScriptResource, cssScriptType.getFileModelClass());
-          } catch (InvalidResourceTypeException exception) {
+          } catch (final InvalidResourceTypeException exception) {
             unsupportedCssScriptTypes.add(cssScriptType);
           }
         }
       }
-    } catch (ChildResourceNotFoundException exception) {
+    } catch (final ChildResourceNotFoundException exception) {
       // TODO log.
     }
 
-    for (ScriptType scriptType : UiLibraryUtils.getCssScriptTypes()) {
+    for (final ScriptType scriptType : UiLibraryUtils.getCssScriptTypes()) {
       if (!unsupportedCssScriptTypes.contains(scriptType)) {
         supportableCssScriptTypes.add(scriptType);
       }
@@ -185,7 +185,7 @@ public class UiLibrary extends BaseResource {
   protected <T extends ScriptFile> List<T> getCssScriptFiles() {
     try {
       return getCssScriptsFolder().getScriptFiles(getCssScriptType());
-    } catch (ModelAdaptionException exception) {
+    } catch (final ModelAdaptionException exception) {
       return Collections.emptyList();
     }
   }
@@ -198,7 +198,7 @@ public class UiLibrary extends BaseResource {
   protected List<JavaScriptFile> getJavaScriptScriptFiles() {
     try {
       return getJavaScriptScriptsFolder().getScriptFiles(JAVASCRIPT);
-    } catch (ChildResourceNotFoundException exception) {
+    } catch (final ChildResourceNotFoundException exception) {
       return Collections.emptyList();
     }
   }
@@ -224,7 +224,7 @@ public class UiLibrary extends BaseResource {
     return Arrays.asList(getProperties().get(PROPERTY_DEPENDENCIES, new String[]{}));
   }
 
-  private static BaseResource getScriptsRootResource(ScriptType scriptType, UiLibrary uiLibrary)
+  private static BaseResource getScriptsRootResource(final ScriptType scriptType, final UiLibrary uiLibrary)
       throws ChildResourceNotFoundException {
     return getChildAsBaseResource(scriptType.getRootResourceName(), uiLibrary);
   }
@@ -238,10 +238,10 @@ public class UiLibrary extends BaseResource {
     throw new InvalidResourceTypeException("", UiLibrary.class);
   }
 
-  private String getDependenciesOutput(ScriptType scriptType) throws InvalidResourceTypeException {
-    StringBuilder output = new StringBuilder();
+  private String getDependenciesOutput(final ScriptType scriptType) throws InvalidResourceTypeException {
+    final StringBuilder output = new StringBuilder();
 
-    for (UiLibrary dependency : getDependencies()) {
+    for (final UiLibrary dependency : getDependencies()) {
       output.append(dependency.getOutput(scriptType, false));
     }
     return output.toString();

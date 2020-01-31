@@ -50,10 +50,10 @@ public class UiLibraryConfigurationService implements Serializable {
    */
   @Nonnull
   public List<String> getMinifiedLibraryPaths() {
-    List<String> minifiedPaths = new ArrayList<>();
+    final List<String> minifiedPaths = new ArrayList<>();
     if (configurationList != null) {
-      for (Object config : configurationList) {
-        UiLibraryConfigurationFactory factoryConfig = (UiLibraryConfigurationFactory) config;
+      for (final Object config : configurationList) {
+        final UiLibraryConfigurationFactory factoryConfig = (UiLibraryConfigurationFactory) config;
         minifiedPaths.addAll(factoryConfig.getMinifiedLibraryPaths());
       }
       return minifiedPaths;

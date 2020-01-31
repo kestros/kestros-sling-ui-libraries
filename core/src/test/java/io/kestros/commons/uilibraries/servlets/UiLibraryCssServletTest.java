@@ -71,7 +71,7 @@ public class UiLibraryCssServletTest {
 
     properties.put("sling:resourceType", "kestros/commons/ui-library");
 
-    Resource resource = context.create().resource("/ui-library", properties);
+    final Resource resource = context.create().resource("/ui-library", properties);
 
     context.request().setResource(resource);
 
@@ -99,13 +99,13 @@ public class UiLibraryCssServletTest {
 
     properties.put("sling:resourceType", "kestros/commons/ui-library");
 
-    Resource resource = context.create().resource("/ui-library", properties);
+    final Resource resource = context.create().resource("/ui-library", properties);
 
     cssFolderProperties.put("include", new String[]{"file.css"});
     context.create().resource("/ui-library/css", cssFolderProperties);
     context.create().resource("/ui-library/css/file.css", fileProperties);
 
-    InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
+    final InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
 
     fileContentProperties.put("jcr:data", cssInputStream);
     fileContentProperties.put("jcr:mimeType", "text/css");
@@ -133,12 +133,12 @@ public class UiLibraryCssServletTest {
     context.registerService(UiLibraryCacheService.class, uiLibraryCacheService);
     properties.put("sling:resourceType", "kestros/commons/ui-library");
 
-    Resource resource = context.create().resource("/ui-library", properties);
+    final Resource resource = context.create().resource("/ui-library", properties);
     cssFolderProperties.put("include", new String[]{"file.css"});
     context.create().resource("/ui-library/css", cssFolderProperties);
     context.create().resource("/ui-library/css/file.css", fileProperties);
 
-    InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
+    final InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
 
     fileContentProperties.put("jcr:data", cssInputStream);
     fileContentProperties.put("jcr:mimeType", "text/css");
@@ -165,12 +165,12 @@ public class UiLibraryCssServletTest {
   public void testDoGetWhenNoUiLibraryCacheService() throws Exception {
     properties.put("sling:resourceType", "kestros/commons/ui-library");
 
-    Resource resource = context.create().resource("/ui-library", properties);
+    final Resource resource = context.create().resource("/ui-library", properties);
     cssFolderProperties.put("include", new String[]{"file.css"});
     context.create().resource("/ui-library/css", cssFolderProperties);
     context.create().resource("/ui-library/css/file.css", fileProperties);
 
-    InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
+    final InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
 
     fileContentProperties.put("jcr:data", cssInputStream);
     fileContentProperties.put("jcr:mimeType", "text/css");
@@ -194,10 +194,10 @@ public class UiLibraryCssServletTest {
   @Test
   public void testDoGetWhenInvalidResourceType() throws Exception {
     context.registerService(UiLibraryCacheService.class, uiLibraryCacheService);
-    Resource resource = context.create().resource("/ui-library", properties);
+    final Resource resource = context.create().resource("/ui-library", properties);
     context.request().setResource(resource);
 
-    UiLibraryCssServlet servlet = spy(new UiLibraryCssServlet());
+    final UiLibraryCssServlet servlet = spy(new UiLibraryCssServlet());
 
     when(uiLibraryConfigurationService.getMinifiedLibraryPaths()).thenReturn(
         Collections.emptyList());
@@ -214,13 +214,13 @@ public class UiLibraryCssServletTest {
 
     properties.put("sling:resourceType", "kestros/commons/ui-library");
 
-    Resource resource = context.create().resource("/ui-library", properties);
+    final Resource resource = context.create().resource("/ui-library", properties);
 
     cssFolderProperties.put("include", new String[]{"file.css"});
     context.create().resource("/ui-library/css", cssFolderProperties);
     context.create().resource("/ui-library/css/file.css", fileProperties);
 
-    InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
+    final InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
 
     fileContentProperties.put("jcr:data", cssInputStream);
     fileContentProperties.put("jcr:mimeType", "text/css");
@@ -251,13 +251,13 @@ public class UiLibraryCssServletTest {
 
     properties.put("sling:resourceType", "kestros/commons/ui-library");
 
-    Resource resource = context.create().resource("/ui-library", properties);
+    final Resource resource = context.create().resource("/ui-library", properties);
 
     cssFolderProperties.put("include", new String[]{"file.css"});
     context.create().resource("/ui-library/css", cssFolderProperties);
     context.create().resource("/ui-library/css/file.css", fileProperties);
 
-    InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
+    final InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
 
     fileContentProperties.put("jcr:data", cssInputStream);
     fileContentProperties.put("jcr:mimeType", "text/css");
@@ -286,11 +286,11 @@ public class UiLibraryCssServletTest {
   public void testIsMinified() {
     when(servlet.getUiLibraryConfigurationService()).thenReturn(uiLibraryConfigurationService);
 
-    List<String> minifiedPaths = new ArrayList<>();
+    final List<String> minifiedPaths = new ArrayList<>();
     minifiedPaths.add("/ui-library");
     when(uiLibraryConfigurationService.getMinifiedLibraryPaths()).thenReturn(minifiedPaths);
 
-    Resource resource = context.create().resource("/ui-library", properties);
+    final Resource resource = context.create().resource("/ui-library", properties);
     context.request().setResource(resource);
 
     assertTrue(servlet.isMinified(context.request()));
@@ -300,10 +300,10 @@ public class UiLibraryCssServletTest {
   public void testIsMinifiedWhenLibraryIsNotMinified() {
     when(servlet.getUiLibraryConfigurationService()).thenReturn(uiLibraryConfigurationService);
 
-    List<String> minifiedPaths = new ArrayList<>();
+    final List<String> minifiedPaths = new ArrayList<>();
     when(uiLibraryConfigurationService.getMinifiedLibraryPaths()).thenReturn(minifiedPaths);
 
-    Resource resource = context.create().resource("/ui-library", properties);
+    final Resource resource = context.create().resource("/ui-library", properties);
     context.request().setResource(resource);
 
     assertFalse(servlet.isMinified(context.request()));
@@ -311,7 +311,7 @@ public class UiLibraryCssServletTest {
 
   @Test
   public void testIsMinifiedWhenLibraryIsConfigurationServiceIsNull() {
-    Resource resource = context.create().resource("/ui-library", properties);
+    final Resource resource = context.create().resource("/ui-library", properties);
     context.request().setResource(resource);
 
     assertFalse(servlet.isMinified(context.request()));

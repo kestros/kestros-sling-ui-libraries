@@ -62,7 +62,7 @@ public class UiLibraryValidationService extends ModelValidationService {
     };
   }
 
-  ModelValidator isAllIncludedScriptsFound(ScriptType scriptType) {
+  ModelValidator isAllIncludedScriptsFound(final ScriptType scriptType) {
     return new ModelValidator() {
       @Override
       public boolean isValid() {
@@ -70,7 +70,7 @@ public class UiLibraryValidationService extends ModelValidationService {
           try {
             return getModel().getCssScriptFiles().size()
                    == getModel().getCssScriptsFolder().getIncludedScriptNames().length;
-          } catch (ChildResourceNotFoundException e) {
+          } catch (final ChildResourceNotFoundException e) {
             return true;
           }
         }
@@ -78,7 +78,7 @@ public class UiLibraryValidationService extends ModelValidationService {
           try {
             return getModel().getJavaScriptScriptFiles().size()
                    == getModel().getJavaScriptScriptsFolder().getIncludedScriptNames().length;
-          } catch (ChildResourceNotFoundException e) {
+          } catch (final ChildResourceNotFoundException e) {
             return true;
           }
         }
