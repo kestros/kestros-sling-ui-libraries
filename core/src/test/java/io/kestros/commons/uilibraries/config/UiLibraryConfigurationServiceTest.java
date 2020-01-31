@@ -19,8 +19,8 @@ public class UiLibraryConfigurationServiceTest {
   private UiLibraryConfigurationFactory uiLibraryConfigurationFactory1;
   private UiLibraryConfigurationFactory uiLibraryConfigurationFactory2;
 
-  private Config config1 = mock(Config.class);
-  private Config config2 = mock(Config.class);
+  private final Config config1 = mock(Config.class);
+  private final Config config2 = mock(Config.class);
 
   @Before
   public void setUp() throws Exception {

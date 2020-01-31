@@ -34,13 +34,13 @@ public class UiLibraryTest {
 
   private Resource resource;
 
-  private Map<String, Object> properties = new HashMap<>();
+  private final Map<String, Object> properties = new HashMap<>();
 
-  private Map<String, Object> cssFolderProperties = new HashMap<>();
-  private Map<String, Object> jsFolderProperties = new HashMap<>();
+  private final Map<String, Object> cssFolderProperties = new HashMap<>();
+  private final Map<String, Object> jsFolderProperties = new HashMap<>();
 
-  private Map<String, Object> fileProperties = new HashMap<>();
-  private Map<String, Object> fileContentProperties = new HashMap<>();
+  private final Map<String, Object> fileProperties = new HashMap<>();
+  private final Map<String, Object> fileContentProperties = new HashMap<>();
 
   @Before
   public void setUp() throws Exception {

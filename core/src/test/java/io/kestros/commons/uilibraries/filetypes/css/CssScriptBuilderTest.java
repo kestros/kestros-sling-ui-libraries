@@ -31,9 +31,9 @@ public class CssScriptBuilderTest {
 
   private Resource resource;
 
-  private Map<String, Object> cssDirectoryProperties = new HashMap<>();
-  private Map<String, Object> fileProperties = new HashMap<>();
-  private Map<String, Object> cssContentProperties = new HashMap<>();
+  private final Map<String, Object> cssDirectoryProperties = new HashMap<>();
+  private final Map<String, Object> fileProperties = new HashMap<>();
+  private final Map<String, Object> cssContentProperties = new HashMap<>();
 
   @Before
   public void setUp() throws Exception {

@@ -32,9 +32,9 @@ public class LessFileTest {
 
   private Resource jcrContentResource;
 
-  private Map<String, Object> fileProperties = new HashMap<>();
-  private Map<String, Object> importerContentProperties = new HashMap<>();
-  private Map<String, Object> importedContentProperties = new HashMap<>();
+  private final Map<String, Object> fileProperties = new HashMap<>();
+  private final Map<String, Object> importerContentProperties = new HashMap<>();
+  private final Map<String, Object> importedContentProperties = new HashMap<>();
 
   @Before
   public void setUp() throws Exception {

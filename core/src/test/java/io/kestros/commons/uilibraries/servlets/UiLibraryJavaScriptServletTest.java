@@ -27,7 +27,7 @@ public class UiLibraryJavaScriptServletTest {
 
   private UiLibraryJavaScriptServlet servlet;
 
-  private Map<String, Object> properties = new HashMap<>();
+  private final Map<String, Object> properties = new HashMap<>();
 
 
   @Before

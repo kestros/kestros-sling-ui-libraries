@@ -23,12 +23,12 @@ public class UiLibraryUtilsTest {
 
   private Resource resource;
 
-  private Map<String, Object> properties = new HashMap<>();
-  private Map<String, Object> uiLibraryProperties = new HashMap<>();
-  private Map<String, Object> cssRootProperties = new HashMap<>();
-  private Map<String, Object> fileProperties = new HashMap<>();
-  private Map<String, Object> importerContentProperties = new HashMap<>();
-  private Map<String, Object> importedContentProperties = new HashMap<>();
+  private final Map<String, Object> properties = new HashMap<>();
+  private final Map<String, Object> uiLibraryProperties = new HashMap<>();
+  private final Map<String, Object> cssRootProperties = new HashMap<>();
+  private final Map<String, Object> fileProperties = new HashMap<>();
+  private final Map<String, Object> importerContentProperties = new HashMap<>();
+  private final Map<String, Object> importedContentProperties = new HashMap<>();
 
   @Before
   public void setup() {

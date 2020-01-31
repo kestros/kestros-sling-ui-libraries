@@ -87,9 +87,9 @@ public class BaseUiLibraryCacheServiceTest {
 
   @Test
   public void testGetScriptFileSuffix() {
-    assertEquals(".css", cacheService.getScriptFileSuffix(ScriptType.CSS, false));
-    assertEquals(".min.css", cacheService.getScriptFileSuffix(ScriptType.CSS, true));
-    assertEquals(".js", cacheService.getScriptFileSuffix(ScriptType.JAVASCRIPT, false));
-    assertEquals(".min.js", cacheService.getScriptFileSuffix(ScriptType.JAVASCRIPT, true));
+    assertEquals(".css", BaseUiLibraryCacheService.getScriptFileSuffix(ScriptType.CSS, false));
+    assertEquals(".min.css", BaseUiLibraryCacheService.getScriptFileSuffix(ScriptType.CSS, true));
+    assertEquals(".js", BaseUiLibraryCacheService.getScriptFileSuffix(ScriptType.JAVASCRIPT, false));
+    assertEquals(".min.js", BaseUiLibraryCacheService.getScriptFileSuffix(ScriptType.JAVASCRIPT, true));
   }
 }
