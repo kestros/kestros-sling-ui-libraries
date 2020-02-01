@@ -49,8 +49,8 @@ public abstract class BaseScriptBuilder {
     return scriptStringBuilder.toString();
   }
 
-  public static BaseResource getScriptsRootResource(final ScriptType scriptType, final UiLibrary uiLibrary)
-      throws ChildResourceNotFoundException {
+  public static BaseResource getScriptsRootResource(final ScriptType scriptType,
+      final UiLibrary uiLibrary) throws ChildResourceNotFoundException {
     return getChildAsBaseResource(scriptType.getRootResourceName(), uiLibrary);
   }
 

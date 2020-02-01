@@ -9,4 +9,7 @@ public class LessFileValidationService extends BaseScriptFileValidationService {
     return (LessFile) getGenericModel();
   }
 
+  @Override
+  public void registerDetailedValidators() {
+  }
 }

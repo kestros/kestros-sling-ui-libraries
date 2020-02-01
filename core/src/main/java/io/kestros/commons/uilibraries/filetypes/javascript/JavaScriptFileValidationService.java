@@ -12,4 +12,7 @@ public class JavaScriptFileValidationService extends BaseScriptFileValidationSer
     return (JavaScriptFile) getGenericModel();
   }
 
+  @Override
+  public void registerDetailedValidators() {
+  }
 }

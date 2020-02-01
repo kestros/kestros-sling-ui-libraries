@@ -12,4 +12,8 @@ public class CssFileValidationService extends BaseScriptFileValidationService {
     return (CssFile) getGenericModel();
   }
 
+  @Override
+  public void registerDetailedValidators() {
+
+  }
 }

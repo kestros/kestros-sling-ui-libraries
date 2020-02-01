@@ -75,20 +75,22 @@ public class BaseUiLibraryCacheService extends JcrFileCacheService
   }
 
   @Override
-  public String getCachedOutput(@Nonnull final UiLibrary uiLibrary, @Nonnull final ScriptType scriptType,
-      final boolean minified) throws CacheRetrievalException {
+  public String getCachedOutput(@Nonnull final UiLibrary uiLibrary,
+      @Nonnull final ScriptType scriptType, final boolean minified) throws CacheRetrievalException {
 
     try {
       return getCachedFile(uiLibrary.getPath() + getScriptFileSuffix(scriptType, minified),
           scriptType.getFileModelClass()).getOutput();
-    } catch (final IOException | ResourceNotFoundException | InvalidResourceTypeException exception) {
+    } catch (final IOException | ResourceNotFoundException
+                               | InvalidResourceTypeException exception) {
       throw new CacheRetrievalException(exception.getMessage());
     }
 
   }
 
   @Override
-  public void cacheUiLibraryScripts(@Nonnull final UiLibrary uiLibrary, final boolean cacheMinified) {
+  public void cacheUiLibraryScripts(@Nonnull final UiLibrary uiLibrary,
+      final boolean cacheMinified) {
     LOG.info("Caching CSS/JS scripts for {}.", uiLibrary.getPath());
     for (final ScriptType supportedScriptType : uiLibrary.getSupportedScriptTypes()) {
       try {
@@ -135,8 +137,8 @@ public class BaseUiLibraryCacheService extends JcrFileCacheService
     return jobProperties;
   }
 
-  private void cacheOutput(final UiLibrary uiLibrary, final ScriptType scriptType, final boolean minify)
-      throws CacheBuilderException {
+  private void cacheOutput(final UiLibrary uiLibrary, final ScriptType scriptType,
+      final boolean minify) throws CacheBuilderException {
     final String fileName = uiLibrary.getPath() + getScriptFileSuffix(scriptType, minify);
     try {
       createCacheFile(uiLibrary.getOutput(scriptType, minify), fileName, scriptType);

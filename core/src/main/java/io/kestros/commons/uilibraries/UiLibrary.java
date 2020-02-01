@@ -224,8 +224,8 @@ public class UiLibrary extends BaseResource {
     return Arrays.asList(getProperties().get(PROPERTY_DEPENDENCIES, new String[]{}));
   }
 
-  private static BaseResource getScriptsRootResource(final ScriptType scriptType, final UiLibrary uiLibrary)
-      throws ChildResourceNotFoundException {
+  private static BaseResource getScriptsRootResource(final ScriptType scriptType,
+      final UiLibrary uiLibrary) throws ChildResourceNotFoundException {
     return getChildAsBaseResource(scriptType.getRootResourceName(), uiLibrary);
   }
 
@@ -238,7 +238,8 @@ public class UiLibrary extends BaseResource {
     throw new InvalidResourceTypeException("", UiLibrary.class);
   }
 
-  private String getDependenciesOutput(final ScriptType scriptType) throws InvalidResourceTypeException {
+  private String getDependenciesOutput(final ScriptType scriptType)
+      throws InvalidResourceTypeException {
     final StringBuilder output = new StringBuilder();
 
     for (final UiLibrary dependency : getDependencies()) {
