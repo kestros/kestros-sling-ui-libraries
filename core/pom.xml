@@ -20,7 +20,7 @@
   </description>
 
   <properties>
-    <rootPackage>io.kestros.commons.uilibraries</rootPackage>
+    <rootPackage>io.io.commons.uilibraries</rootPackage>
     <bundleCategory>kestros</bundleCategory>
   </properties>
 
