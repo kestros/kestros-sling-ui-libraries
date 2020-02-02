@@ -72,7 +72,7 @@ public enum ScriptType implements FileType {
     return this.readableContentTypes;
   }
 
-  @Nullable
+  @Nonnull
   public <T extends BaseScriptBuilder> T getScriptBuilder() {
     return (T) this.scriptBuilder;
   }
