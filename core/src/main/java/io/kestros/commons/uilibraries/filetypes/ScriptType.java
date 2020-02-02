@@ -10,15 +10,16 @@ import io.kestros.commons.uilibraries.filetypes.javascript.JavaScriptScriptBuild
 import io.kestros.commons.uilibraries.filetypes.less.LessFile;
 import io.kestros.commons.uilibraries.filetypes.less.LessScriptBuilder;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public enum ScriptType implements FileType {
-  CSS("css", "css", "text/css", Arrays.asList("text/css"), CssScriptBuilder.class, CssFile.class),
-  JAVASCRIPT("js", "js", "application/javascript", Arrays.asList("application/javascript"),
-      JavaScriptScriptBuilder.class, JavaScriptFile.class), LESS("less", "css", "text/css",
-      Arrays.asList("text/css", "text/less"), LessScriptBuilder.class, LessFile.class);
+  CSS("css", "css", "text/css", Collections.singletonList("text/css"), CssScriptBuilder.class,
+      CssFile.class), JAVASCRIPT("js", "js", "application/javascript",
+      Collections.singletonList("application/javascript"), JavaScriptScriptBuilder.class,
+      JavaScriptFile.class), LESS("less", "css", "text/css", Arrays.asList("text/css", "text/less"),
+      LessScriptBuilder.class, LessFile.class);
 
   private final String name;
   private final String rootResourceName;
