@@ -114,18 +114,25 @@ public class BaseUiLibraryCacheService extends JcrFileCacheService
   @Override
   public void cacheUiLibraryScripts(final String uiLibraryPath, final boolean cacheMinified)
       throws CacheBuilderException {
-    try {
-      final BaseResource uiLibraryResource = getResourceAsBaseResource(uiLibraryPath,
-          getServiceResourceResolver());
-      final BaseResource uiLibrary = getResourceAsClosestType(uiLibraryResource.getResource(),
-          modelFactory);
-      if (uiLibrary instanceof UiLibrary) {
-        cacheUiLibraryScripts((UiLibrary) uiLibrary, cacheMinified);
-      }
+    if (getServiceResourceResolver() != null) {
+      try {
+        final BaseResource uiLibraryResource = getResourceAsBaseResource(uiLibraryPath,
+            getServiceResourceResolver());
+        final BaseResource uiLibrary = getResourceAsClosestType(uiLibraryResource.getResource(),
+            modelFactory);
+        if (uiLibrary instanceof UiLibrary) {
+          cacheUiLibraryScripts((UiLibrary) uiLibrary, cacheMinified);
+        }
 
-    } catch (final ResourceNotFoundException | MatchingResourceTypeNotFoundException e) {
-      throw new CacheBuilderException(e.getMessage());
+      } catch (final ResourceNotFoundException | MatchingResourceTypeNotFoundException e) {
+        throw new CacheBuilderException(e.getMessage());
+      }
+    } else {
+      throw new CacheBuilderException(String.format(
+          "Failed to build cache for UiLibrary %s. Null or closed service ResourceResolver.",
+          uiLibraryPath));
     }
+
   }
 
   @Override
