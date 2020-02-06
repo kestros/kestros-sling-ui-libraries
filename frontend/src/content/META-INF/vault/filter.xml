@@ -6,6 +6,8 @@
 
   <filter root="/libs/kestros/commons/ui-libraries.html"/>
 
-  <filter root="/apps/kestros/commons/config"/>
+  <filter root="/libs/kestros/commons/config" mode="update">
+    <exclude pattern="/libs/kestros/commons/config.*"/>
+  </filter>
 
 </workspaceFilter>
