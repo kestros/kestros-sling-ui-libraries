@@ -225,13 +225,11 @@ public class UiLibrary extends BaseResource {
   }
 
   protected UiLibraryScriptFolder getCssScriptsFolder() throws ChildResourceNotFoundException {
-    // TODO custom throw exception?
     return getScriptsRootResource(CSS, this).getResource().adaptTo(UiLibraryScriptFolder.class);
   }
 
   protected UiLibraryScriptFolder getJavaScriptScriptsFolder()
       throws ChildResourceNotFoundException {
-    // TODO custom throw exception?
     return getScriptsRootResource(JAVASCRIPT, this).getResource().adaptTo(
         UiLibraryScriptFolder.class);
   }
