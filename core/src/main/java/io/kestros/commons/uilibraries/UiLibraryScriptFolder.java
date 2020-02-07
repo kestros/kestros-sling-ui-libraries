@@ -36,7 +36,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Model(adaptables = Resource.class)
-// TODO add validation service.
 public class UiLibraryScriptFolder extends BaseResource {
 
   private static final Logger LOG = LoggerFactory.getLogger(UiLibraryScriptFolder.class);
