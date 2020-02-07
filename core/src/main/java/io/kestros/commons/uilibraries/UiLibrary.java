@@ -116,7 +116,8 @@ public class UiLibrary extends BaseResource {
         try {
           return uiLibraryMinificationService.getMinifiedOutput(output, scriptType);
         } catch (final ScriptCompressionException e) {
-          // todo log.
+          LOG.warn("Unable to minify {} output for {}. {}", scriptType.getName(), getPath(),
+              e.getMessage());
         }
       }
     }
