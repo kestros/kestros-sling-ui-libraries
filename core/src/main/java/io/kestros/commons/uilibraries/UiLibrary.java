@@ -252,8 +252,6 @@ public class UiLibrary extends BaseResource {
     if (getSupportedScriptTypes().size() == 2) {
       return getSupportedScriptTypes().get(1);
     }
-
-    // TODO custom exception
     throw new InvalidResourceTypeException("", UiLibrary.class);
   }
 
