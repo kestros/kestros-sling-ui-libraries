@@ -30,12 +30,20 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * Utilities for building UiLibrary script outputs.
+ */
 public class UiLibraryUtils {
 
 
   private UiLibraryUtils() {
   }
 
+  /**
+   * Supported CSS script types.
+   *
+   * @return Supported CSS script types.
+   */
   public static List<ScriptType> getCssScriptTypes() {
     return Arrays.asList(CSS, LESS);
   }

@@ -25,6 +25,9 @@ import io.kestros.commons.uilibraries.BaseScriptBuilder;
 import io.kestros.commons.uilibraries.UiLibrary;
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
 
+/**
+ * ScriptBuilder used for compiling JavaScript file(s).
+ */
 public class JavaScriptScriptBuilder extends BaseScriptBuilder {
 
   @Override

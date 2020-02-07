@@ -35,6 +35,9 @@ import io.kestros.commons.structuredslingmodels.validation.ModelValidator;
 import io.kestros.commons.structuredslingmodels.validation.ModelValidatorBundle;
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
 
+/**
+ * ModelValidationService for validation {@link UiLibrary} models.
+ */
 public class UiLibraryValidationService extends ModelValidationService {
 
   @Override

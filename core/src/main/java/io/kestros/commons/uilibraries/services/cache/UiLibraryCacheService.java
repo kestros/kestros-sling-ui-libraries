@@ -24,7 +24,6 @@ import io.kestros.commons.osgiserviceutils.exceptions.CacheRetrievalException;
 import io.kestros.commons.osgiserviceutils.services.cache.CacheService;
 import io.kestros.commons.uilibraries.UiLibrary;
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
-import java.util.Map;
 
 /**
  * Service for handling UiLibrary caches.
@@ -62,8 +61,4 @@ public interface UiLibraryCacheService extends CacheService {
    */
   void cacheUiLibraryScripts(String uiLibraryPath, boolean cacheMinified)
       throws CacheBuilderException;
-
-  void addCacheCreationJob(Map<String, Object> jobProperties);
-
-  Map<String, Object> getCacheCreationJobProperties(UiLibrary uiLibrary, Boolean cacheMinified);
 }

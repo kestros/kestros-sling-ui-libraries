@@ -32,6 +32,11 @@ import java.io.StringWriter;
 import org.apache.commons.lang3.StringUtils;
 import org.osgi.service.component.annotations.Component;
 
+/**
+ * Service which compresses CSS and JavaScript Strings for
+ * {@link io.kestros.commons.uilibraries.UiLibrary}
+ * output.
+ */
 @Component(immediate = true,
            service = UiLibraryMinificationService.class,
            property = "service.ranking:Integer=100")

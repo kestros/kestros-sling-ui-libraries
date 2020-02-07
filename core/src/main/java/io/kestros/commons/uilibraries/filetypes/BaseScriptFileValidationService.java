@@ -24,6 +24,10 @@ import static io.kestros.commons.structuredslingmodels.validation.ModelValidatio
 
 import io.kestros.commons.structuredslingmodels.validation.ModelValidationService;
 
+/**
+ * Baseline validation for {@link ScriptType} implementations. Checks that nt:file Resources have
+ * the proper extension before considering them valid.
+ */
 public abstract class BaseScriptFileValidationService extends ModelValidationService {
 
   @Override

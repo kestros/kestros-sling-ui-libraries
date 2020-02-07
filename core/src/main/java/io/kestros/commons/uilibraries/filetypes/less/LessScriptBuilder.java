@@ -32,6 +32,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * ScriptBuilder used for compiling LESS file(s) into CSS output.
+ */
 public class LessScriptBuilder extends CssScriptBuilder {
 
   private static final Logger LOG = LoggerFactory.getLogger(LessScriptBuilder.class);

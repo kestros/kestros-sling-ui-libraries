@@ -140,7 +140,6 @@ public class UiLibraryCssServletTest {
 
     verify(uiLibraryCacheService, times(1)).getCachedOutput(any(UiLibrary.class), any(),
         anyBoolean());
-    verify(uiLibraryCacheService, never()).addCacheCreationJob(any());
 
     assertEquals(200, context.response().getStatus());
     assertEquals("text/css", context.response().getContentType());
@@ -173,7 +172,6 @@ public class UiLibraryCssServletTest {
     servlet.doGet(context.request(), context.response());
 
     verify(uiLibraryCacheService, times(1)).getCachedOutput(any(), any(), anyBoolean());
-    verify(uiLibraryCacheService, never()).addCacheCreationJob(any());
 
     assertEquals(200, context.response().getStatus());
     assertEquals("text/css", context.response().getContentType());
@@ -255,7 +253,6 @@ public class UiLibraryCssServletTest {
 
     verify(uiLibraryCacheService, times(1)).getCachedOutput(any(UiLibrary.class), any(),
         anyBoolean());
-    verify(uiLibraryCacheService, never()).addCacheCreationJob(any());
 
     assertEquals(200, context.response().getStatus());
     assertEquals("text/css", context.response().getContentType());
@@ -294,7 +291,6 @@ public class UiLibraryCssServletTest {
 
     verify(uiLibraryCacheService, times(1)).getCachedOutput(any(UiLibrary.class), any(),
         anyBoolean());
-    verify(uiLibraryCacheService, never()).addCacheCreationJob(any());
 
     assertEquals(400, context.response().getStatus());
     assertEquals("text/plain", context.response().getContentType());

@@ -21,6 +21,9 @@ package io.kestros.commons.uilibraries.filetypes.less;
 
 import io.kestros.commons.uilibraries.filetypes.BaseScriptFileValidationService;
 
+/**
+ * ModeValidationService for validating {@link LessFile}.
+ */
 public class LessFileValidationService extends BaseScriptFileValidationService {
 
   @Override

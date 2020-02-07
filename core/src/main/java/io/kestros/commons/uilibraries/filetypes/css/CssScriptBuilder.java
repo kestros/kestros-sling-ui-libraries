@@ -25,6 +25,9 @@ import io.kestros.commons.uilibraries.BaseScriptBuilder;
 import io.kestros.commons.uilibraries.UiLibrary;
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
 
+/**
+ * ScriptBuilder used for compiling CSS file(s).
+ */
 public class CssScriptBuilder extends BaseScriptBuilder {
 
   @Override

@@ -33,6 +33,9 @@ import java.util.Collections;
 import java.util.List;
 import javax.annotation.Nonnull;
 
+/**
+ * Script {@link FileType} implementations used by UiLibraries for CSS and JavaScript output.
+ */
 public enum ScriptType implements FileType {
   CSS("css", "css", "text/css", Collections.singletonList("text/css"), CssScriptBuilder.class,
       CssFile.class), JAVASCRIPT("js", "js", "application/javascript",
@@ -67,16 +70,23 @@ public enum ScriptType implements FileType {
   }
 
   @Nonnull
+  @Override
   public String getName() {
     return this.name;
   }
 
+  /**
+   * Resource folder name where scripts of this type should live.
+   *
+   * @return Resource folder name where scripts of this type should live.
+   */
   @Nonnull
   public String getRootResourceName() {
     return this.rootResourceName;
   }
 
   @Nonnull
+  @Override
   public String getExtension() {
     return this.extension;
   }
@@ -87,16 +97,24 @@ public enum ScriptType implements FileType {
   }
 
   @Nonnull
+  @Override
   public List<String> getReadableContentTypes() {
     return this.readableContentTypes;
   }
 
+  /**
+   * {@link BaseScriptBuilder} to associate with a ScriptType
+   *
+   * @param <T> Extends {@link BaseScriptBuilder}
+   * @return {@link BaseScriptBuilder} to associate with a ScriptType
+   */
   @Nonnull
   public <T extends BaseScriptBuilder> T getScriptBuilder() {
     return (T) this.scriptBuilder;
   }
 
   @Nonnull
+  @Override
   public <T extends BaseFile> Class<T> getFileModelClass() {
     return this.scriptFileType;
   }

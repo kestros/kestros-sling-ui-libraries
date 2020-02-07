@@ -33,8 +33,6 @@ import io.kestros.commons.structuredslingmodels.exceptions.ResourceNotFoundExcep
 import io.kestros.commons.uilibraries.UiLibrary;
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import javax.annotation.Nonnull;
 import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.apache.sling.event.jobs.JobManager;
@@ -44,6 +42,10 @@ import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Service for managing, building, retrieving and purging UiLibrary output caches.  Saves output as
+ * nt:file Resources under /var/cache/ui-libraries.
+ */
 @Component(immediate = true,
            service = {ManagedCacheService.class, UiLibraryCacheService.class},
            property = "service.ranking:Integer=100")
@@ -100,8 +102,7 @@ public class BaseUiLibraryCacheService extends JcrFileCacheService
     try {
       return getCachedFile(uiLibrary.getPath() + getScriptFileSuffix(scriptType, minified),
           scriptType.getFileModelClass()).getOutput();
-    } catch (final IOException | ResourceNotFoundException
-                               | InvalidResourceTypeException exception) {
+    } catch (final IOException | ResourceNotFoundException | InvalidResourceTypeException exception) {
       throw new CacheRetrievalException(exception.getMessage());
     }
 
@@ -152,15 +153,6 @@ public class BaseUiLibraryCacheService extends JcrFileCacheService
           uiLibraryPath));
     }
 
-  }
-
-  @Override
-  public Map<String, Object> getCacheCreationJobProperties(final UiLibrary uiLibrary,
-      final Boolean cacheMinified) {
-    final Map<String, Object> jobProperties = new HashMap<>();
-    jobProperties.put("ui-library-path", uiLibrary.getPath());
-    jobProperties.put("cache-minified", cacheMinified);
-    return jobProperties;
   }
 
   private void cacheOutput(final UiLibrary uiLibrary, final ScriptType scriptType,

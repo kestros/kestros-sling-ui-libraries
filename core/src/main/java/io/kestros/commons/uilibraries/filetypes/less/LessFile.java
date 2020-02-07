@@ -35,6 +35,9 @@ import org.apache.sling.models.annotations.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Sling Model for .less files.
+ */
 @StructuredModel(validationService = LessFileValidationService.class)
 @Model(adaptables = Resource.class,
        resourceType = "nt:file")
