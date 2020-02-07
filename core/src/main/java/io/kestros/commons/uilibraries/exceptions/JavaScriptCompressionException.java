@@ -19,8 +19,16 @@
 
 package io.kestros.commons.uilibraries.exceptions;
 
+/**
+ * Exception thrown when JavaScript output failed to be minified/compressed.
+ */
 public class JavaScriptCompressionException extends ScriptCompressionException {
 
+  /**
+   * Exception thrown when JavaScript output failed to be minified/compressed.
+   *
+   * @param message Cause message.
+   */
   public JavaScriptCompressionException(final String message) {
     super(message);
   }

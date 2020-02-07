@@ -19,8 +19,16 @@
 
 package io.kestros.commons.uilibraries.exceptions;
 
+/**
+ * Exception thrown when CSS output failed to be minified/compressed.
+ */
 public class CssCompressionException extends ScriptCompressionException {
 
+  /**
+   * Exception thrown when CSS output failed to be minified/compressed.
+   *
+   * @param message Cause message.
+   */
   public CssCompressionException(final String message) {
     super(message);
   }

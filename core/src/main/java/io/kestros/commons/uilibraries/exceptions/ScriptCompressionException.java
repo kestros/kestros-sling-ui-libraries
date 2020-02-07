@@ -21,12 +21,27 @@ package io.kestros.commons.uilibraries.exceptions;
 
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
 
+/**
+ * Generic Exception thrown when CSS or JavaScript output failed to minify/compress.
+ */
 public class ScriptCompressionException extends Exception {
 
+  /**
+   * Generic Exception thrown when CSS or JavaScript output failed to minify/compress.
+   *
+   * @param message Cause message.
+   */
   public ScriptCompressionException(final String message) {
     super(message);
   }
 
+  /**
+   * Generic Exception thrown when CSS or JavaScript output failed to minify/compress.
+   *
+   * @param resourcePath Absolute path to the UiLibrary that could not be compressed.
+   * @param scriptType CSS or JavaScript Type.
+   * @param message Cause message.
+   */
   public ScriptCompressionException(final String resourcePath, final ScriptType scriptType,
       final String message) {
     super(String.format("Unable to compress %s script for '%s'. %s.", scriptType.getName(),
