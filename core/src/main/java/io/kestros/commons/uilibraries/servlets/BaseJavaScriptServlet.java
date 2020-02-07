@@ -23,6 +23,11 @@ import static io.kestros.commons.uilibraries.filetypes.ScriptType.JAVASCRIPT;
 
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
 
+/**
+ * Baseline Servlet for providing JavaScript output from
+ * {@link io.kestros.commons.uilibraries.UiLibrary}
+ * instances.
+ */
 public abstract class BaseJavaScriptServlet extends BaseUiLibraryServlet {
 
   private static final long serialVersionUID = 1917627832880901745L;

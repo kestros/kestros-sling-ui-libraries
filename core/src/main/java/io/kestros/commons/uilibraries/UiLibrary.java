@@ -104,7 +104,10 @@ public class UiLibrary extends BaseResource {
    * Returns the uncached ScriptType output.
    *
    * @param scriptType ScriptType to retrieve.
+   * @param minify Whether to minify the output.
    * @return The uncached ScriptType output.
+   * @throws InvalidResourceTypeException Thrown when a referenced dependency could not be
+   *     adapted to UiLibrary.
    */
   public String getOutput(final ScriptType scriptType, final boolean minify)
       throws InvalidResourceTypeException {

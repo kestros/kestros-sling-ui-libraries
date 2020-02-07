@@ -28,6 +28,9 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
+/**
+ * Renders JavaScript output for UiLibrary requests.
+ */
 @Component(service = Servlet.class,
            property = {"sling.servlet.resourceTypes=kestros/commons/ui-library",
                "sling.servlet.extensions=js", "sling.servlet.methods=GET",})

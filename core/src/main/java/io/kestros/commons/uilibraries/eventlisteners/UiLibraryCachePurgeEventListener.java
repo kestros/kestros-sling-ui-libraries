@@ -29,6 +29,9 @@ import org.apache.sling.api.resource.observation.ResourceChangeListener;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+/**
+ * Purges cached UiLibrary CSS and JavaScript on caches after changes under /apps, /etc, and /libs.
+ */
 @Component(service = ResourceChangeListener.class,
            property = {ResourceChangeListener.CHANGES + "=ADDED",
                ResourceChangeListener.CHANGES + "=CHANGED",

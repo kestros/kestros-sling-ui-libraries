@@ -37,6 +37,10 @@ import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Baseline Servlet for providing CSS or JavaScript output from {@link
+ * io.kestros.commons.uilibraries.UiLibrary} instances.
+ */
 public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
 
   private static final Logger LOG = LoggerFactory.getLogger(BaseUiLibraryServlet.class);

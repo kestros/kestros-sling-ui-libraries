@@ -31,6 +31,9 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Provides UiLibrary configuration values.
+ */
 @Component(immediate = true,
            service = UiLibraryConfigurationService.class)
 public class UiLibraryConfigurationService implements Serializable {

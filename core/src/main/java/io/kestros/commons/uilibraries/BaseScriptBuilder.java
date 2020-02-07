@@ -31,17 +31,32 @@ import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Baseline class used from building {@link ScriptType} output for {@link UiLibrary} Resources.
+ */
 public abstract class BaseScriptBuilder {
 
   private static final Logger LOG = LoggerFactory.getLogger(BaseScriptBuilder.class);
 
+  /**
+   * ScriptType associated to the ScriptBuilder implementation.
+   *
+   * @return ScriptType associated to the ScriptBuilder implementation.
+   */
   public abstract ScriptType getScriptType();
 
+  /**
+   * Retrieves script output from a UiLibrary. ScriptType is defined by {@link #getScriptType()}
+   *
+   * @param uiLibrary UiLibrary to get output from.
+   * @return Retrieves script output from a UiLibrary.
+   */
   public abstract String getOutput(UiLibrary uiLibrary);
 
   /**
    * Retrieves a List of files that the ScriptBuilder will use to built the Output.
    *
+   * @param uiLibrary UiLibrary to retrieve {@link ScriptFile} instances from.
    * @param <T> Class which extends BaseFile
    * @return All files that will be used to build the script output.
    */
@@ -68,6 +83,14 @@ public abstract class BaseScriptBuilder {
     return scriptStringBuilder.toString();
   }
 
+  /**
+   * Retrieves the root resource of the specified ScriptType.
+   *
+   * @param scriptType ScriptType
+   * @param uiLibrary UiLibrary to retrieve root resource from.
+   * @return The root resource of the specified ScriptType.
+   * @throws ChildResourceNotFoundException Expected root resource does not exist.
+   */
   public static BaseResource getScriptsRootResource(final ScriptType scriptType,
       final UiLibrary uiLibrary) throws ChildResourceNotFoundException {
     return getChildAsBaseResource(scriptType.getRootResourceName(), uiLibrary);

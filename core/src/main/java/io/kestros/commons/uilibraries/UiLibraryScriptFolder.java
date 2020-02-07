@@ -35,6 +35,10 @@ import org.apache.sling.models.annotations.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Folder Resource that contains CSS or JavaScript files, which are compiled into {@link UiLibrary}
+ * instances.
+ */
 @Model(adaptables = Resource.class)
 public class UiLibraryScriptFolder extends BaseResource {
 

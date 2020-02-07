@@ -19,6 +19,7 @@
 
 package io.kestros.commons.uilibraries.config;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
@@ -44,6 +45,9 @@ public class UiLibraryConfigurationFactory implements Serializable {
 
   private static final long serialVersionUID = -2062013416937224382L;
 
+  /**
+   * UiLibrary Configuration.
+   */
   @ObjectClassDefinition(name = "Kestros Commons UiLibrary Configuration Service Factory",
                          description = "Allows the configuration of UILibraries")
   public @interface Config {
@@ -61,6 +65,7 @@ public class UiLibraryConfigurationFactory implements Serializable {
 
   private static final Logger LOG = LoggerFactory.getLogger(UiLibraryConfigurationFactory.class);
 
+  @SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
   private transient Config config;
 
   /**

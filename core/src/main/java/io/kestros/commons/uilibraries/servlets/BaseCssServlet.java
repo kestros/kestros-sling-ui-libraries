@@ -21,6 +21,10 @@ package io.kestros.commons.uilibraries.servlets;
 
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
 
+/**
+ * Baseline Servlet for providing CSS output from {@link io.kestros.commons.uilibraries.UiLibrary}
+ * instances.
+ */
 public abstract class BaseCssServlet extends BaseUiLibraryServlet {
 
   private static final long serialVersionUID = 3589556577237220081L;
