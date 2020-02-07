@@ -24,6 +24,7 @@ import static io.kestros.commons.structuredslingmodels.utils.SlingModelUtils.get
 import static io.kestros.commons.structuredslingmodels.utils.SlingModelUtils.getResourceAsType;
 import static io.kestros.commons.uilibraries.filetypes.ScriptType.CSS;
 import static io.kestros.commons.uilibraries.filetypes.ScriptType.JAVASCRIPT;
+import static io.kestros.commons.uilibraries.utils.UiLibraryUtils.getCssScriptTypes;
 import static io.kestros.commons.uilibraries.utils.UiLibraryUtils.getScriptOutput;
 
 import io.kestros.commons.structuredslingmodels.BaseResource;
@@ -37,7 +38,6 @@ import io.kestros.commons.uilibraries.filetypes.ScriptFile;
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
 import io.kestros.commons.uilibraries.filetypes.javascript.JavaScriptFile;
 import io.kestros.commons.uilibraries.services.minification.UiLibraryMinificationService;
-import io.kestros.commons.uilibraries.utils.UiLibraryUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -167,7 +167,7 @@ public class UiLibrary extends BaseResource {
 
     try {
       for (final BaseResource cssScriptResource : getCssScriptsFolder().getScriptFiles()) {
-        for (final ScriptType cssScriptType : UiLibraryUtils.getCssScriptTypes()) {
+        for (final ScriptType cssScriptType : getCssScriptTypes()) {
           try {
             adaptToFileType(cssScriptResource, cssScriptType.getFileModelClass());
           } catch (final InvalidResourceTypeException exception) {
@@ -176,10 +176,11 @@ public class UiLibrary extends BaseResource {
         }
       }
     } catch (final ChildResourceNotFoundException exception) {
-      // TODO log.
+      LOG.warn("Unable to determine supported css script files for {}. {}", getPath(),
+          exception.getMessage());
     }
 
-    for (final ScriptType scriptType : UiLibraryUtils.getCssScriptTypes()) {
+    for (final ScriptType scriptType : getCssScriptTypes()) {
       if (!unsupportedCssScriptTypes.contains(scriptType)) {
         supportableCssScriptTypes.add(scriptType);
       }
