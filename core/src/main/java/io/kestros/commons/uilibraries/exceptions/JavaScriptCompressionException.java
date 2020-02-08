@@ -24,6 +24,8 @@ package io.kestros.commons.uilibraries.exceptions;
  */
 public class JavaScriptCompressionException extends ScriptCompressionException {
 
+  private static final long serialVersionUID = -7923786135685423594L;
+
   /**
    * Exception thrown when JavaScript output failed to be minified/compressed.
    *

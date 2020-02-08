@@ -26,6 +26,8 @@ import io.kestros.commons.uilibraries.filetypes.ScriptType;
  */
 public class ScriptCompressionException extends Exception {
 
+  private static final long serialVersionUID = -5571650926731874503L;
+
   /**
    * Generic Exception thrown when CSS or JavaScript output failed to minify/compress.
    *
