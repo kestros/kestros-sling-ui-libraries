@@ -24,6 +24,8 @@ package io.kestros.commons.uilibraries.exceptions;
  */
 public class CssCompressionException extends ScriptCompressionException {
 
+  private static final long serialVersionUID = 8486128711415674952L;
+
   /**
    * Exception thrown when CSS output failed to be minified/compressed.
    *

@@ -55,15 +55,16 @@ public class BaseUiLibraryCacheService extends JcrFileCacheService
   private static final Logger LOG = LoggerFactory.getLogger(BaseUiLibraryCacheService.class);
 
   private static final String UI_LIBRARY_CACHE_PURGE_SERVICE_USER = "ui-library-cache-service";
+  private static final long serialVersionUID = 8442978263338882415L;
 
   @Reference
-  private ResourceResolverFactory resourceResolverFactory;
+  private transient ResourceResolverFactory resourceResolverFactory;
 
   @Reference
-  private ModelFactory modelFactory;
+  private transient ModelFactory modelFactory;
 
   @Reference
-  private JobManager jobManager;
+  private transient JobManager jobManager;
 
   @Override
   public JobManager getJobManager() {
