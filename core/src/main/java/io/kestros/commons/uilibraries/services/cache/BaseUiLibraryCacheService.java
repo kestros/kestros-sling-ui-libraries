@@ -58,13 +58,13 @@ public class BaseUiLibraryCacheService extends JcrFileCacheService
   private static final long serialVersionUID = 8442978263338882415L;
 
   @Reference
-  private transient ResourceResolverFactory resourceResolverFactory;
+  private ResourceResolverFactory resourceResolverFactory;
 
   @Reference
-  private transient ModelFactory modelFactory;
+  private ModelFactory modelFactory;
 
   @Reference
-  private transient JobManager jobManager;
+  private JobManager jobManager;
 
   @Override
   public JobManager getJobManager() {
