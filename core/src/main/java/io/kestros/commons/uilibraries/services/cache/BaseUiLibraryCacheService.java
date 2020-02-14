@@ -22,6 +22,7 @@ package io.kestros.commons.uilibraries.services.cache;
 import static io.kestros.commons.structuredslingmodels.utils.SlingModelUtils.getResourceAsBaseResource;
 import static io.kestros.commons.structuredslingmodels.utils.SlingModelUtils.getResourceAsClosestType;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.kestros.commons.osgiserviceutils.exceptions.CacheBuilderException;
 import io.kestros.commons.osgiserviceutils.exceptions.CacheRetrievalException;
 import io.kestros.commons.osgiserviceutils.services.cache.ManagedCacheService;
@@ -57,12 +58,15 @@ public class BaseUiLibraryCacheService extends JcrFileCacheService
   private static final String UI_LIBRARY_CACHE_PURGE_SERVICE_USER = "ui-library-cache-service";
   private static final long serialVersionUID = 8442978263338882415L;
 
+  @SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
   @Reference
   private transient ResourceResolverFactory resourceResolverFactory;
 
+  @SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
   @Reference
   private transient ModelFactory modelFactory;
 
+  @SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
   @Reference
   private transient JobManager jobManager;
 

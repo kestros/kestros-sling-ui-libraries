@@ -69,7 +69,7 @@ public class UiLibraryScriptFolder extends BaseResource {
       try {
         scriptFiles.add(getChildAsFileType(scriptPath, this, scriptType.getFileModelClass()));
       } catch (final ChildResourceNotFoundException | InvalidResourceTypeException exception) {
-        LOG.warn("Unable to retrieve {} script files for {}. {}", scriptType.getName(), getPath(),
+        LOG.debug("Unable to retrieve {} script files for {}. {}", scriptType.getName(), getPath(),
             exception.getMessage());
       }
     }
@@ -83,7 +83,7 @@ public class UiLibraryScriptFolder extends BaseResource {
       try {
         scriptFiles.add(getChildAsBaseResource(scriptPath, this));
       } catch (final ChildResourceNotFoundException exception) {
-        LOG.warn("Unable to retrieve script file resource {} for {}. {}", scriptPath, getPath(),
+        LOG.debug("Unable to retrieve script file resource {} for {}. {}", scriptPath, getPath(),
             exception.getMessage());
       }
     }

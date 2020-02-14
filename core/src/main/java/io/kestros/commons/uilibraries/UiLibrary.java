@@ -179,7 +179,7 @@ public class UiLibrary extends BaseResource {
         }
       }
     } catch (final ChildResourceNotFoundException exception) {
-      LOG.warn("Unable to determine supported css script files for {}. {}", getPath(),
+      LOG.debug("Unable to determine supported css script files for {}. {}", getPath(),
           exception.getMessage());
     }
 
