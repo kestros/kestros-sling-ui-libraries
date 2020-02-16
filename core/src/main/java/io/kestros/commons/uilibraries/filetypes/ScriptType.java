@@ -103,7 +103,7 @@ public enum ScriptType implements FileType {
   }
 
   /**
-   * {@link BaseScriptBuilder} to associate with a ScriptType
+   * {@link BaseScriptBuilder} to associate with a ScriptType.
    *
    * @param <T> Extends {@link BaseScriptBuilder}
    * @return {@link BaseScriptBuilder} to associate with a ScriptType

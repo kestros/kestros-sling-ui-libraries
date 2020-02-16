@@ -107,7 +107,8 @@ public class BaseUiLibraryCacheService extends JcrFileCacheService
     try {
       return getCachedFile(uiLibrary.getPath() + getScriptFileSuffix(scriptType, minified),
           scriptType.getFileModelClass()).getOutput();
-    } catch (final IOException | ResourceNotFoundException | InvalidResourceTypeException exception) {
+    } catch (final IOException | ResourceNotFoundException
+                               | InvalidResourceTypeException exception) {
       throw new CacheRetrievalException(exception.getMessage());
     }
 
