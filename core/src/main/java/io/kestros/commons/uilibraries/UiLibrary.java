@@ -55,7 +55,7 @@ import org.slf4j.LoggerFactory;
  */
 @StructuredModel(validationService = UiLibraryValidationService.class)
 @Model(adaptables = Resource.class,
-       resourceType = "kestros/commons/ui-library")
+       resourceType = "kes:UiLibrary")
 public class UiLibrary extends BaseResource {
 
   private static final Logger LOG = LoggerFactory.getLogger(UiLibrary.class);

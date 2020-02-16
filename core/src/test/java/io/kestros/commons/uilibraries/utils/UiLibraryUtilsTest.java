@@ -56,7 +56,7 @@ public class UiLibraryUtilsTest {
 
   @Test
   public void testGetCompiledUiLibraryOutputWhenLess() {
-    uiLibraryProperties.put("sling:resourceType", "kestros/commons/ui-library");
+    uiLibraryProperties.put("jcr:primaryType", "kes:UiLibrary");
     cssRootProperties.put("include", "my-less.less");
     fileProperties.put("jcr:primaryType", "nt:file");
 
@@ -98,7 +98,7 @@ public class UiLibraryUtilsTest {
 
   @Test
   public void testGetCompiledUiLibraryOutputWhenLessWhenScripFilesHaveMultiplePeriods() {
-    uiLibraryProperties.put("sling:resourceType", "kestros/commons/ui-library");
+    uiLibraryProperties.put("jcr:primaryType", "kes:UiLibrary");
     cssRootProperties.put("include", "my-less.test.less");
     fileProperties.put("jcr:primaryType", "nt:file");
 
@@ -140,7 +140,7 @@ public class UiLibraryUtilsTest {
 
   @Test
   public void testGetCompiledUiLibraryOutputWhenCss() {
-    uiLibraryProperties.put("sling:resourceType", "kestros/commons/ui-library");
+    uiLibraryProperties.put("jcr:primaryType", "kes:UiLibrary");
     cssRootProperties.put("include", "my-css.css");
     fileProperties.put("jcr:primaryType", "nt:file");
 
@@ -165,7 +165,7 @@ public class UiLibraryUtilsTest {
 
   @Test
   public void testGetCompiledUiLibraryOutputWhenJavaScript() {
-    uiLibraryProperties.put("sling:resourceType", "kestros/commons/ui-library");
+    uiLibraryProperties.put("jcr:primaryType", "kes:UiLibrary");
     cssRootProperties.put("include", "my-javascript.js");
     fileProperties.put("jcr:primaryType", "nt:file");
 
@@ -190,7 +190,7 @@ public class UiLibraryUtilsTest {
 
   @Test
   public void testGetUncompiledUiLibraryOutputWhenLess() {
-    uiLibraryProperties.put("sling:resourceType", "kestros/commons/ui-library");
+    uiLibraryProperties.put("jcr:primaryType", "kes:UiLibrary");
     cssRootProperties.put("include", "my-less.less");
     fileProperties.put("jcr:primaryType", "nt:file");
 

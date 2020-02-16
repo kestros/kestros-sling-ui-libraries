@@ -33,8 +33,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(immediate = true,
            service = Servlet.class,
-           property = {"sling.servlet.resourceTypes=kestros/commons/ui-library",
-               "sling.servlet.extensions=css", "sling.servlet.methods=GET",})
+           property = {"sling.servlet.resourceTypes=kes:UiLibrary", "sling.servlet.extensions=css",
+               "sling.servlet.methods=GET",})
 public class UiLibraryCssServlet extends BaseCssServlet {
 
   private static final long serialVersionUID = -1932666508054420750L;
