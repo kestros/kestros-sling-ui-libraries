@@ -1,7 +1,7 @@
 # Kestros UI Libraries
+UiLibraries are managed compilations of CSS and JavaScript files that can be included on Sling resources.
 
 ## Creating UI Libraries
-
 
 Root level resource
 ```
@@ -17,7 +17,7 @@ CSS Script Folder
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
   jcr:primaryType="sling:Folder"
-  include="[my-scripts.less]"/>
+  include="[script-1.less,script-2.less]"/>
 ```
 
 JavaScript Script Folder
@@ -25,12 +25,11 @@ JavaScript Script Folder
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
   jcr:primaryType="sling:Folder"
-  include="[my-scripts.js]"/>
+  include="[script-1.js,script-2.js]"/>
 ```
 
 
 ## Include UiLibrary Scripts
-
 
 ### JavaScript
 ```
