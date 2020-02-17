@@ -118,7 +118,10 @@ public class BaseUiLibraryCacheService extends JcrFileCacheService
   public void cacheUiLibraryScripts(@Nonnull final UiLibrary uiLibrary,
       final boolean cacheMinified) {
     LOG.info("Caching CSS/JS scripts for {}.", uiLibrary.getPath());
-    for (final ScriptType supportedScriptType : uiLibrary.getSupportedScriptTypes()) {
+    for (ScriptType supportedScriptType : uiLibrary.getSupportedScriptTypes()) {
+      if (supportedScriptType == ScriptType.LESS) {
+        supportedScriptType = ScriptType.CSS;
+      }
       try {
         cacheOutput(uiLibrary, supportedScriptType, false);
       } catch (final CacheBuilderException exception) {
