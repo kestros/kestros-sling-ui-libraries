@@ -60,7 +60,8 @@ public class UiLibraryConfigurationFactory implements Serializable {
     @AttributeDefinition(name = "Minified UI Library Paths",
                          description = "Path to UI Libraries to be "
                                        + "automatically minified. Requests without the `.min` "
-                                       + "selector will be minified,") String[] minifiedLibraryPaths() default {};
+                                       + "selector will be minified,")
+    String[] minifiedLibraryPaths() default {};
   }
 
   private static final Logger LOG = LoggerFactory.getLogger(UiLibraryConfigurationFactory.class);
