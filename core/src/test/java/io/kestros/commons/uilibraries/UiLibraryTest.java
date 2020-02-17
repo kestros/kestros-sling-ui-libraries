@@ -64,7 +64,7 @@ public class UiLibraryTest {
   @Before
   public void setUp() throws Exception {
     context.addModelsForPackage("io.kestros.commons.uilibraries");
-    properties.put("sling:resourceType", "kestros/commons/ui-library");
+    properties.put("jcr:primaryType", "kes:UiLibrary");
 
     uiLibraryCacheService = mock(UiLibraryCacheService.class);
     minificationService = new BaseUiLibraryMinificationService();

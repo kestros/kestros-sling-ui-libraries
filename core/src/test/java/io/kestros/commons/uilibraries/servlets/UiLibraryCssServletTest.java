@@ -88,7 +88,7 @@ public class UiLibraryCssServletTest {
   public void testDoGet() throws Exception {
     context.registerService(UiLibraryCacheService.class, uiLibraryCacheService);
 
-    properties.put("sling:resourceType", "kestros/commons/ui-library");
+    properties.put("jcr:primaryType", "kes:UiLibrary");
 
     final Resource resource = context.create().resource("/ui-library", properties);
 
@@ -116,7 +116,7 @@ public class UiLibraryCssServletTest {
     doThrow(CacheBuilderException.class).when(uiLibraryCacheService).cacheUiLibraryScripts(
         anyString(), anyBoolean());
 
-    properties.put("sling:resourceType", "kestros/commons/ui-library");
+    properties.put("jcr:primaryType", "kes:UiLibrary");
 
     final Resource resource = context.create().resource("/ui-library", properties);
 
@@ -149,7 +149,7 @@ public class UiLibraryCssServletTest {
   @Test
   public void testDoGetWhenNoValueIsCached() throws Exception {
     context.registerService(UiLibraryCacheService.class, uiLibraryCacheService);
-    properties.put("sling:resourceType", "kestros/commons/ui-library");
+    properties.put("jcr:primaryType", "kes:UiLibrary");
 
     final Resource resource = context.create().resource("/ui-library", properties);
     cssFolderProperties.put("include", new String[]{"file.css"});
@@ -180,7 +180,7 @@ public class UiLibraryCssServletTest {
 
   @Test
   public void testDoGetWhenNoUiLibraryCacheService() throws Exception {
-    properties.put("sling:resourceType", "kestros/commons/ui-library");
+    properties.put("jcr:primaryType", "kes:UiLibrary");
 
     final Resource resource = context.create().resource("/ui-library", properties);
     cssFolderProperties.put("include", new String[]{"file.css"});
@@ -229,7 +229,7 @@ public class UiLibraryCssServletTest {
     when(uiLibraryCacheService.getCachedOutput(any(), any(), anyBoolean())).thenThrow(
         CacheRetrievalException.class);
 
-    properties.put("sling:resourceType", "kestros/commons/ui-library");
+    properties.put("jcr:primaryType", "kes:UiLibrary");
 
     final Resource resource = context.create().resource("/ui-library", properties);
 
@@ -265,7 +265,7 @@ public class UiLibraryCssServletTest {
     when(uiLibraryCacheService.getCachedOutput(any(), any(), anyBoolean())).thenThrow(
         CacheRetrievalException.class);
 
-    properties.put("sling:resourceType", "kestros/commons/ui-library");
+    properties.put("jcr:primaryType", "kes:UiLibrary");
 
     final Resource resource = context.create().resource("/ui-library", properties);
 

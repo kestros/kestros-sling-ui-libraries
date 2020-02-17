@@ -61,7 +61,7 @@ public class UiLibraryValidationServiceTest {
     uiLibraryValidationService = spy(new UiLibraryValidationService());
     fileProperties.put("jcr:primaryType", "nt:file");
 
-    properties.put("sling:resourceType", "kestros/commons/ui-library");
+    properties.put("jcr:primaryType", "kes:UiLibrary");
     properties.put("jcr:title", "title");
     properties.put("jcr:description", "description");
   }
