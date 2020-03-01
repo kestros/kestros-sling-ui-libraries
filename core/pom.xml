@@ -47,7 +47,7 @@
     <!-- Structured Resource Models -->
     <dependency>
       <groupId>io.kestros.commons</groupId>
-      <artifactId>structured-sling-models</artifactId>
+      <artifactId>kestros-structured-sling-models</artifactId>
     </dependency>
     <!-- OSGI Service Utils -->
     <dependency>
