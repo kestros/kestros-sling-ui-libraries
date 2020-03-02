@@ -31,7 +31,7 @@
   </parent>
 
   <groupId>io.kestros.commons</groupId>
-  <artifactId>ui-libraries</artifactId>
+  <artifactId>kestros-sling-ui-libraries</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
   <name>Kestros Commons - UI Libraries</name>
@@ -51,7 +51,7 @@
     <dependencies>
       <dependency>
         <groupId>io.kestros.commons</groupId>
-        <artifactId>structured-sling-models</artifactId>
+        <artifactId>kestros-structured-sling-models</artifactId>
         <version>0.0.2</version>
       </dependency>
       <dependency>

@@ -29,7 +29,7 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ui-libraries-frontend</artifactId>
+  <artifactId>kestros-sling-ui-libraries-frontend</artifactId>
 
   <name>Kestros Commons - UI Libraries Frontend Package</name>
   <description>Package that installs the UI Libraries Bundle, and provides HTL templates for adding

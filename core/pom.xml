@@ -29,11 +29,11 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ui-libraries-core</artifactId>
+  <artifactId>kestros-sling-ui-libraries-core</artifactId>
 
   <packaging>bundle</packaging>
 
-  <name>Kestros Commons - UI Libraries Bundle</name>
+  <name>Kestros Commons - Sling UI Libraries Bundle</name>
   <description>Bundle that provides Models for adapting resources to UiLibraries, and provides CSS
     and JS output.
   </description>
@@ -47,7 +47,7 @@
     <!-- Structured Resource Models -->
     <dependency>
       <groupId>io.kestros.commons</groupId>
-      <artifactId>structured-sling-models</artifactId>
+      <artifactId>kestros-structured-sling-models</artifactId>
     </dependency>
     <!-- OSGI Service Utils -->
     <dependency>
