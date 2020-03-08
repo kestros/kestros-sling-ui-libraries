@@ -25,11 +25,11 @@
 
   <parent>
     <groupId>io.kestros.commons</groupId>
-    <artifactId>ui-libraries</artifactId>
-    <version>0.0.1</version>
+    <artifactId>kestros-sling-ui-libraries</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ui-libraries-frontend</artifactId>
+  <artifactId>kestros-sling-ui-libraries-frontend</artifactId>
 
   <name>Kestros Commons - UI Libraries Frontend Package</name>
   <description>Package that installs the UI Libraries Bundle, and provides HTL templates for adding

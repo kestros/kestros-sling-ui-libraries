@@ -18,28 +18,11 @@
   ~ under the License.
   -->
 
-<workspaceFilter version="1.0">
-
-  <filter root="/home/users/system/ui-libraries"/>
-
-  <filter root="/apps">
-    <exclude pattern="/apps/.*"/>
-  </filter>
-
-  <filter root="/etc">
-    <exclude pattern="/etc/.*"/>
-  </filter>
-
-  <filter root="/libs">
-    <exclude pattern="/libs/.*"/>
-  </filter>
-
-  <filter root="/var/cache/ui-libraries"/>
-
-  <filter root="/libs/kestros/commons/ui-libraries.html"/>
-
-  <filter
-    root="/libs/kestros/commons/config/org.apache.sling.serviceusermapping.impl.ServiceUserMapperImpl.amended-ui-library-manager"
-    mode="update"/>
-
-</workspaceFilter>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:rep="internal"
+  jcr:primaryType="rep:ACL">
+  <allow-ui-library-manager
+    jcr:primaryType="rep:GrantACE"
+    rep:principalName="ui-library-manager"
+    rep:privileges="{Name}[jcr:read]">
+  </allow-ui-library-manager>
+</jcr:root>

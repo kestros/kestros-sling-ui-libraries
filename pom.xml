@@ -26,13 +26,13 @@
   <parent>
     <groupId>io.kestros.commons</groupId>
     <artifactId>kestros-parent-strict</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.5</version>
     <relativePath/>
   </parent>
 
   <groupId>io.kestros.commons</groupId>
-  <artifactId>ui-libraries</artifactId>
-  <version>0.0.1</version>
+  <artifactId>kestros-sling-ui-libraries</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
 
   <name>Kestros Commons - UI Libraries</name>
   <description>Provides UI Libraries to Sling instances, which are used for maintaining and
@@ -51,8 +51,8 @@
     <dependencies>
       <dependency>
         <groupId>io.kestros.commons</groupId>
-        <artifactId>structured-sling-models</artifactId>
-        <version>0.0.2-SNAPSHOT</version>
+        <artifactId>kestros-structured-sling-models</artifactId>
+        <version>0.0.2</version>
       </dependency>
       <dependency>
         <groupId>io.kestros.commons</groupId>

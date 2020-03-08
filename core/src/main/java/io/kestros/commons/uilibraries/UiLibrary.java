@@ -28,7 +28,7 @@ import static io.kestros.commons.uilibraries.utils.UiLibraryUtils.getCssScriptTy
 import static io.kestros.commons.uilibraries.utils.UiLibraryUtils.getScriptOutput;
 
 import io.kestros.commons.structuredslingmodels.BaseResource;
-import io.kestros.commons.structuredslingmodels.annotation.StructuredModel;
+import io.kestros.commons.structuredslingmodels.annotation.KestrosModel;
 import io.kestros.commons.structuredslingmodels.exceptions.ChildResourceNotFoundException;
 import io.kestros.commons.structuredslingmodels.exceptions.InvalidResourceTypeException;
 import io.kestros.commons.structuredslingmodels.exceptions.ModelAdaptionException;
@@ -53,7 +53,7 @@ import org.slf4j.LoggerFactory;
  * Resource Model used to proved css and js output.  `css` and `js` folders should exist as
  * children.
  */
-@StructuredModel(validationService = UiLibraryValidationService.class)
+@KestrosModel(validationService = UiLibraryValidationService.class)
 @Model(adaptables = Resource.class,
        resourceType = "kes:UiLibrary")
 public class UiLibrary extends BaseResource {
