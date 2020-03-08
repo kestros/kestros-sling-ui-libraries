@@ -22,7 +22,7 @@ package io.kestros.commons.uilibraries.filetypes.less;
 import static io.kestros.commons.uilibraries.filetypes.ScriptType.LESS;
 
 import io.kestros.commons.structuredslingmodels.BaseResource;
-import io.kestros.commons.structuredslingmodels.annotation.StructuredModel;
+import io.kestros.commons.structuredslingmodels.annotation.KestrosModel;
 import io.kestros.commons.structuredslingmodels.exceptions.ModelAdaptionException;
 import io.kestros.commons.structuredslingmodels.filetypes.FileType;
 import io.kestros.commons.structuredslingmodels.utils.FileModelUtils;
@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Sling Model for .less files.
  */
-@StructuredModel(validationService = LessFileValidationService.class)
+@KestrosModel(validationService = LessFileValidationService.class)
 @Model(adaptables = Resource.class,
        resourceType = "nt:file")
 public class LessFile extends ScriptFile {
