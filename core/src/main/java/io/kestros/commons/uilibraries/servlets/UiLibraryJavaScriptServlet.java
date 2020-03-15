@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(service = Servlet.class,
            property = {"sling.servlet.resourceTypes=kes:UiLibrary", "sling.servlet.extensions=js",
-               "sling.servlet.methods=GET",})
+               "sling.servlet.methods=GET"})
 public class UiLibraryJavaScriptServlet extends BaseJavaScriptServlet {
 
   private static final long serialVersionUID = 60099830019763308L;

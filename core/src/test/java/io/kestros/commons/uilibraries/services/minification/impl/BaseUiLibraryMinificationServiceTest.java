@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package io.kestros.commons.uilibraries.services.minification;
+package io.kestros.commons.uilibraries.services.minification.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

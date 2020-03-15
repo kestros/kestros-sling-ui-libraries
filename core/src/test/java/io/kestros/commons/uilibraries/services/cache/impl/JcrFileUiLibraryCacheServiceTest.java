@@ -17,16 +17,15 @@
  * under the License.
  */
 
-package io.kestros.commons.uilibraries.services.cache;
+package io.kestros.commons.uilibraries.services.cache.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 
+import io.kestros.commons.osgiserviceutils.exceptions.CacheRetrievalException;
 import io.kestros.commons.uilibraries.UiLibrary;
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
-import io.kestros.commons.osgiserviceutils.exceptions.CacheRetrievalException;
-import io.kestros.commons.uilibraries.services.cache.impl.JcrFileUiLibraryCacheService;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.sling.api.resource.Resource;
@@ -88,10 +87,10 @@ public class JcrFileUiLibraryCacheServiceTest {
     resource = context.create().resource("/etc/ui-library", uiLibraryProperties);
 
     uiLibrary = resource.adaptTo(UiLibrary.class);
-    cacheService.cacheUiLibraryScripts(uiLibrary, true, "test");
+    cacheService.cacheUiLibraryScripts(uiLibrary, true);
     assertNotNull(
         context.resourceResolver().getResource("/var/cache/ui-libraries/etc/ui-library.css"));
-    assertEquals("test", cacheService.getCachedOutput(uiLibrary, ScriptType.CSS, true));
+    assertEquals("", cacheService.getCachedOutput(uiLibrary, ScriptType.CSS, true));
   }
 
   @Test
@@ -99,7 +98,7 @@ public class JcrFileUiLibraryCacheServiceTest {
     resource = context.create().resource("/etc/ui-library", uiLibraryProperties);
 
     uiLibrary = resource.adaptTo(UiLibrary.class);
-    cacheService.cacheUiLibraryScripts(uiLibrary, true, "test");
+    cacheService.cacheUiLibraryScripts(uiLibrary, true);
     assertNotNull(
         context.resourceResolver().getResource("/var/cache/ui-libraries/etc/ui-library.css"));
   }
@@ -108,8 +107,11 @@ public class JcrFileUiLibraryCacheServiceTest {
   @Test
   public void testGetScriptFileSuffix() {
     assertEquals(".css", JcrFileUiLibraryCacheService.getScriptFileSuffix(ScriptType.CSS, false));
-    assertEquals(".min.css", JcrFileUiLibraryCacheService.getScriptFileSuffix(ScriptType.CSS, true));
-    assertEquals(".js", JcrFileUiLibraryCacheService.getScriptFileSuffix(ScriptType.JAVASCRIPT, false));
-    assertEquals(".min.js", JcrFileUiLibraryCacheService.getScriptFileSuffix(ScriptType.JAVASCRIPT, true));
+    assertEquals(".min.css",
+        JcrFileUiLibraryCacheService.getScriptFileSuffix(ScriptType.CSS, true));
+    assertEquals(".js",
+        JcrFileUiLibraryCacheService.getScriptFileSuffix(ScriptType.JAVASCRIPT, false));
+    assertEquals(".min.js",
+        JcrFileUiLibraryCacheService.getScriptFileSuffix(ScriptType.JAVASCRIPT, true));
   }
 }
