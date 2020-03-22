@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package io.kestros.commons.uilibraries.services.minification;
+package io.kestros.commons.uilibraries.services.minification.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -26,6 +26,7 @@ import io.kestros.commons.uilibraries.exceptions.CssCompressionException;
 import io.kestros.commons.uilibraries.exceptions.JavaScriptCompressionException;
 import io.kestros.commons.uilibraries.exceptions.ScriptCompressionException;
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
+import io.kestros.commons.uilibraries.services.minification.impl.BaseUiLibraryMinificationService;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;

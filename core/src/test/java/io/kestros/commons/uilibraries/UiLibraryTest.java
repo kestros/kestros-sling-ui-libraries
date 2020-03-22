@@ -28,7 +28,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
 import io.kestros.commons.uilibraries.services.cache.UiLibraryCacheService;
-import io.kestros.commons.uilibraries.services.minification.BaseUiLibraryMinificationService;
+import io.kestros.commons.uilibraries.services.minification.impl.BaseUiLibraryMinificationService;
 import io.kestros.commons.uilibraries.services.minification.UiLibraryMinificationService;
 import io.kestros.commons.osgiserviceutils.exceptions.CacheRetrievalException;
 import io.kestros.commons.structuredslingmodels.exceptions.InvalidResourceTypeException;
