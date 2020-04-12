@@ -48,7 +48,7 @@ public enum ScriptType implements FileType {
   private final String outputContentType;
   private final List<String> readableContentTypes;
   private final String extension;
-  private final Class scriptFileType;
+  private final Class<?> scriptFileType;
   private BaseScriptBuilder scriptBuilder;
 
   <T extends BaseScriptBuilder, S extends ScriptFile> ScriptType(final String name,
@@ -116,6 +116,6 @@ public enum ScriptType implements FileType {
   @Nonnull
   @Override
   public <T extends BaseFile> Class<T> getFileModelClass() {
-    return this.scriptFileType;
+    return (Class<T>) this.scriptFileType;
   }
 }

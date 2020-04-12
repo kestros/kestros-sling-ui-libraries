@@ -49,6 +49,7 @@ public interface UiLibraryCacheService extends CacheService {
    * @param cacheMinified Whether to cache minified scripts.
    * @throws CacheBuilderException Cache failed to build for specified UiLibrary.
    */
+  @SuppressWarnings("RedundantThrows")
   void cacheUiLibraryScripts(UiLibrary uiLibrary, boolean cacheMinified)
       throws CacheBuilderException;
 

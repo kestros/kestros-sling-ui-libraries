@@ -107,7 +107,7 @@ public class JcrFileUiLibraryCacheService extends JcrFileCacheService
 
     try {
       return getCachedFile(uiLibrary.getPath() + getScriptFileSuffix(scriptType, minified),
-          scriptType.getFileModelClass()).getOutput();
+          scriptType.getFileModelClass()).getFileContent();
     } catch (final IOException | ResourceNotFoundException
                                | InvalidResourceTypeException exception) {
       throw new CacheRetrievalException(exception.getMessage());
@@ -139,7 +139,7 @@ public class JcrFileUiLibraryCacheService extends JcrFileCacheService
     }
   }
 
-
+  @SuppressWarnings("unused")
   @Override
   public void cacheUiLibraryScripts(final String uiLibraryPath, final boolean cacheMinified)
       throws CacheBuilderException {
