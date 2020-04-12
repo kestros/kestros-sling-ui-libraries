@@ -44,6 +44,7 @@ public class ScriptCompressionException extends Exception {
    * @param scriptType CSS or JavaScript Type.
    * @param message Cause message.
    */
+  @SuppressWarnings("unused")
   public ScriptCompressionException(final String resourcePath, final ScriptType scriptType,
       final String message) {
     super(String.format("Unable to compress %s script for '%s'. %s.", scriptType.getName(),

@@ -100,7 +100,7 @@ public abstract class BaseScriptBuilder {
   private <T extends ScriptFile> void appendFileOutputToStringBuilder(final T file,
       final StringBuilder stringBuilder) {
     try {
-      stringBuilder.append(file.getOutput());
+      stringBuilder.append(file.getFileContent());
       stringBuilder.append("\n");
     } catch (final IOException exception) {
       LOG.error("Unable to append {} file {} to UiLibrary output due to IOException",

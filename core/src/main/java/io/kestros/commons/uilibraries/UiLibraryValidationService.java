@@ -90,7 +90,7 @@ public class UiLibraryValidationService extends ModelValidationService {
         if (CSS.equals(scriptType)) {
           try {
             return getModel().getCssScriptFiles().size()
-                   == getModel().getCssScriptsFolder().getIncludedScriptNames().length;
+                   == getModel().getCssScriptsFolder().getIncludedScriptNames().size();
           } catch (final ChildResourceNotFoundException e) {
             return true;
           }
@@ -98,7 +98,7 @@ public class UiLibraryValidationService extends ModelValidationService {
         if (JAVASCRIPT.equals(scriptType)) {
           try {
             return getModel().getJavaScriptScriptFiles().size()
-                   == getModel().getJavaScriptScriptsFolder().getIncludedScriptNames().length;
+                   == getModel().getJavaScriptScriptsFolder().getIncludedScriptNames().size();
           } catch (final ChildResourceNotFoundException e) {
             return true;
           }

@@ -61,7 +61,7 @@ public class LessScriptBuilder extends CssScriptBuilder {
     for (final ScriptFile scriptFile : scriptFiles) {
       try {
         final LessFile lessFile = adaptToFileType(scriptFile, LessFile.class);
-        builder.append(lessFile.getOutput());
+        builder.append(lessFile.getFileContent());
       } catch (final InvalidResourceTypeException e) {
         LOG.warn("Unable to add script file {} to uiLibrary {}. {}", scriptFile.getPath(),
             uiLibrary.getPath(), e.getMessage());

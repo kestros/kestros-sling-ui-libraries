@@ -122,7 +122,7 @@ public class CssScriptBuilderTest {
     final List<CssFile> cssFileList = new ArrayList<>();
 
     final CssFile mockCssFile = spy(new CssFile());
-    doThrow(new IOException()).when(mockCssFile).getOutput();
+    doThrow(new IOException()).when(mockCssFile).getFileContent();
     doReturn("mock-css-file.css").when(mockCssFile).getName();
 
     cssFileList.add(cssFileResource.adaptTo(CssFile.class));

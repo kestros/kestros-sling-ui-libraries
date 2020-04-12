@@ -28,8 +28,11 @@ import io.kestros.commons.structuredslingmodels.exceptions.InvalidResourceTypeEx
 import io.kestros.commons.uilibraries.filetypes.ScriptFile;
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import javax.annotation.Nonnull;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Model;
 import org.slf4j.Logger;
@@ -52,8 +55,12 @@ public class UiLibraryScriptFolder extends BaseResource {
    * @return Filenames included script files.
    */
   @Nonnull
-  public String[] getIncludedScriptNames() {
-    return getProperty(PROPERTY_INCLUDE, new String[]{});
+  public List<String> getIncludedScriptNames() {
+    String[] includedScriptNames = getProperty(PROPERTY_INCLUDE, ArrayUtils.EMPTY_STRING_ARRAY);
+    if (includedScriptNames != null) {
+      return Arrays.asList(includedScriptNames);
+    }
+    return Collections.EMPTY_LIST;
   }
 
   /**

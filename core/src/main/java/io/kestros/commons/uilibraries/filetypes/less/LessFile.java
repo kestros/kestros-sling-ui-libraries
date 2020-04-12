@@ -51,7 +51,7 @@ public class LessFile extends ScriptFile {
   }
 
   @Override
-  public String getOutput() {
+  public String getFileContent() {
     final StringBuilder builder = new StringBuilder();
 
     final BufferedReader bufferedReader = getBufferedReader();
@@ -85,7 +85,7 @@ public class LessFile extends ScriptFile {
       final LessFile importedFile = FileModelUtils.getChildAsFileType(filename, parentResource,
           LessFile.class);
 
-      line = importedFile.getOutput();
+      line = importedFile.getFileContent();
     } catch (final ModelAdaptionException exception) {
       LOG.error("Unable to import Less script {} for {}. {}", filename, getPath(),
           exception.getMessage());

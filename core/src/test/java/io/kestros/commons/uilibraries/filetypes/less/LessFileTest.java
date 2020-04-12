@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.junit.SlingContext;
 import org.junit.Before;
@@ -56,23 +57,23 @@ public class LessFileTest {
   private final Map<String, Object> importedContentProperties = new HashMap<>();
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     context.addModelsForPackage("io.kestros.commons.uilibraries");
   }
 
   @Test
-  public void testValidate() throws Exception {
+  public void testValidate() {
     resource = context.create().resource("/my-less.less");
 
     lessFile = resource.adaptTo(LessFile.class);
 
-    assertEquals(0, lessFile.getErrorMessages().size());
+    assertEquals(0, Objects.requireNonNull(lessFile).getErrorMessages().size());
     assertEquals(0, lessFile.getWarningMessages().size());
     assertEquals(0, lessFile.getInfoMessages().size());
   }
 
   @Test
-  public void testGetOutputWithImportsResolved() throws Exception {
+  public void testGetOutputWithImportsResolved() {
     fileProperties.put("jcr:primaryType", "nt:file");
 
     final InputStream importerInputStream = new ByteArrayInputStream(
@@ -91,8 +92,8 @@ public class LessFileTest {
 
     lessFile = resource.adaptTo(LessFile.class);
 
-    assertEquals(ScriptType.LESS, lessFile.getFileType());
-    assertEquals("body{\n" + "div{\n" + "\tcolor: red;\n" + "}\n" + "}", lessFile.getOutput());
+    assertEquals(ScriptType.LESS, Objects.requireNonNull(lessFile).getFileType());
+    assertEquals("body{\n" + "div{\n" + "\tcolor: red;\n" + "}\n" + "}", lessFile.getFileContent());
   }
 
   @Test
@@ -103,18 +104,18 @@ public class LessFileTest {
 
     lessFile = resource.adaptTo(LessFile.class);
 
-    lessFile = spy(lessFile);
+    lessFile = spy(Objects.requireNonNull(lessFile));
     final BufferedReader mockBufferedReader = mock(BufferedReader.class);
 
     when(mockBufferedReader.readLine()).thenThrow(new IOException());
 
     doReturn(mockBufferedReader).when(lessFile).getBufferedReader();
 
-    assertEquals("", lessFile.getOutput());
+    assertEquals("", lessFile.getFileContent());
   }
 
   @Test
-  public void testGetOutputWithImportsResolvedWhenFileNotFound() throws Exception {
+  public void testGetOutputWithImportsResolvedWhenFileNotFound() {
     fileProperties.put("jcr:primaryType", "nt:file");
 
     final InputStream importerInputStream = new ByteArrayInputStream(
@@ -127,12 +128,12 @@ public class LessFileTest {
 
     lessFile = resource.adaptTo(LessFile.class);
 
-    lessFile.getOutput();
-    assertEquals("body{\n" + "\t@import \"import-1.less\";\n" + "}", lessFile.getOutput());
+    assertEquals("body{\n" + "\t@import \"import-1.less\";\n" + "}", Objects.requireNonNull(
+        lessFile).getFileContent());
   }
 
   @Test
-  public void testGetOutputWithImportsResolvedWhenInvalidResourceType() throws Exception {
+  public void testGetOutputWithImportsResolvedWhenInvalidResourceType() {
     fileProperties.put("jcr:primaryType", "nt:file");
 
     final InputStream importerInputStream = new ByteArrayInputStream(
@@ -149,14 +150,14 @@ public class LessFileTest {
     context.create().resource("/import-1.png/jcr:content", importedContentProperties);
 
     lessFile = resource.adaptTo(LessFile.class);
-    lessFile.validate();
+    Objects.requireNonNull(lessFile).validate();
 
-    assertEquals("body{\n" + "\t@import \"import-1.png\";\n" + "}", lessFile.getOutput());
+    assertEquals("body{\n" + "\t@import \"import-1.png\";\n" + "}", lessFile.getFileContent());
   }
 
 
   @Test
-  public void testGetOutputWithImportsResolvedWhenNestedImports() throws Exception {
+  public void testGetOutputWithImportsResolvedWhenNestedImports() {
     fileProperties.put("jcr:primaryType", "nt:file");
 
     final InputStream importerInputStream = new ByteArrayInputStream(
@@ -186,57 +187,57 @@ public class LessFileTest {
     lessFile = resource.adaptTo(LessFile.class);
 
     assertEquals("body{\n" + "div{\n" + "div{\n" + "\tcolor: red;\n" + "}\n" + "}\n" + "}",
-        lessFile.getOutput());
+        Objects.requireNonNull(lessFile).getFileContent());
   }
 
   @Test
-  public void testGetFileNameFromImport() throws Exception {
+  public void testGetFileNameFromImport() {
     assertEquals("my-file.less", LessFile.getFileNameFromImport("@import " + "\"my-file.less\";"));
   }
 
   @Test
-  public void testGetFileNameFromImportWhenInvalidImportSyntax() throws Exception {
+  public void testGetFileNameFromImportWhenInvalidImportSyntax() {
     assertEquals("", LessFile.getFileNameFromImport("import \"my-file" + ".less\";"));
   }
 
   @Test
-  public void testIsImportLine() throws Exception {
+  public void testIsImportLine() {
     assertTrue(LessFile.isImportLine("@import \"test.less\";"));
   }
 
   @Test
-  public void testIsImportLineWhenMissingFirstQuote() throws Exception {
+  public void testIsImportLineWhenMissingFirstQuote() {
     assertFalse(LessFile.isImportLine("@import test.less\";"));
   }
 
   @Test
-  public void testIsImportLineWhenMissingSecondQuote() throws Exception {
+  public void testIsImportLineWhenMissingSecondQuote() {
     assertFalse(LessFile.isImportLine("@import \"test.less;"));
   }
 
   @Test
-  public void testIsImportLineWhenInvalidImportSyntax() throws Exception {
+  public void testIsImportLineWhenInvalidImportSyntax() {
     assertFalse(LessFile.isImportLine("import \"test.less\";"));
     assertFalse(LessFile.isImportLine("@test-import \"test.less\";"));
   }
 
   @Test
-  public void testIsImportLineWhenHasSpaces() throws Exception {
+  public void testIsImportLineWhenHasSpaces() {
     assertTrue(LessFile.isImportLine("    @import \"test.less\";"));
   }
 
   @Test
-  public void testIsImportLineWhenHasTabs() throws Exception {
+  public void testIsImportLineWhenHasTabs() {
     assertTrue(LessFile.isImportLine("\t\t@import \"test.less\";"));
   }
 
   @Test
-  public void testIsImportLineWhenHasNewLine() throws Exception {
+  public void testIsImportLineWhenHasNewLine() {
     assertTrue(LessFile.isImportLine("\n\n@import \"test.less\";"));
   }
 
   @Test
-  public void testIsImportLineWhenComment() throws Exception {
+  public void testIsImportLineWhenComment() {
     assertFalse(LessFile.isImportLine("// @import \"test.less\";"));
   }
 
