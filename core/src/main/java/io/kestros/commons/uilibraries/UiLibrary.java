@@ -99,7 +99,6 @@ public class UiLibrary extends BaseResource {
     }
   }
 
-
   /**
    * Returns the uncached ScriptType output.
    *
@@ -112,6 +111,7 @@ public class UiLibrary extends BaseResource {
   public String getOutput(final ScriptType scriptType, final boolean minify)
       throws InvalidResourceTypeException {
     String output = getDependenciesOutput(scriptType);
+
     output += getScriptOutput(scriptType, this, false);
 
     if (minify) {
@@ -124,7 +124,6 @@ public class UiLibrary extends BaseResource {
         }
       }
     }
-
     return output;
   }
 

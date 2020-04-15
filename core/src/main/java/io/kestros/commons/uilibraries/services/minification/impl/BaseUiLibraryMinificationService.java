@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package io.kestros.commons.uilibraries.services.minification;
+package io.kestros.commons.uilibraries.services.minification.impl;
 
 import static io.kestros.commons.uilibraries.filetypes.ScriptType.JAVASCRIPT;
 
@@ -27,6 +27,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.kestros.commons.uilibraries.exceptions.CssCompressionException;
 import io.kestros.commons.uilibraries.exceptions.JavaScriptCompressionException;
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
+import io.kestros.commons.uilibraries.services.minification.UiLibraryMinificationService;
 import java.io.StringReader;
 import java.io.StringWriter;
 import org.apache.commons.lang3.StringUtils;

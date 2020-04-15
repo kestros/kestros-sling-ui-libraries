@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package io.kestros.commons.uilibraries.services.cache;
+package io.kestros.commons.uilibraries.services.cache.impl;
 
 import static io.kestros.commons.structuredslingmodels.utils.SlingModelUtils.getResourceAsBaseResource;
 import static io.kestros.commons.structuredslingmodels.utils.SlingModelUtils.getResourceAsClosestType;
@@ -33,6 +33,7 @@ import io.kestros.commons.structuredslingmodels.exceptions.MatchingResourceTypeN
 import io.kestros.commons.structuredslingmodels.exceptions.ResourceNotFoundException;
 import io.kestros.commons.uilibraries.UiLibrary;
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
+import io.kestros.commons.uilibraries.services.cache.UiLibraryCacheService;
 import java.io.IOException;
 import javax.annotation.Nonnull;
 import org.apache.sling.api.resource.ResourceResolverFactory;
@@ -50,10 +51,10 @@ import org.slf4j.LoggerFactory;
 @Component(immediate = true,
            service = {ManagedCacheService.class, UiLibraryCacheService.class},
            property = "service.ranking:Integer=100")
-public class BaseUiLibraryCacheService extends JcrFileCacheService
+public class JcrFileUiLibraryCacheService extends JcrFileCacheService
     implements UiLibraryCacheService {
 
-  private static final Logger LOG = LoggerFactory.getLogger(BaseUiLibraryCacheService.class);
+  private static final Logger LOG = LoggerFactory.getLogger(JcrFileUiLibraryCacheService.class);
 
   private static final String UI_LIBRARY_CACHE_PURGE_SERVICE_USER = "ui-library-cache-service";
   private static final long serialVersionUID = 8442978263338882415L;
@@ -106,12 +107,11 @@ public class BaseUiLibraryCacheService extends JcrFileCacheService
 
     try {
       return getCachedFile(uiLibrary.getPath() + getScriptFileSuffix(scriptType, minified),
-          scriptType.getFileModelClass()).getOutput();
+          scriptType.getFileModelClass()).getFileContent();
     } catch (final IOException | ResourceNotFoundException
                                | InvalidResourceTypeException exception) {
       throw new CacheRetrievalException(exception.getMessage());
     }
-
   }
 
   @Override
@@ -139,7 +139,7 @@ public class BaseUiLibraryCacheService extends JcrFileCacheService
     }
   }
 
-
+  @SuppressWarnings("unused")
   @Override
   public void cacheUiLibraryScripts(final String uiLibraryPath, final boolean cacheMinified)
       throws CacheBuilderException {
