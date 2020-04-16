@@ -31,7 +31,7 @@
 
   <artifactId>kestros-sling-ui-libraries-frontend</artifactId>
 
-  <name>Kestros Commons - UI Libraries Frontend Package</name>
+  <name>Kestros Commons - Sling UI Libraries Frontend Package</name>
   <description>Package that installs the UI Libraries Bundle, and provides HTL templates for adding
     UiLibrary Scripts to HTML pages.
   </description>
