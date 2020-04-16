@@ -34,7 +34,7 @@
   <artifactId>kestros-sling-ui-libraries</artifactId>
   <version>0.0.1</version>
 
-  <name>Kestros Commons - UI Libraries</name>
+  <name>Kestros Commons - Sling UI Libraries</name>
   <description>Provides UI Libraries to Sling instances, which are used for maintaining and
     rendering CSS and JavaScript.
   </description>
