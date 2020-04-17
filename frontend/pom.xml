@@ -35,6 +35,7 @@
   <description>Package that installs the UI Libraries Bundle, and provides HTL templates for adding
     UiLibrary Scripts to HTML pages.
   </description>
+  <packaging>content-package</packaging>
 
   <build>
     <resources>
