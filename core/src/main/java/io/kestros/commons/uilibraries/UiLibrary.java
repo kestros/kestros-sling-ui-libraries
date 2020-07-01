@@ -127,9 +127,8 @@ public class UiLibrary extends BaseResource {
     return output;
   }
 
-
   /**
-   * All dependency UI Libraries.
+   * All dependency UI Libraries. Dependencies must be specified by complete resource path.
    *
    * @return All dependency UI Libraries.
    */
@@ -241,7 +240,7 @@ public class UiLibrary extends BaseResource {
    *
    * @return All dependency UI Library paths.
    */
-  List<String> getDependencyPaths() {
+  public List<String> getDependencyPaths() {
     return Arrays.asList(getProperties().get(PROPERTY_DEPENDENCIES, new String[]{}));
   }
 
