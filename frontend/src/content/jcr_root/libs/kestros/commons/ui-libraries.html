@@ -18,7 +18,6 @@
   /*-->
 
 <template data-sly-template.includeCss="${ @ uiLibrary, id}">
-  <!-- test -->
   <link data-sly-test="${uiLibrary.includeCss}"
         rel="stylesheet" type="text/css"
         href="${uiLibrary.cssPath}" id="${id}">
@@ -26,5 +25,5 @@
 
 <template data-sly-template.includeJs="${ @ uiLibrary}">
   <script data-sly-test="${uiLibrary.includeJavaScript}"
-      data-sly-test="${uiLibrary.jsPath}" src="${uiLibrary.jsPath}"></script>
+          data-sly-test="${uiLibrary.jsPath}" src="${uiLibrary.jsPath}"></script>
 </template>
