@@ -54,6 +54,17 @@
       <groupId>io.kestros.commons</groupId>
       <artifactId>kestros-osgi-service-utils</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.healthcheck.api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.healthcheck.annotation</artifactId>
+    </dependency>
+
     <!-- LESS Compiler -->
     <dependency>
       <groupId>de.inetsoftware</groupId>
