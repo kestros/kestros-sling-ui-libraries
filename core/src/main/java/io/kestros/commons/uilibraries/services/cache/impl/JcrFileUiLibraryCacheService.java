@@ -36,6 +36,7 @@ import io.kestros.commons.uilibraries.filetypes.ScriptType;
 import io.kestros.commons.uilibraries.services.cache.UiLibraryCacheService;
 import java.io.IOException;
 import javax.annotation.Nonnull;
+import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.apache.sling.event.jobs.JobManager;
 import org.apache.sling.models.factory.ModelFactory;
@@ -79,6 +80,11 @@ public class JcrFileUiLibraryCacheService extends JcrFileCacheService
   @Override
   public String getDisplayName() {
     return "Ui Library Cache Service";
+  }
+
+  @Override
+  protected void afterCachePurgeComplete(ResourceResolver resourceResolver) {
+    // does nothing
   }
 
   @Override

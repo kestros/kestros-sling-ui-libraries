@@ -52,6 +52,11 @@ public class UiLibraryCachePurgeEventListener extends BaseCachePurgeOnResourceCh
   }
 
   @Override
+  protected boolean purgeOnActivation() {
+    return false;
+  }
+
+  @Override
   public List<UiLibraryCacheService> getCacheServices() {
     return getAllOsgiServicesOfType(getComponentContext(), UiLibraryCacheService.class);
   }
