@@ -35,38 +35,63 @@
   <description>Package that installs the UI Libraries Bundle, and provides HTL templates for adding
     UiLibrary Scripts to HTML pages.
   </description>
-  <packaging>content-package</packaging>
+  <packaging>bundle</packaging>
+
+  <properties>
+    <rootPackage>io.kestros.commons.uilibraries.frontend</rootPackage>
+    <bundleCategory>kestros</bundleCategory>
+  </properties>
 
   <build>
     <resources>
       <resource>
-        <directory>src/content/jcr_root</directory>
+        <directory>src/main/resources</directory>
       </resource>
     </resources>
-    <plugins>
 
-      <!-- Builds the content package -->
+    <plugins>
       <plugin>
-        <groupId>org.apache.jackrabbit</groupId>
-        <artifactId>filevault-package-maven-plugin</artifactId>
-        <!-- Configuration inherited from kestros-root-project -->
+        <groupId>org.apache.rat</groupId>
+        <artifactId>apache-rat-plugin</artifactId>
+        <version>0.13</version>
+        <configuration>
+          <excludes>
+            <!-- don't check anything in target -->
+            <exclude>target/*</exclude>
+            <!-- Fixing issues with deleted modules -->
+            <exclude>**/target/*</exclude>
+            <exclude>**/target/**/*</exclude>
+            <exclude>node/**/*</exclude>
+            <exclude>node_modules/**/*</exclude>
+            <exclude>**/README.md</exclude>
+            <exclude>package.json</exclude>
+            <exclude>package-lock.json</exclude>
+            <exclude>*-maven-settings.xml</exclude>
+            <exclude>src/main/resources/content/ROOT.json</exclude>
+            <exclude>src/main/resources/startup/favicon.svg</exclude>
+          </excludes>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>verify</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <configuration>
+          <instructions>
+            <Sling-Initial-Content>
+              content/ui-libraries.html;overwrite:=true;path:=/libs/kestros/commons;
+            </Sling-Initial-Content>
+          </instructions>
+        </configuration>
       </plugin>
     </plugins>
   </build>
-
-  <profiles>
-    <profile>
-      <id>installPackage</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>io.wcm.maven.plugins</groupId>
-            <artifactId>wcmio-content-package-maven-plugin</artifactId>
-            <!-- Configuration inherited from kestros-root-project -->
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
 
 </project>
