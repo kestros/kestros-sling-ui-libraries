@@ -54,8 +54,6 @@ public class UiLibraryCacheServiceHealthCheck implements HealthCheck {
     FormattingResultLog log = new FormattingResultLog();
     if (uiLibraryCacheService == null) {
       log.critical("No UiLibraryCacheService is registered.");
-    } else if (!uiLibraryCacheService.isLive()) {
-      log.warn("UiLibraryCacheService is registered, but is not live.");
     } else {
       log.info("UiLibraryCacheService is registered and running properly.");
     }
