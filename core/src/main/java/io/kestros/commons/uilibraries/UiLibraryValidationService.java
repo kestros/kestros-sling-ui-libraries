@@ -118,7 +118,7 @@ public class UiLibraryValidationService extends ModelValidationService {
     };
   }
 
-  ModelValidatorBundle isAllIncludedScriptsFound() {
+  protected ModelValidatorBundle isAllIncludedScriptsFound() {
     return new ModelValidatorBundle() {
 
       @Override
@@ -144,7 +144,7 @@ public class UiLibraryValidationService extends ModelValidationService {
     };
   }
 
-  ModelValidator isAllDependenciesFound() {
+  protected ModelValidator isAllDependenciesFound() {
     return new ModelValidator() {
       @Override
       public boolean isValid() {

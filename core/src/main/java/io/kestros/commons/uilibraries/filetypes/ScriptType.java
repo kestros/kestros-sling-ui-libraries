@@ -40,8 +40,9 @@ public enum ScriptType implements FileType {
   CSS("css", "css", "text/css", Collections.singletonList("text/css"), CssScriptBuilder.class,
       CssFile.class), JAVASCRIPT("js", "js", "application/javascript",
       Collections.singletonList("application/javascript"), JavaScriptScriptBuilder.class,
-      JavaScriptFile.class), LESS("less", "css", "text/css", Arrays.asList("text/css", "text/less"),
-      LessScriptBuilder.class, LessFile.class);
+      JavaScriptFile.class), LESS("less", "css", "text/css",
+      Arrays.asList("text/css", "text/less", "application/octet-stream"), LessScriptBuilder.class,
+      LessFile.class);
 
   private final String name;
   private final String rootResourceName;
