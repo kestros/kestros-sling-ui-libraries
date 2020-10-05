@@ -19,21 +19,34 @@
 
 package io.kestros.commons.uilibraries.filetypes;
 
-import static io.kestros.commons.structuredslingmodels.validation.CommonValidators.hasFileExtension;
-import static io.kestros.commons.structuredslingmodels.validation.ModelValidationMessageType.ERROR;
+import static io.kestros.commons.validation.utils.CommonValidators.hasFileExtension;
 
-import io.kestros.commons.structuredslingmodels.validation.ModelValidationService;
+import io.kestros.commons.structuredslingmodels.filetypes.FileType;
+import io.kestros.commons.validation.ModelValidationMessageType;
+import io.kestros.commons.validation.models.ModelValidator;
+import io.kestros.commons.validation.services.ModelValidatorRegistrationService;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Baseline validation for {@link ScriptType} implementations. Checks that nt:file Resources have
  * the proper extension before considering them valid.
  */
-public abstract class BaseScriptFileValidationService extends ModelValidationService {
+public abstract class BaseScriptFileValidationService implements ModelValidatorRegistrationService {
+
+  /**
+   * FileType to validate model against.
+   *
+   * @return FileType to validate model against.
+   */
+  public abstract FileType getFileType();
 
   @Override
-  public void registerBasicValidators() {
-    final ScriptFile model = getModel();
-    addBasicValidator(hasFileExtension(model.getFileType().getExtension(), model, ERROR));
+  public List<ModelValidator> getModelValidators() {
+    List<ModelValidator> modelValidators = new ArrayList<>();
+    modelValidators.add(
+        hasFileExtension(getFileType().getExtension(), ModelValidationMessageType.ERROR));
+    return modelValidators;
   }
 
 }

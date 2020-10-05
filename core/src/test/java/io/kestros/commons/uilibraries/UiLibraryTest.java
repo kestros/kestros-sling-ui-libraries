@@ -191,7 +191,7 @@ public class UiLibraryTest {
     doThrow(new CacheRetrievalException("")).when(uiLibraryCacheService).getCachedOutput(uiLibrary,
         CSS, false);
 
-    assertEquals("body{ color:red;}", uiLibrary.getOutput(CSS, false));
+    assertEquals("body{ color:red;}\n", uiLibrary.getOutput(CSS, false));
   }
 
   @Test
@@ -241,7 +241,7 @@ public class UiLibraryTest {
     doThrow(new CacheRetrievalException("")).when(uiLibraryCacheService).getCachedOutput(uiLibrary,
         CSS, false);
 
-    assertEquals("body{ color:red;}", uiLibrary.getOutput(CSS, true));
+    assertEquals("body{ color:red;}\n", uiLibrary.getOutput(CSS, true));
   }
 
   @Test

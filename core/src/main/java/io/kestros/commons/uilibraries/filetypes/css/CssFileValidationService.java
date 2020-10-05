@@ -19,20 +19,27 @@
 
 package io.kestros.commons.uilibraries.filetypes.css;
 
+import io.kestros.commons.structuredslingmodels.BaseSlingModel;
+import io.kestros.commons.structuredslingmodels.filetypes.FileType;
 import io.kestros.commons.uilibraries.filetypes.BaseScriptFileValidationService;
+import io.kestros.commons.uilibraries.filetypes.ScriptType;
+import io.kestros.commons.validation.services.ModelValidatorRegistrationService;
+import org.osgi.service.component.annotations.Component;
 
 /**
- * Validator Service for CssFile models.
+ * Validation Service for CssFile resources.
  */
+@Component(immediate = true,
+           service = ModelValidatorRegistrationService.class)
 public class CssFileValidationService extends BaseScriptFileValidationService {
 
   @Override
-  public CssFile getModel() {
-    return (CssFile) getGenericModel();
+  public FileType getFileType() {
+    return ScriptType.CSS;
   }
 
   @Override
-  public void registerDetailedValidators() {
-
+  public Class<? extends BaseSlingModel> getModelType() {
+    return CssFile.class;
   }
 }

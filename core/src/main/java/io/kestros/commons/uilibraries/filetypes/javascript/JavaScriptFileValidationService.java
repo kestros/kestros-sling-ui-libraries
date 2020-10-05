@@ -19,19 +19,27 @@
 
 package io.kestros.commons.uilibraries.filetypes.javascript;
 
+import io.kestros.commons.structuredslingmodels.BaseSlingModel;
+import io.kestros.commons.structuredslingmodels.filetypes.FileType;
 import io.kestros.commons.uilibraries.filetypes.BaseScriptFileValidationService;
+import io.kestros.commons.uilibraries.filetypes.ScriptType;
+import io.kestros.commons.validation.services.ModelValidatorRegistrationService;
+import org.osgi.service.component.annotations.Component;
 
 /**
- * Validator Service for JavaScriptFile models.
+ * Validation Service for JavaScriptFile resources.
  */
+@Component(immediate = true,
+           service = ModelValidatorRegistrationService.class)
 public class JavaScriptFileValidationService extends BaseScriptFileValidationService {
 
   @Override
-  public JavaScriptFile getModel() {
-    return (JavaScriptFile) getGenericModel();
+  public FileType getFileType() {
+    return ScriptType.JAVASCRIPT;
   }
 
   @Override
-  public void registerDetailedValidators() {
+  public Class<? extends BaseSlingModel> getModelType() {
+    return JavaScriptFile.class;
   }
 }

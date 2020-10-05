@@ -19,7 +19,6 @@
 
 package io.kestros.commons.uilibraries;
 
-import static io.kestros.commons.structuredslingmodels.utils.FileModelUtils.adaptToFileType;
 import static io.kestros.commons.structuredslingmodels.utils.SlingModelUtils.getChildAsBaseResource;
 import static io.kestros.commons.structuredslingmodels.utils.SlingModelUtils.getResourceAsType;
 import static io.kestros.commons.uilibraries.filetypes.ScriptType.CSS;
@@ -33,6 +32,7 @@ import io.kestros.commons.structuredslingmodels.exceptions.ChildResourceNotFound
 import io.kestros.commons.structuredslingmodels.exceptions.InvalidResourceTypeException;
 import io.kestros.commons.structuredslingmodels.exceptions.ModelAdaptionException;
 import io.kestros.commons.structuredslingmodels.exceptions.ResourceNotFoundException;
+import io.kestros.commons.structuredslingmodels.filetypes.BaseFile;
 import io.kestros.commons.uilibraries.exceptions.ScriptCompressionException;
 import io.kestros.commons.uilibraries.filetypes.ScriptFile;
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
@@ -53,7 +53,7 @@ import org.slf4j.LoggerFactory;
  * Resource Model used to proved css and js output.  `css` and `js` folders should exist as
  * children.
  */
-@KestrosModel(validationService = UiLibraryValidationService.class)
+@KestrosModel
 @Model(adaptables = Resource.class,
        resourceType = "kes:UiLibrary")
 public class UiLibrary extends BaseResource {
@@ -169,10 +169,12 @@ public class UiLibrary extends BaseResource {
     try {
       for (final BaseResource cssScriptResource : getCssScriptsFolder().getScriptFiles()) {
         for (final ScriptType cssScriptType : getCssScriptTypes()) {
-          try {
-            adaptToFileType(cssScriptResource, cssScriptType.getFileModelClass());
-          } catch (final InvalidResourceTypeException exception) {
-            unsupportedCssScriptTypes.add(cssScriptType);
+          BaseFile file = cssScriptResource.getResource().adaptTo(
+              cssScriptType.getFileModelClass());
+          if (file != null) {
+            if (!(cssScriptType.getReadableContentTypes().contains(file.getMimeType()))) {
+              unsupportedCssScriptTypes.add(cssScriptType);
+            }
           }
         }
       }

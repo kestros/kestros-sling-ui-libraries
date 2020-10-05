@@ -21,6 +21,7 @@ package io.kestros.commons.uilibraries.filetypes.css;
 
 import static org.junit.Assert.assertEquals;
 
+import io.kestros.commons.uilibraries.filetypes.ScriptType;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.junit.SlingContext;
 import org.junit.Before;
@@ -46,6 +47,6 @@ public class CssFileTest {
     resource = context.create().resource("/file.css");
     cssFile = resource.adaptTo(CssFile.class);
 
-    assertEquals(0, cssFile.getErrorMessages().size());
+    assertEquals(ScriptType.CSS, cssFile.getFileType());
   }
 }

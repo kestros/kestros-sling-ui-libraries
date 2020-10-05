@@ -28,6 +28,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
+import io.kestros.commons.uilibraries.filetypes.css.CssFile;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -67,9 +68,7 @@ public class LessFileTest {
 
     lessFile = resource.adaptTo(LessFile.class);
 
-    assertEquals(0, Objects.requireNonNull(lessFile).getErrorMessages().size());
-    assertEquals(0, lessFile.getWarningMessages().size());
-    assertEquals(0, lessFile.getInfoMessages().size());
+    assertEquals(ScriptType.LESS, lessFile.getFileType());
   }
 
   @Test
@@ -150,7 +149,6 @@ public class LessFileTest {
     context.create().resource("/import-1.png/jcr:content", importedContentProperties);
 
     lessFile = resource.adaptTo(LessFile.class);
-    Objects.requireNonNull(lessFile).validate();
 
     assertEquals("body{\n" + "\t@import \"import-1.png\";\n" + "}", lessFile.getFileContent());
   }
