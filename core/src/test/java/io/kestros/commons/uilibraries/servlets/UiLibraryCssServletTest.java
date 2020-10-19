@@ -143,7 +143,7 @@ public class UiLibraryCssServletTest {
 
     assertEquals(200, context.response().getStatus());
     assertEquals("text/css", context.response().getContentType());
-    assertEquals("body{ color:red;}", context.response().getOutputAsString());
+    assertEquals("body{ color:red;}\n", context.response().getOutputAsString());
   }
 
   @Test
@@ -175,7 +175,7 @@ public class UiLibraryCssServletTest {
 
     assertEquals(200, context.response().getStatus());
     assertEquals("text/css", context.response().getContentType());
-    assertEquals("body{ color:red;}", context.response().getOutputAsString());
+    assertEquals("body{ color:red;}\n", context.response().getOutputAsString());
   }
 
   @Test
@@ -205,7 +205,7 @@ public class UiLibraryCssServletTest {
 
     assertEquals(200, context.response().getStatus());
     assertEquals("text/css", context.response().getContentType());
-    assertEquals("body{ color:red;}", context.response().getOutputAsString());
+    assertEquals("body{ color:red;}\n", context.response().getOutputAsString());
   }
 
   @Test
@@ -256,7 +256,7 @@ public class UiLibraryCssServletTest {
 
     assertEquals(200, context.response().getStatus());
     assertEquals("text/css", context.response().getContentType());
-    assertEquals("body{ color:red;}", context.response().getOutputAsString());
+    assertEquals("body{ color:red;}\n", context.response().getOutputAsString());
   }
 
   @Test

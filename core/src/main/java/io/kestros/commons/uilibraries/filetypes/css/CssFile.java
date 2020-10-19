@@ -30,7 +30,7 @@ import org.apache.sling.models.annotations.Model;
 /**
  * Model type for CSS files to be adapted to.
  */
-@KestrosModel(validationService = CssFileValidationService.class)
+@KestrosModel
 @Model(adaptables = Resource.class,
        resourceType = "nt:file")
 public class CssFile extends ScriptFile {

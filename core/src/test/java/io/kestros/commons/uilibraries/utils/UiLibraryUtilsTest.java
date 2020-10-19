@@ -148,8 +148,7 @@ public class UiLibraryUtilsTest {
         "body{\n\tcolor: red; \n// @import \"123.less\";\n}".getBytes());
 
     importerContentProperties.put("jcr:data", inputStream);
-    importerContentProperties.put("jcr:mimeType", "text/less");
-    importedContentProperties.put("jcr:mimeType", "text/less");
+    importerContentProperties.put("jcr:mimeType", "text/css");
 
     resource = context.create().resource("/ui-library", uiLibraryProperties);
     context.create().resource("/ui-library/css", cssRootProperties);
@@ -159,7 +158,31 @@ public class UiLibraryUtilsTest {
 
     final UiLibrary uiLibrary = resource.adaptTo(UiLibrary.class);
 
-    assertEquals("body {\n" + "  color: red;\n" + "}\n",
+    assertEquals("body{\n" + "\tcolor: red; \n" + "// @import \"123.less\";\n" + "}\n",
+        UiLibraryUtils.getScriptOutput(ScriptType.CSS, uiLibrary, true));
+  }
+
+  @Test
+  public void testGetCompiledUiLibraryOutputWhenCssWhenWrongMimeType() {
+    uiLibraryProperties.put("jcr:primaryType", "kes:UiLibrary");
+    cssRootProperties.put("include", "my-css.css");
+    fileProperties.put("jcr:primaryType", "nt:file");
+
+    final InputStream inputStream = new ByteArrayInputStream(
+        "body{\n\tcolor: red; \n// @import \"123.less\";\n}".getBytes());
+
+    importerContentProperties.put("jcr:data", inputStream);
+    importerContentProperties.put("jcr:mimeType", "text/less");
+
+    resource = context.create().resource("/ui-library", uiLibraryProperties);
+    context.create().resource("/ui-library/css", cssRootProperties);
+
+    context.create().resource("/ui-library/css/my-css.css", fileProperties);
+    context.create().resource("/ui-library/css/my-css.css/jcr:content", importerContentProperties);
+
+    final UiLibrary uiLibrary = resource.adaptTo(UiLibrary.class);
+
+    assertEquals("",
         UiLibraryUtils.getScriptOutput(ScriptType.CSS, uiLibrary, true));
   }
 

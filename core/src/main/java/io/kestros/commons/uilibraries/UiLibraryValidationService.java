@@ -19,51 +19,52 @@
 
 package io.kestros.commons.uilibraries;
 
-import static io.kestros.commons.structuredslingmodels.validation.CommonValidators.hasDescription;
-import static io.kestros.commons.structuredslingmodels.validation.CommonValidators.hasTitle;
-import static io.kestros.commons.structuredslingmodels.validation.CommonValidators.hasValidChild;
-import static io.kestros.commons.structuredslingmodels.validation.ModelValidationMessageType.ERROR;
-import static io.kestros.commons.structuredslingmodels.validation.ModelValidationMessageType.WARNING;
 import static io.kestros.commons.uilibraries.filetypes.ScriptType.CSS;
 import static io.kestros.commons.uilibraries.filetypes.ScriptType.JAVASCRIPT;
+import static io.kestros.commons.validation.ModelValidationMessageType.WARNING;
+import static io.kestros.commons.validation.utils.CommonValidators.hasValidChild;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.kestros.commons.structuredslingmodels.BaseResource;
+import io.kestros.commons.structuredslingmodels.BaseSlingModel;
 import io.kestros.commons.structuredslingmodels.exceptions.ChildResourceNotFoundException;
-import io.kestros.commons.structuredslingmodels.validation.ModelValidationMessageType;
-import io.kestros.commons.structuredslingmodels.validation.ModelValidationService;
-import io.kestros.commons.structuredslingmodels.validation.ModelValidator;
-import io.kestros.commons.structuredslingmodels.validation.ModelValidatorBundle;
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
+import io.kestros.commons.validation.ModelValidationMessageType;
+import io.kestros.commons.validation.models.ModelValidator;
+import io.kestros.commons.validation.models.ModelValidatorBundle;
+import io.kestros.commons.validation.services.ModelValidatorRegistrationService;
+import java.util.ArrayList;
+import java.util.List;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * ModelValidationService for validation {@link UiLibrary} models.
  */
-public class UiLibraryValidationService extends ModelValidationService {
+@Component(immediate = true,
+           service = ModelValidatorRegistrationService.class)
+public class UiLibraryValidationService implements ModelValidatorRegistrationService {
 
   @Override
-  public UiLibrary getModel() {
-    return (UiLibrary) getGenericModel();
+  public Class<? extends BaseSlingModel> getModelType() {
+    return UiLibrary.class;
   }
 
   @Override
-  public void registerBasicValidators() {
-    addBasicValidator(hasTitle(getModel()));
-    addBasicValidator(hasDescription(getModel(), WARNING));
-    addBasicValidator(hasCssOrJsDirectory());
-    addBasicValidator(isAllIncludedScriptsFound());
-    addBasicValidator(isAllDependenciesFound());
+  public List<ModelValidator> getModelValidators() {
+    List<ModelValidator> uiLibraryValidators = new ArrayList<>();
+
+    uiLibraryValidators.add(hasCssOrJsDirectory());
+
+    return uiLibraryValidators;
   }
 
-  @Override
-  public void registerDetailedValidators() {
-  }
-
+  @SuppressFBWarnings("SIC_INNER_SHOULD_BE_STATIC_ANON")
   ModelValidatorBundle hasCssOrJsDirectory() {
     return new ModelValidatorBundle() {
       @Override
       public void registerValidators() {
-        addBasicValidator(hasValidChild(CSS.getName(), BaseResource.class, getModel()));
-        addBasicValidator(hasValidChild(JAVASCRIPT.getName(), BaseResource.class, getModel()));
+        addValidator(hasValidChild(CSS.getName(), BaseResource.class));
+        addValidator(hasValidChild(JAVASCRIPT.getName(), BaseResource.class));
       }
 
       @Override
@@ -72,21 +73,22 @@ public class UiLibraryValidationService extends ModelValidationService {
       }
 
       @Override
-      public String getBundleMessage() {
+      public String getMessage() {
         return "Has a valid CSS or JS directory.";
       }
 
       @Override
       public ModelValidationMessageType getType() {
-        return ERROR;
+        return ModelValidationMessageType.ERROR;
       }
     };
   }
 
+  @SuppressFBWarnings("SIC_INNER_SHOULD_BE_STATIC_ANON")
   ModelValidator isAllIncludedScriptsFound(final ScriptType scriptType) {
-    return new ModelValidator() {
+    return new ModelValidator<UiLibrary>() {
       @Override
-      public boolean isValid() {
+      public Boolean isValidCheck() {
         if (CSS.equals(scriptType)) {
           try {
             return getModel().getCssScriptFiles().size()
@@ -112,6 +114,11 @@ public class UiLibraryValidationService extends ModelValidationService {
       }
 
       @Override
+      public String getDetailedMessage() {
+        return null;
+      }
+
+      @Override
       public ModelValidationMessageType getType() {
         return WARNING;
       }
@@ -119,17 +126,12 @@ public class UiLibraryValidationService extends ModelValidationService {
   }
 
   protected ModelValidatorBundle isAllIncludedScriptsFound() {
-    return new ModelValidatorBundle() {
-
-      @Override
-      public String getBundleMessage() {
-        return "All included CSS and Javascript files exist and are valid.";
-      }
+    return new ModelValidatorBundle<UiLibrary>() {
 
       @Override
       public void registerValidators() {
-        addBasicValidator(isAllIncludedScriptsFound(CSS));
-        addBasicValidator(isAllIncludedScriptsFound(JAVASCRIPT));
+        addValidator(isAllIncludedScriptsFound(CSS));
+        addValidator(isAllIncludedScriptsFound(JAVASCRIPT));
       }
 
       @Override
@@ -138,16 +140,22 @@ public class UiLibraryValidationService extends ModelValidationService {
       }
 
       @Override
+      public String getMessage() {
+        return "All included CSS and Javascript files exist and are valid.";
+      }
+
+      @Override
       public ModelValidationMessageType getType() {
         return WARNING;
       }
     };
   }
 
+  @SuppressFBWarnings("SIC_INNER_SHOULD_BE_STATIC_ANON")
   protected ModelValidator isAllDependenciesFound() {
-    return new ModelValidator() {
+    return new ModelValidator<UiLibrary>() {
       @Override
-      public boolean isValid() {
+      public Boolean isValidCheck() {
         return getModel().getDependencies().size() == getModel().getDependencyPaths().size();
       }
 
@@ -157,9 +165,15 @@ public class UiLibraryValidationService extends ModelValidationService {
       }
 
       @Override
+      public String getDetailedMessage() {
+        return "";
+      }
+
+      @Override
       public ModelValidationMessageType getType() {
         return WARNING;
       }
     };
   }
+
 }

@@ -22,12 +22,13 @@ package io.kestros.commons.uilibraries;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 
 import io.kestros.commons.structuredslingmodels.exceptions.InvalidResourceTypeException;
-import io.kestros.commons.structuredslingmodels.validation.ModelValidationMessageType;
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
+import io.kestros.commons.validation.ModelValidationMessageType;
+import io.kestros.commons.validation.models.ModelValidator;
+import io.kestros.commons.validation.models.ModelValidatorBundle;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -66,50 +67,10 @@ public class UiLibraryValidationServiceTest {
     properties.put("jcr:description", "description");
   }
 
-  @Test
-  public void testGetModel() {
-    resource = context.create().resource("/ui-library");
-    uiLibrary = resource.adaptTo(UiLibrary.class);
-
-    doReturn(uiLibrary).when(uiLibraryValidationService).getGenericModel();
-
-    assertEquals("/ui-library", uiLibraryValidationService.getModel().getPath());
-  }
 
   @Test
-  public void testRegisterBasicValidators() {
-    resource = context.create().resource("/ui-library", properties);
-    uiLibrary = resource.adaptTo(UiLibrary.class);
-
-    doReturn(uiLibrary).when(uiLibraryValidationService).getGenericModel();
-
-    uiLibraryValidationService.registerBasicValidators();
-
-    assertEquals(5, uiLibraryValidationService.getBasicValidators().size());
-    assertTrue(uiLibraryValidationService.getBasicValidators().get(0).isValid());
-    assertTrue(uiLibraryValidationService.getBasicValidators().get(1).isValid());
-    assertEquals("Title is configured.",
-        uiLibraryValidationService.getBasicValidators().get(0).getMessage());
-    assertEquals("Description is configured.",
-        uiLibraryValidationService.getBasicValidators().get(1).getMessage());
-    assertEquals("One of the following is true:",
-        uiLibraryValidationService.getBasicValidators().get(2).getMessage());
-    assertEquals("All of the following are true:",
-        uiLibraryValidationService.getBasicValidators().get(3).getMessage());
-    assertEquals("All dependencies exist and are valid.",
-        uiLibraryValidationService.getBasicValidators().get(4).getMessage());
-  }
-
-  @Test
-  public void testRegisterDetailedValidators() {
-    resource = context.create().resource("/ui-library");
-    uiLibrary = resource.adaptTo(UiLibrary.class);
-
-    doReturn(uiLibrary).when(uiLibraryValidationService).getGenericModel();
-
-    uiLibraryValidationService.registerDetailedValidators();
-
-    assertEquals(0, uiLibraryValidationService.getDetailedValidators().size());
+  public void testGetModelValidators() {
+    assertEquals(1, uiLibraryValidationService.getModelValidators().size());
   }
 
   @Test
@@ -119,11 +80,9 @@ public class UiLibraryValidationServiceTest {
     context.create().resource("/ui-library/js");
     uiLibrary = resource.adaptTo(UiLibrary.class);
 
-    doReturn(uiLibrary).when(uiLibraryValidationService).getGenericModel();
-
-    uiLibraryValidationService.registerBasicValidators();
-
-    assertTrue(uiLibraryValidationService.hasCssOrJsDirectory().isValid());
+    ModelValidator validator = uiLibraryValidationService.hasCssOrJsDirectory();
+    validator.setModel(uiLibrary);
+    assertTrue(validator.isValidCheck());
   }
 
   @Test
@@ -132,11 +91,9 @@ public class UiLibraryValidationServiceTest {
     context.create().resource("/ui-library/css");
     uiLibrary = resource.adaptTo(UiLibrary.class);
 
-    doReturn(uiLibrary).when(uiLibraryValidationService).getGenericModel();
-
-    uiLibraryValidationService.registerBasicValidators();
-
-    assertTrue(uiLibraryValidationService.hasCssOrJsDirectory().isValid());
+    ModelValidator validator = uiLibraryValidationService.hasCssOrJsDirectory();
+    validator.setModel(uiLibrary);
+    assertTrue(validator.isValidCheck());
   }
 
   @Test
@@ -145,11 +102,9 @@ public class UiLibraryValidationServiceTest {
     context.create().resource("/ui-library/js");
     uiLibrary = resource.adaptTo(UiLibrary.class);
 
-    doReturn(uiLibrary).when(uiLibraryValidationService).getGenericModel();
-
-    uiLibraryValidationService.registerBasicValidators();
-
-    assertTrue(uiLibraryValidationService.hasCssOrJsDirectory().isValid());
+    ModelValidator validator = uiLibraryValidationService.hasCssOrJsDirectory();
+    validator.setModel(uiLibrary);
+    assertTrue(validator.isValidCheck());
   }
 
   @Test
@@ -157,17 +112,13 @@ public class UiLibraryValidationServiceTest {
     resource = context.create().resource("/ui-library");
     uiLibrary = resource.adaptTo(UiLibrary.class);
 
-    doReturn(uiLibrary).when(uiLibraryValidationService).getGenericModel();
+    ModelValidator validator = uiLibraryValidationService.hasCssOrJsDirectory();
+    validator.setModel(uiLibrary);
 
-    uiLibraryValidationService.registerBasicValidators();
-
-    assertFalse(uiLibraryValidationService.hasCssOrJsDirectory().isValid());
-    assertEquals(ModelValidationMessageType.ERROR,
-        uiLibraryValidationService.hasCssOrJsDirectory().getType());
-    assertEquals("One of the following is true:",
-        uiLibraryValidationService.hasCssOrJsDirectory().getMessage());
-    assertEquals("Has a valid CSS or JS directory.",
-        uiLibraryValidationService.hasCssOrJsDirectory().getBundleMessage());
+    assertFalse(validator.isValidCheck());
+    assertEquals(ModelValidationMessageType.ERROR, validator.getType());
+    assertEquals("One of the following is true:", validator.getDetailedMessage());
+    assertEquals("Has a valid CSS or JS directory.", validator.getMessage());
   }
 
 
@@ -198,11 +149,9 @@ public class UiLibraryValidationServiceTest {
 
     uiLibrary = resource.adaptTo(UiLibrary.class);
 
-    doReturn(uiLibrary).when(uiLibraryValidationService).getGenericModel();
-
-    uiLibraryValidationService.registerBasicValidators();
-
-    assertTrue(uiLibraryValidationService.isAllIncludedScriptsFound().isValid());
+    ModelValidator validator = uiLibraryValidationService.hasCssOrJsDirectory();
+    validator.setModel(uiLibrary);
+    assertTrue(validator.isValidCheck());
   }
 
 
@@ -222,13 +171,11 @@ public class UiLibraryValidationServiceTest {
 
     uiLibrary = resource.adaptTo(UiLibrary.class);
 
-    doReturn(uiLibrary).when(uiLibraryValidationService).getGenericModel();
+    ModelValidator validator = uiLibraryValidationService.hasCssOrJsDirectory();
+    validator.setModel(uiLibrary);
 
-    uiLibraryValidationService.registerBasicValidators();
-
-    assertTrue(uiLibraryValidationService.isAllIncludedScriptsFound().isValid());
+    assertTrue(validator.isValidCheck());
   }
-
 
   @Test
   public void testIsAllIncludedScriptsFoundWhenHasJavascriptJavascript() {
@@ -245,12 +192,10 @@ public class UiLibraryValidationServiceTest {
     context.create().resource("/ui-library/js/file.js/jcr:content", fileContentProperties);
 
     uiLibrary = resource.adaptTo(UiLibrary.class);
+    ModelValidator validator = uiLibraryValidationService.hasCssOrJsDirectory();
+    validator.setModel(uiLibrary);
 
-    doReturn(uiLibrary).when(uiLibraryValidationService).getGenericModel();
-
-    uiLibraryValidationService.registerBasicValidators();
-
-    assertTrue(uiLibraryValidationService.isAllIncludedScriptsFound().isValid());
+    assertTrue(validator.isValidCheck());
   }
 
   @Test
@@ -260,15 +205,13 @@ public class UiLibraryValidationServiceTest {
     context.create().resource("/ui-library/css", cssFolderProperties);
     uiLibrary = resource.adaptTo(UiLibrary.class);
 
-    doReturn(uiLibrary).when(uiLibraryValidationService).getGenericModel();
+    ModelValidatorBundle validator = uiLibraryValidationService.isAllIncludedScriptsFound();
+    validator.setModel(uiLibrary);
 
-    uiLibraryValidationService.registerBasicValidators();
-    assertEquals(2, uiLibraryValidationService.isAllIncludedScriptsFound().getValidators().size());
-    assertFalse(uiLibraryValidationService.isAllIncludedScriptsFound().isValid());
-    assertEquals(ModelValidationMessageType.WARNING,
-        uiLibraryValidationService.isAllIncludedScriptsFound().getType());
-    assertEquals("All of the following are true:",
-        uiLibraryValidationService.isAllIncludedScriptsFound().getMessage());
+    assertEquals(2, validator.getValidators().size());
+    assertFalse(validator.isValidCheck());
+    assertEquals(ModelValidationMessageType.WARNING, validator.getType());
+    assertEquals("All of the following are true:", validator.getDetailedMessage());
   }
 
   @Test
@@ -287,22 +230,23 @@ public class UiLibraryValidationServiceTest {
 
     uiLibrary = resource.adaptTo(UiLibrary.class);
 
-    doReturn(uiLibrary).when(uiLibraryValidationService).getGenericModel();
+    ModelValidatorBundle validatorBundle = uiLibraryValidationService.isAllIncludedScriptsFound();
+    ModelValidator javascriptValidator = uiLibraryValidationService.isAllIncludedScriptsFound(
+        ScriptType.JAVASCRIPT);
+    ModelValidator cssValidator = uiLibraryValidationService.isAllIncludedScriptsFound(
+        ScriptType.CSS);
+    validatorBundle.setModel(uiLibrary);
+    javascriptValidator.setModel(uiLibrary);
+    cssValidator.setModel(uiLibrary);
 
-    uiLibraryValidationService.registerBasicValidators();
-
-    assertFalse(uiLibraryValidationService.isAllIncludedScriptsFound().isValid());
-    assertEquals("All of the following are true:",
-        uiLibraryValidationService.isAllIncludedScriptsFound().getMessage());
+    assertFalse(validatorBundle.isValidCheck());
+    assertEquals("All of the following are true:", validatorBundle.getDetailedMessage());
     assertEquals("All included CSS and Javascript files exist and are valid.",
-        uiLibraryValidationService.isAllIncludedScriptsFound().getBundleMessage());
-    assertTrue(
-        uiLibraryValidationService.isAllIncludedScriptsFound(ScriptType.JAVASCRIPT).isValid());
-    assertFalse(uiLibraryValidationService.isAllIncludedScriptsFound(ScriptType.CSS).isValid());
-    assertEquals(ModelValidationMessageType.WARNING,
-        uiLibraryValidationService.isAllIncludedScriptsFound(ScriptType.CSS).getType());
-    assertEquals("All css scripts exist and are valid.",
-        uiLibraryValidationService.isAllIncludedScriptsFound(ScriptType.CSS).getMessage());
+        validatorBundle.getMessage());
+    assertTrue(javascriptValidator.isValidCheck());
+    assertFalse(cssValidator.isValidCheck());
+    assertEquals(ModelValidationMessageType.WARNING, cssValidator.getType());
+    assertEquals("All css scripts exist and are valid.", cssValidator.getMessage());
   }
 
   @Test
@@ -321,22 +265,23 @@ public class UiLibraryValidationServiceTest {
 
     uiLibrary = resource.adaptTo(UiLibrary.class);
 
-    doReturn(uiLibrary).when(uiLibraryValidationService).getGenericModel();
+    ModelValidatorBundle validatorBundle = uiLibraryValidationService.isAllIncludedScriptsFound();
+    ModelValidator javascriptValidator = uiLibraryValidationService.isAllIncludedScriptsFound(
+        ScriptType.JAVASCRIPT);
+    ModelValidator cssValidator = uiLibraryValidationService.isAllIncludedScriptsFound(
+        ScriptType.CSS);
+    validatorBundle.setModel(uiLibrary);
+    javascriptValidator.setModel(uiLibrary);
+    cssValidator.setModel(uiLibrary);
 
-    uiLibraryValidationService.registerBasicValidators();
-
-    assertFalse(uiLibraryValidationService.isAllIncludedScriptsFound().isValid());
-    assertEquals("All of the following are true:",
-        uiLibraryValidationService.isAllIncludedScriptsFound().getMessage());
+    assertFalse(validatorBundle.isValidCheck());
+    assertEquals("All of the following are true:", validatorBundle.getDetailedMessage());
     assertEquals("All included CSS and Javascript files exist and are valid.",
-        uiLibraryValidationService.isAllIncludedScriptsFound().getBundleMessage());
-    assertTrue(uiLibraryValidationService.isAllIncludedScriptsFound(ScriptType.CSS).isValid());
-    assertFalse(
-        uiLibraryValidationService.isAllIncludedScriptsFound(ScriptType.JAVASCRIPT).isValid());
-    assertEquals(ModelValidationMessageType.WARNING,
-        uiLibraryValidationService.isAllIncludedScriptsFound(ScriptType.JAVASCRIPT).getType());
-    assertEquals("All js scripts exist and are valid.",
-        uiLibraryValidationService.isAllIncludedScriptsFound(ScriptType.JAVASCRIPT).getMessage());
+        validatorBundle.getMessage());
+    assertTrue(cssValidator.isValidCheck());
+    assertFalse(javascriptValidator.isValidCheck());
+    assertEquals(ModelValidationMessageType.WARNING, javascriptValidator.getType());
+    assertEquals("All js scripts exist and are valid.", javascriptValidator.getMessage());
   }
 
   @Test
@@ -356,12 +301,17 @@ public class UiLibraryValidationServiceTest {
 
     uiLibrary = resource.adaptTo(UiLibrary.class);
 
-    doReturn(uiLibrary).when(uiLibraryValidationService).getGenericModel();
+    ModelValidatorBundle validatorBundle = uiLibraryValidationService.isAllIncludedScriptsFound();
+    ModelValidator javascriptValidator = uiLibraryValidationService.isAllIncludedScriptsFound(
+        ScriptType.JAVASCRIPT);
+    ModelValidator cssValidator = uiLibraryValidationService.isAllIncludedScriptsFound(
+        ScriptType.CSS);
+    validatorBundle.setModel(uiLibrary);
+    javascriptValidator.setModel(uiLibrary);
+    cssValidator.setModel(uiLibrary);
 
-    uiLibraryValidationService.registerBasicValidators();
-
-    assertTrue(uiLibraryValidationService.isAllIncludedScriptsFound(ScriptType.CSS).isValid());
-    assertTrue(uiLibraryValidationService.isAllIncludedScriptsFound().isValid());
+    assertTrue(cssValidator.isValidCheck());
+    assertTrue(validatorBundle.isValidCheck());
 
   }
 
@@ -382,12 +332,17 @@ public class UiLibraryValidationServiceTest {
 
     uiLibrary = resource.adaptTo(UiLibrary.class);
 
-    doReturn(uiLibrary).when(uiLibraryValidationService).getGenericModel();
+    ModelValidatorBundle validatorBundle = uiLibraryValidationService.isAllIncludedScriptsFound();
+    ModelValidator lessValidator = uiLibraryValidationService.isAllIncludedScriptsFound(
+        ScriptType.LESS);
+    ModelValidator cssValidator = uiLibraryValidationService.isAllIncludedScriptsFound(
+        ScriptType.CSS);
+    validatorBundle.setModel(uiLibrary);
+    lessValidator.setModel(uiLibrary);
+    cssValidator.setModel(uiLibrary);
 
-    uiLibraryValidationService.registerBasicValidators();
-
-    assertFalse(uiLibraryValidationService.isAllIncludedScriptsFound(ScriptType.LESS).isValid());
-    assertTrue(uiLibraryValidationService.isAllIncludedScriptsFound(ScriptType.CSS).isValid());
+    assertFalse(lessValidator.isValidCheck());
+    assertTrue(cssValidator.isValidCheck());
   }
 
   @Test
@@ -399,12 +354,11 @@ public class UiLibraryValidationServiceTest {
 
     uiLibrary = resource.adaptTo(UiLibrary.class);
 
-    doReturn(uiLibrary).when(uiLibraryValidationService).getGenericModel();
-
-    uiLibraryValidationService.registerBasicValidators();
+    ModelValidator validator = uiLibraryValidationService.isAllDependenciesFound();
+    validator.setModel(uiLibrary);
 
     assertEquals(1, uiLibrary.getDependencies().size());
-    assertTrue(uiLibraryValidationService.isAllDependenciesFound().isValid());
+    assertTrue(validator.isValidCheck());
   }
 
   @Test
@@ -414,15 +368,12 @@ public class UiLibraryValidationServiceTest {
 
     uiLibrary = resource.adaptTo(UiLibrary.class);
 
-    doReturn(uiLibrary).when(uiLibraryValidationService).getGenericModel();
+    ModelValidator validator = uiLibraryValidationService.isAllDependenciesFound();
+    validator.setModel(uiLibrary);
 
-    uiLibraryValidationService.registerBasicValidators();
-
-    assertFalse(uiLibraryValidationService.isAllDependenciesFound().isValid());
-    assertEquals("All dependencies exist and are valid.",
-        uiLibraryValidationService.isAllDependenciesFound().getMessage());
-    assertEquals(ModelValidationMessageType.WARNING,
-        uiLibraryValidationService.isAllDependenciesFound().getType());
+    assertFalse(validator.isValidCheck());
+    assertEquals("All dependencies exist and are valid.", validator.getMessage());
+    assertEquals(ModelValidationMessageType.WARNING, validator.getType());
   }
 
   @Test
@@ -432,15 +383,12 @@ public class UiLibraryValidationServiceTest {
 
     uiLibrary = resource.adaptTo(UiLibrary.class);
 
-    doReturn(uiLibrary).when(uiLibraryValidationService).getGenericModel();
+    ModelValidator validator = uiLibraryValidationService.isAllDependenciesFound();
+    validator.setModel(uiLibrary);
 
-    uiLibraryValidationService.registerBasicValidators();
-
-    assertFalse(uiLibraryValidationService.isAllDependenciesFound().isValid());
-    assertEquals("All dependencies exist and are valid.",
-        uiLibraryValidationService.isAllDependenciesFound().getMessage());
-    assertEquals(ModelValidationMessageType.WARNING,
-        uiLibraryValidationService.isAllDependenciesFound().getType());
+    assertFalse(validator.isValidCheck());
+    assertEquals("All dependencies exist and are valid.", validator.getMessage());
+    assertEquals(ModelValidationMessageType.WARNING, validator.getType());
   }
 
 }

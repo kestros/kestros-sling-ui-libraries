@@ -30,7 +30,7 @@ import org.apache.sling.models.annotations.Model;
 /**
  * Model type for JavaScript files to be adapted to.
  */
-@KestrosModel(validationService = JavaScriptFileValidationService.class)
+@KestrosModel
 @Model(adaptables = Resource.class,
        resourceType = "nt:file")
 public class JavaScriptFile extends ScriptFile {

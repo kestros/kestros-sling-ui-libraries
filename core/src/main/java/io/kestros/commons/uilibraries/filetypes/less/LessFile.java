@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Sling Model for .less files.
  */
-@KestrosModel(validationService = LessFileValidationService.class)
+@KestrosModel
 @Model(adaptables = Resource.class,
        resourceType = "nt:file")
 public class LessFile extends ScriptFile {
