@@ -19,6 +19,8 @@
 
 package io.kestros.commons.uilibraries.utils;
 
+import static io.kestros.commons.uilibraries.filetypes.ScriptType.CSS;
+import static io.kestros.commons.uilibraries.filetypes.ScriptType.LESS;
 import static org.junit.Assert.assertEquals;
 
 import io.kestros.commons.uilibraries.UiLibrary;
@@ -93,7 +95,7 @@ public class UiLibraryUtilsTest {
     final UiLibrary uiLibrary = resource.adaptTo(UiLibrary.class);
 
     assertEquals("body div div {\n" + "  color: red;\n" + "}\n",
-        UiLibraryUtils.getScriptOutput(ScriptType.CSS, uiLibrary, true));
+        UiLibraryUtils.getScriptOutput(CSS, uiLibrary, true));
   }
 
   @Test
@@ -135,7 +137,7 @@ public class UiLibraryUtilsTest {
     final UiLibrary uiLibrary = resource.adaptTo(UiLibrary.class);
 
     assertEquals("body div div {\n" + "  color: red;\n" + "}\n",
-        UiLibraryUtils.getScriptOutput(ScriptType.CSS, uiLibrary, true));
+        UiLibraryUtils.getScriptOutput(CSS, uiLibrary, true));
   }
 
   @Test
@@ -159,7 +161,9 @@ public class UiLibraryUtilsTest {
     final UiLibrary uiLibrary = resource.adaptTo(UiLibrary.class);
 
     assertEquals("body{\n" + "\tcolor: red; \n" + "// @import \"123.less\";\n" + "}\n",
-        UiLibraryUtils.getScriptOutput(ScriptType.CSS, uiLibrary, true));
+        UiLibraryUtils.getScriptOutput(CSS, uiLibrary, true));
+    assertEquals("body{\n" + "\tcolor: red; \n" + "// @import \"123.less\";\n" + "}\n",
+        UiLibraryUtils.getScriptOutput(LESS, uiLibrary, true));
   }
 
   @Test
@@ -182,8 +186,7 @@ public class UiLibraryUtilsTest {
 
     final UiLibrary uiLibrary = resource.adaptTo(UiLibrary.class);
 
-    assertEquals("",
-        UiLibraryUtils.getScriptOutput(ScriptType.CSS, uiLibrary, true));
+    assertEquals("", UiLibraryUtils.getScriptOutput(CSS, uiLibrary, true));
   }
 
   @Test
@@ -249,9 +252,9 @@ public class UiLibraryUtilsTest {
 
     final UiLibrary uiLibrary = resource.adaptTo(UiLibrary.class);
 
-    assertEquals(31, UiLibraryUtils.getScriptOutput(ScriptType.LESS, uiLibrary, true).length());
+    assertEquals(31, UiLibraryUtils.getScriptOutput(LESS, uiLibrary, true).length());
     assertEquals("body{\n" + "div{\n" + "div{\n" + "\tcolor: red;\n" + "}\n" + "}\n" + "}",
-        UiLibraryUtils.getScriptOutput(ScriptType.LESS, uiLibrary, false));
+        UiLibraryUtils.getScriptOutput(LESS, uiLibrary, false));
   }
 
 
