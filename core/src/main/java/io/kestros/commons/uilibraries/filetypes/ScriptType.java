@@ -37,10 +37,11 @@ import javax.annotation.Nonnull;
  * Script {@link FileType} implementations used by UiLibraries for CSS and JavaScript output.
  */
 public enum ScriptType implements FileType {
-  CSS("css", "css", "text/css", Collections.singletonList("text/css"), CssScriptBuilder.class,
-      CssFile.class), JAVASCRIPT("js", "js", "application/javascript",
+  CSS("css", "css", Collections.singletonList("css"), "text/css",
+      Collections.singletonList("text/css"), CssScriptBuilder.class, CssFile.class), JAVASCRIPT(
+      "js", "js", Arrays.asList("js"), "application/javascript",
       Collections.singletonList("application/javascript"), JavaScriptScriptBuilder.class,
-      JavaScriptFile.class), LESS("less", "css", "text/css",
+      JavaScriptFile.class), LESS("less", "css", Arrays.asList("css", "less"), "text/css",
       Arrays.asList("text/css", "text/less", "application/octet-stream"), LessScriptBuilder.class,
       LessFile.class);
 
@@ -48,16 +49,18 @@ public enum ScriptType implements FileType {
   private final String rootResourceName;
   private final String outputContentType;
   private final List<String> readableContentTypes;
+  private final List<String> readableExtensions;
   private final String extension;
   private final Class<?> scriptFileType;
   private BaseScriptBuilder scriptBuilder;
 
   <T extends BaseScriptBuilder, S extends ScriptFile> ScriptType(final String name,
-      final String rootResourceName, final String outputContentType,
-      final List<String> readableContentTypes, final Class<T> scriptBuilderType,
-      final Class<S> scriptFileType) {
+      final String rootResourceName, final List<String> readableExtensions,
+      final String outputContentType, final List<String> readableContentTypes,
+      final Class<T> scriptBuilderType, final Class<S> scriptFileType) {
     this.name = name;
     this.rootResourceName = rootResourceName;
+    this.readableExtensions = readableExtensions;
     this.outputContentType = outputContentType;
     this.readableContentTypes = readableContentTypes;
     this.extension = "." + name;
@@ -90,6 +93,15 @@ public enum ScriptType implements FileType {
   @Override
   public String getExtension() {
     return this.extension;
+  }
+
+  /**
+   * Extensions that can be interpreted by this FileType and its associated Model.
+   *
+   * @return Extensions that can be interpreted by this FileType and its associated Model.
+   */
+  public List<String> getReadableExtensions() {
+    return this.readableExtensions;
   }
 
   @Override

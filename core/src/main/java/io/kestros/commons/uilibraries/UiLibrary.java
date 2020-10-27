@@ -174,6 +174,8 @@ public class UiLibrary extends BaseResource {
           if (file != null) {
             if (!(cssScriptType.getReadableContentTypes().contains(file.getMimeType()))) {
               unsupportedCssScriptTypes.add(cssScriptType);
+            } else if (!cssScriptType.getReadableExtensions().contains(file.getExtension())) {
+              unsupportedCssScriptTypes.add(cssScriptType);
             }
           }
         }
@@ -193,6 +195,11 @@ public class UiLibrary extends BaseResource {
 
     if (supportableCssScriptTypes.size() == 1) {
       supportedScriptTypes.addAll(supportableCssScriptTypes);
+    } else if (supportableCssScriptTypes.size() == 2) {
+      for (ScriptType scriptType : supportableCssScriptTypes) {
+        supportedScriptTypes.add(scriptType);
+      }
+
     } else {
       supportedScriptTypes.add(CSS);
     }
@@ -252,7 +259,7 @@ public class UiLibrary extends BaseResource {
   }
 
   private ScriptType getCssScriptType() throws InvalidResourceTypeException {
-    if (getSupportedScriptTypes().size() == 2) {
+    if (getSupportedScriptTypes().size() >= 2) {
       return getSupportedScriptTypes().get(1);
     }
     throw new InvalidResourceTypeException("", UiLibrary.class);

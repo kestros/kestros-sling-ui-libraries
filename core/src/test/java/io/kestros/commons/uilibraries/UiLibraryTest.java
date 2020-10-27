@@ -27,11 +27,11 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
-import io.kestros.commons.uilibraries.services.cache.UiLibraryCacheService;
-import io.kestros.commons.uilibraries.services.minification.impl.BaseUiLibraryMinificationService;
-import io.kestros.commons.uilibraries.services.minification.UiLibraryMinificationService;
 import io.kestros.commons.osgiserviceutils.exceptions.CacheRetrievalException;
 import io.kestros.commons.structuredslingmodels.exceptions.InvalidResourceTypeException;
+import io.kestros.commons.uilibraries.services.cache.UiLibraryCacheService;
+import io.kestros.commons.uilibraries.services.minification.UiLibraryMinificationService;
+import io.kestros.commons.uilibraries.services.minification.impl.BaseUiLibraryMinificationService;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -191,7 +191,7 @@ public class UiLibraryTest {
     doThrow(new CacheRetrievalException("")).when(uiLibraryCacheService).getCachedOutput(uiLibrary,
         CSS, false);
 
-    assertEquals("body{ color:red;}\n", uiLibrary.getOutput(CSS, false));
+    assertEquals("body{ color:red;}\n", uiLibrary.getOutput(LESS, false));
   }
 
   @Test
@@ -217,7 +217,7 @@ public class UiLibraryTest {
     doThrow(new CacheRetrievalException("")).when(uiLibraryCacheService).getCachedOutput(uiLibrary,
         CSS, false);
 
-    assertEquals("body{color:red}", uiLibrary.getOutput(CSS, true));
+    assertEquals("body{color:red}", uiLibrary.getOutput(LESS, true));
   }
 
   @Test
@@ -242,6 +242,7 @@ public class UiLibraryTest {
         CSS, false);
 
     assertEquals("body{ color:red;}\n", uiLibrary.getOutput(CSS, true));
+    assertEquals("body{ color:red;}\n", uiLibrary.getOutput(LESS, true));
   }
 
   @Test
@@ -310,15 +311,23 @@ public class UiLibraryTest {
 
     uiLibrary = resource.adaptTo(UiLibrary.class);
 
-    assertEquals(2, uiLibrary.getSupportedScriptTypes().size());
+    assertEquals(3, uiLibrary.getSupportedScriptTypes().size());
     assertEquals(JAVASCRIPT, uiLibrary.getSupportedScriptTypes().get(0));
     assertEquals(CSS, uiLibrary.getSupportedScriptTypes().get(1));
+    assertEquals(LESS, uiLibrary.getSupportedScriptTypes().get(2));
   }
 
   @Test
-  public void testGetSupportedScriptTypesWhenHasLessFiles() {
+  public void testGetSupportedScriptTypesWhenHasLessFiles() throws InvalidResourceTypeException {
+
+    final InputStream inputStream = new ByteArrayInputStream("div{\n\tcolor: red;\n}".getBytes());
+
+    fileContentProperties.put("jcr:data", inputStream);
+    fileContentProperties.put("jcr:mimeType", "text/less");
+
     resource = context.create().resource("/ui-library", properties);
     cssFolderProperties.put("include", new String[]{"file.less"});
+
     context.create().resource("/ui-library/css", cssFolderProperties);
     context.create().resource("/ui-library/css/file.less", fileProperties);
 
@@ -330,6 +339,33 @@ public class UiLibraryTest {
     assertEquals(2, uiLibrary.getSupportedScriptTypes().size());
     assertEquals(JAVASCRIPT, uiLibrary.getSupportedScriptTypes().get(0));
     assertEquals(LESS, uiLibrary.getSupportedScriptTypes().get(1));
+    assertEquals("div{\n" + "\tcolor: red;\n" + "}", uiLibrary.getOutput(LESS, false));
+  }
+
+  @Test
+  public void testGetSupportedScriptTypesWhenHasLessFilesWithTextCssMimeType()
+      throws InvalidResourceTypeException {
+
+    final InputStream inputStream = new ByteArrayInputStream("div{\n\tcolor: red;\n}".getBytes());
+
+    fileContentProperties.put("jcr:data", inputStream);
+    fileContentProperties.put("jcr:mimeType", "text/css");
+
+    resource = context.create().resource("/ui-library", properties);
+    cssFolderProperties.put("include", new String[]{"file.less"});
+
+    context.create().resource("/ui-library/css", cssFolderProperties);
+    context.create().resource("/ui-library/css/file.less", fileProperties);
+
+    fileContentProperties.put("jcr:mimeType", "text/css");
+
+    context.create().resource("/ui-library/css/file.less/jcr:content", fileContentProperties);
+    uiLibrary = resource.adaptTo(UiLibrary.class);
+
+    assertEquals(2, uiLibrary.getSupportedScriptTypes().size());
+    assertEquals(JAVASCRIPT, uiLibrary.getSupportedScriptTypes().get(0));
+    assertEquals(LESS, uiLibrary.getSupportedScriptTypes().get(1));
+    assertEquals("div{\n" + "\tcolor: red;\n" + "}", uiLibrary.getOutput(LESS, false));
   }
 
   @Test

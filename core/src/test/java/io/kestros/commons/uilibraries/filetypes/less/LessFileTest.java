@@ -28,7 +28,6 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
-import io.kestros.commons.uilibraries.filetypes.css.CssFile;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -77,7 +76,8 @@ public class LessFileTest {
 
     final InputStream importerInputStream = new ByteArrayInputStream(
         "body{\n\t@import \"import-1.less\";\n}".getBytes());
-    final InputStream importedInputStream = new ByteArrayInputStream("div{\n\tcolor: red;\n}".getBytes());
+    final InputStream importedInputStream = new ByteArrayInputStream(
+        "div{\n\tcolor: red;\n}".getBytes());
 
     importerContentProperties.put("jcr:data", importerInputStream);
     importedContentProperties.put("jcr:data", importedInputStream);
@@ -127,8 +127,8 @@ public class LessFileTest {
 
     lessFile = resource.adaptTo(LessFile.class);
 
-    assertEquals("body{\n" + "\t@import \"import-1.less\";\n" + "}", Objects.requireNonNull(
-        lessFile).getFileContent());
+    assertEquals("body{\n" + "\t@import \"import-1.less\";\n" + "}",
+        Objects.requireNonNull(lessFile).getFileContent());
   }
 
   @Test
@@ -137,7 +137,8 @@ public class LessFileTest {
 
     final InputStream importerInputStream = new ByteArrayInputStream(
         "body{\n\t@import \"import-1.png\";\n}".getBytes());
-    final InputStream importedInputStream = new ByteArrayInputStream("div{\n\tcolor: red;\n}".getBytes());
+    final InputStream importedInputStream = new ByteArrayInputStream(
+        "div{\n\tcolor: red;\n}".getBytes());
 
     importerContentProperties.put("jcr:data", importerInputStream);
     importedContentProperties.put("jcr:data", importedInputStream);
