@@ -14,3 +14,8 @@ node_modules/
 
 package-lock.json
 npm-debug.log`
+
+\.settings
+\.project
+\.checkstyle
+\.classpath
