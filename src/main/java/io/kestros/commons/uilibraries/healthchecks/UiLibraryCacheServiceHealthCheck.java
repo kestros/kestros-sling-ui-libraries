@@ -19,6 +19,7 @@
 
 package io.kestros.commons.uilibraries.healthchecks;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.kestros.commons.osgiserviceutils.healthchecks.BaseManagedServiceHealthCheck;
 import io.kestros.commons.osgiserviceutils.services.cache.CacheService;
 import io.kestros.commons.uilibraries.services.cache.UiLibraryCacheService;
@@ -36,6 +37,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * Health Check that looks to see if the UiLibraryCacheService is active and running properly.
  */
+@SuppressFBWarnings("RI_REDUNDANT_INTERFACES")
 @Component
 @HealthCheckService(name = "UI Library Cache Service Health Check",
                     tags = {"kestros", "ui-libraries"})
