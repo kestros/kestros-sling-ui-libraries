@@ -19,6 +19,7 @@
 
 package io.kestros.commons.uilibraries.healthchecks;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.kestros.commons.osgiserviceutils.healthchecks.BaseManagedServiceHealthCheck;
 import io.kestros.commons.osgiserviceutils.services.ManagedService;
 import io.kestros.commons.uilibraries.services.minification.UiLibraryMinificationService;
@@ -36,6 +37,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * Health Check for {@link UiLibraryMinificationService}.
  */
+@SuppressFBWarnings("RI_REDUNDANT_INTERFACES")
 @Component
 @HealthCheckService(name = "UI Library Minification Service Health Check",
                     tags = {"kestros", "ui-libraries"})
