@@ -19,13 +19,14 @@
 
 package io.kestros.commons.uilibraries.services.minification;
 
+import io.kestros.commons.osgiserviceutils.services.ManagedService;
 import io.kestros.commons.uilibraries.exceptions.ScriptCompressionException;
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
 
 /**
  * Service for determining how CSS and JS scripts will be compressed/minified.
  */
-public interface UiLibraryMinificationService {
+public interface UiLibraryMinificationService extends ManagedService {
 
   /**
    * Compressed the specified string as a ScriptType.

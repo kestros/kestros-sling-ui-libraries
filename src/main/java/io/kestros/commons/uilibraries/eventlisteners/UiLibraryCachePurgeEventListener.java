@@ -26,13 +26,16 @@ import io.kestros.commons.uilibraries.services.cache.UiLibraryCacheService;
 import java.util.List;
 import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.apache.sling.api.resource.observation.ResourceChangeListener;
+import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Purges cached UiLibrary CSS and JavaScript on caches after changes under /apps, /etc, and /libs.
  */
-@Component(service = ResourceChangeListener.class,
+@Component(service = {ResourceChangeListener.class, UiLibraryCachePurgeEventListener.class},
            property = {ResourceChangeListener.CHANGES + "=ADDED",
                ResourceChangeListener.CHANGES + "=CHANGED",
                ResourceChangeListener.CHANGES + "=REMOVED",
@@ -43,8 +46,21 @@ import org.osgi.service.component.annotations.Reference;
            immediate = true)
 public class UiLibraryCachePurgeEventListener extends BaseCachePurgeOnResourceChangeEventListener {
 
+  private static final Logger LOG = LoggerFactory.getLogger(
+      BaseCachePurgeOnResourceChangeEventListener.class);
+
   @Reference
   private ResourceResolverFactory resourceResolverFactory;
+
+  @Override
+  public String getDisplayName() {
+    return "UI Library Cache Purge Event Listener";
+  }
+
+  @Override
+  public void deactivate(ComponentContext componentContext) {
+    LOG.info("Deactivating UiLibraryCachePurgeEventListener.");
+  }
 
   @Override
   protected String getServiceUserName() {
@@ -65,4 +81,5 @@ public class UiLibraryCachePurgeEventListener extends BaseCachePurgeOnResourceCh
   public ResourceResolverFactory getResourceResolverFactory() {
     return resourceResolverFactory;
   }
+
 }
