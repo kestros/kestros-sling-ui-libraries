@@ -19,44 +19,44 @@
 
 package io.kestros.commons.uilibraries.healthchecks;
 
-import io.kestros.commons.uilibraries.services.cache.UiLibraryCacheService;
+import io.kestros.commons.osgiserviceutils.healthchecks.BaseManagedServiceHealthCheck;
+import io.kestros.commons.osgiserviceutils.services.ManagedService;
+import io.kestros.commons.uilibraries.eventlisteners.UiLibraryCachePurgeEventListener;
 import org.apache.felix.hc.annotation.Async;
 import org.apache.felix.hc.annotation.HealthCheckMBean;
 import org.apache.felix.hc.annotation.HealthCheckService;
 import org.apache.felix.hc.annotation.ResultTTL;
 import org.apache.felix.hc.annotation.Sticky;
-import org.apache.felix.hc.api.FormattingResultLog;
 import org.apache.felix.hc.api.HealthCheck;
-import org.apache.felix.hc.api.Result;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
- * Health Check that looks to see if the UiLibraryCacheService is active and running properly.
+ * Health Check for {@link UiLibraryCachePurgeEventListener}.
  */
 @Component
-@HealthCheckService(name = "UiLibraryCacheService Check",
+@HealthCheckService(name = "UI Library Cache Purge Event ListenerHealth Check",
                     tags = {"kestros", "ui-libraries"})
 @Async(intervalInSec = 60)
 @ResultTTL(resultCacheTtlInMs = 10000)
-@HealthCheckMBean(name = "UiLibraryCacheServiceHealthCheck")
+@HealthCheckMBean(name = "UiLibraryCachePurgeEventListenerServiceHealthCheck")
 @Sticky(keepNonOkResultsStickyForSec = 10)
-public class UiLibraryCacheServiceHealthCheck implements HealthCheck {
+public class UiLibraryCachePurgeEventListenerHealthCheck extends BaseManagedServiceHealthCheck
+    implements HealthCheck {
 
   @Reference(cardinality = ReferenceCardinality.OPTIONAL,
              policyOption = ReferencePolicyOption.GREEDY)
-  private UiLibraryCacheService uiLibraryCacheService;
+  private UiLibraryCachePurgeEventListener uiLibraryCachePurgeEventListener;
 
   @Override
-  public Result execute() {
-    FormattingResultLog log = new FormattingResultLog();
-    if (uiLibraryCacheService == null) {
-      log.critical("No UiLibraryCacheService is registered.");
-    } else {
-      log.info("UiLibraryCacheService is registered and running properly.");
-    }
-    return new Result(log);
+  public ManagedService getCacheService() {
+    return uiLibraryCachePurgeEventListener;
+  }
+
+  @Override
+  public String getServiceName() {
+    return "UI Library Cache Purge Event Listener";
   }
 }

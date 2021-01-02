@@ -27,11 +27,16 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.kestros.commons.uilibraries.exceptions.CssCompressionException;
 import io.kestros.commons.uilibraries.exceptions.JavaScriptCompressionException;
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
+import io.kestros.commons.uilibraries.services.cache.impl.JcrFileUiLibraryCacheService;
 import io.kestros.commons.uilibraries.services.minification.UiLibraryMinificationService;
 import java.io.StringReader;
 import java.io.StringWriter;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.felix.hc.api.FormattingResultLog;
+import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Service which compresses CSS and JavaScript Strings for
@@ -42,6 +47,28 @@ import org.osgi.service.component.annotations.Component;
            service = UiLibraryMinificationService.class,
            property = "service.ranking:Integer=100")
 public class BaseUiLibraryMinificationService implements UiLibraryMinificationService {
+
+  private static final Logger LOG = LoggerFactory.getLogger(BaseUiLibraryMinificationService.class);
+
+  @Override
+  public String getDisplayName() {
+    return "UI Library Minification Service";
+  }
+
+  @Override
+  public void activate(ComponentContext componentContext) {
+    LOG.info("Activating BaseUiLibraryMinificationService.");
+  }
+
+  @Override
+  public void deactivate(ComponentContext componentContext) {
+    LOG.info("Deactivating BaseUiLibraryMinificationService.");
+  }
+
+  @Override
+  public void runAdditionalHealthChecks(FormattingResultLog log) {
+
+  }
 
   /**
    * Compresses specified CSS string.
@@ -99,4 +126,5 @@ public class BaseUiLibraryMinificationService implements UiLibraryMinificationSe
       return getMinifiedCssOutput(scriptOutput);
     }
   }
+
 }
