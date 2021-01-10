@@ -23,6 +23,7 @@ import static io.kestros.commons.validation.utils.CommonValidators.hasFileExtens
 
 import io.kestros.commons.structuredslingmodels.filetypes.FileType;
 import io.kestros.commons.validation.ModelValidationMessageType;
+import io.kestros.commons.validation.models.BaseModelValidationRegistrationService;
 import io.kestros.commons.validation.models.ModelValidator;
 import io.kestros.commons.validation.services.ModelValidatorRegistrationService;
 import java.util.ArrayList;
@@ -32,7 +33,8 @@ import java.util.List;
  * Baseline validation for {@link ScriptType} implementations. Checks that nt:file Resources have
  * the proper extension before considering them valid.
  */
-public abstract class BaseScriptFileValidationService implements ModelValidatorRegistrationService {
+public abstract class BaseScriptFileValidationService extends BaseModelValidationRegistrationService
+    implements ModelValidatorRegistrationService {
 
   /**
    * FileType to validate model against.

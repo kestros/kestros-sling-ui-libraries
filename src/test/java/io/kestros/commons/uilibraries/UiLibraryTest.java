@@ -30,6 +30,8 @@ import static org.mockito.Mockito.spy;
 import io.kestros.commons.osgiserviceutils.exceptions.CacheRetrievalException;
 import io.kestros.commons.structuredslingmodels.exceptions.InvalidResourceTypeException;
 import io.kestros.commons.uilibraries.services.cache.UiLibraryCacheService;
+import io.kestros.commons.uilibraries.services.compilation.UiLibraryCompilationService;
+import io.kestros.commons.uilibraries.services.compilation.impl.UiLibraryCompilationServiceImpl;
 import io.kestros.commons.uilibraries.services.minification.UiLibraryMinificationService;
 import io.kestros.commons.uilibraries.services.minification.impl.BaseUiLibraryMinificationService;
 import java.io.ByteArrayInputStream;
@@ -49,6 +51,7 @@ public class UiLibraryTest {
 
   private UiLibrary uiLibrary;
   private UiLibraryCacheService uiLibraryCacheService;
+  private UiLibraryCompilationService uiLibraryCompilationService;
   private UiLibraryMinificationService minificationService;
 
   private Resource resource;
@@ -68,6 +71,7 @@ public class UiLibraryTest {
 
     uiLibraryCacheService = mock(UiLibraryCacheService.class);
     minificationService = new BaseUiLibraryMinificationService();
+    uiLibraryCompilationService = new UiLibraryCompilationServiceImpl();
 
     context.registerService(UiLibraryCacheService.class, uiLibraryCacheService);
     fileProperties.put("jcr:primaryType", "nt:file");
@@ -172,6 +176,7 @@ public class UiLibraryTest {
   @Test
   public void testGetOutputWhenCss() throws CacheRetrievalException, InvalidResourceTypeException {
     context.registerService(UiLibraryMinificationService.class, minificationService);
+    context.registerService(UiLibraryCompilationService.class, uiLibraryCompilationService);
 
     resource = context.create().resource("/ui-library", properties);
 
@@ -198,6 +203,7 @@ public class UiLibraryTest {
   public void testGetOutputWhenCssAndMinified()
       throws CacheRetrievalException, InvalidResourceTypeException {
     context.registerService(UiLibraryMinificationService.class, minificationService);
+    context.registerInjectActivateService(uiLibraryCompilationService);
 
     resource = context.create().resource("/ui-library", properties);
 
@@ -205,7 +211,8 @@ public class UiLibraryTest {
     context.create().resource("/ui-library/css", cssFolderProperties);
     context.create().resource("/ui-library/css/file.css", fileProperties);
 
-    final InputStream cssInputStream = new ByteArrayInputStream("body{ color:red;}".getBytes());
+    final InputStream cssInputStream = new ByteArrayInputStream(
+        "body {\n\tcolor:red;\n}".getBytes());
 
     fileContentProperties.put("jcr:data", cssInputStream);
     fileContentProperties.put("jcr:mimeType", "text/css");
@@ -224,6 +231,7 @@ public class UiLibraryTest {
   public void testGetOutputWhenCssAndMinificationServiceIsNull()
       throws CacheRetrievalException, InvalidResourceTypeException {
     resource = context.create().resource("/ui-library", properties);
+    context.registerService(UiLibraryCompilationService.class, uiLibraryCompilationService);
 
     cssFolderProperties.put("include", new String[]{"file.css"});
     context.create().resource("/ui-library/css", cssFolderProperties);
@@ -248,6 +256,7 @@ public class UiLibraryTest {
   @Test
   public void testGetCssOutputWhenNoCssResource()
       throws CacheRetrievalException, InvalidResourceTypeException {
+    context.registerService(UiLibraryCompilationService.class, uiLibraryCompilationService);
     resource = context.create().resource("/ui-library", properties);
 
     uiLibrary = resource.adaptTo(UiLibrary.class);
@@ -261,6 +270,8 @@ public class UiLibraryTest {
   @Test
   public void testGetJavaScriptOutputWhenNoJsResource()
       throws CacheRetrievalException, InvalidResourceTypeException {
+    context.registerService(UiLibraryMinificationService.class, minificationService);
+    context.registerInjectActivateService(uiLibraryCompilationService);
     resource = context.create().resource("/ui-library", properties);
 
     uiLibrary = resource.adaptTo(UiLibrary.class);
@@ -319,6 +330,7 @@ public class UiLibraryTest {
 
   @Test
   public void testGetSupportedScriptTypesWhenHasLessFiles() throws InvalidResourceTypeException {
+    context.registerService(UiLibraryCompilationService.class, uiLibraryCompilationService);
 
     final InputStream inputStream = new ByteArrayInputStream("div{\n\tcolor: red;\n}".getBytes());
 
@@ -345,6 +357,7 @@ public class UiLibraryTest {
   @Test
   public void testGetSupportedScriptTypesWhenHasLessFilesWithTextCssMimeType()
       throws InvalidResourceTypeException {
+    context.registerService(UiLibraryCompilationService.class, uiLibraryCompilationService);
 
     final InputStream inputStream = new ByteArrayInputStream("div{\n\tcolor: red;\n}".getBytes());
 

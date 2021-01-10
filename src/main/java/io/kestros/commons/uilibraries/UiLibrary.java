@@ -24,7 +24,6 @@ import static io.kestros.commons.structuredslingmodels.utils.SlingModelUtils.get
 import static io.kestros.commons.uilibraries.filetypes.ScriptType.CSS;
 import static io.kestros.commons.uilibraries.filetypes.ScriptType.JAVASCRIPT;
 import static io.kestros.commons.uilibraries.utils.UiLibraryUtils.getCssScriptTypes;
-import static io.kestros.commons.uilibraries.utils.UiLibraryUtils.getScriptOutput;
 
 import io.kestros.commons.structuredslingmodels.BaseResource;
 import io.kestros.commons.structuredslingmodels.annotation.KestrosModel;
@@ -33,11 +32,10 @@ import io.kestros.commons.structuredslingmodels.exceptions.InvalidResourceTypeEx
 import io.kestros.commons.structuredslingmodels.exceptions.ModelAdaptionException;
 import io.kestros.commons.structuredslingmodels.exceptions.ResourceNotFoundException;
 import io.kestros.commons.structuredslingmodels.filetypes.BaseFile;
-import io.kestros.commons.uilibraries.exceptions.ScriptCompressionException;
 import io.kestros.commons.uilibraries.filetypes.ScriptFile;
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
 import io.kestros.commons.uilibraries.filetypes.javascript.JavaScriptFile;
-import io.kestros.commons.uilibraries.services.minification.UiLibraryMinificationService;
+import io.kestros.commons.uilibraries.services.compilation.UiLibraryCompilationService;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -64,7 +62,7 @@ public class UiLibrary extends BaseResource {
 
   @OSGiService
   @Optional
-  protected UiLibraryMinificationService uiLibraryMinificationService;
+  protected UiLibraryCompilationService uiLibraryCompilationService;
 
   /**
    * Absolute path to the rendered CSS script.
@@ -110,21 +108,10 @@ public class UiLibrary extends BaseResource {
    */
   public String getOutput(final ScriptType scriptType, final boolean minify)
       throws InvalidResourceTypeException {
-    String output = getDependenciesOutput(scriptType);
-
-    output += getScriptOutput(scriptType, this, false);
-
-    if (minify) {
-      if (uiLibraryMinificationService != null) {
-        try {
-          return uiLibraryMinificationService.getMinifiedOutput(output, scriptType);
-        } catch (final ScriptCompressionException e) {
-          LOG.warn("Unable to minify {} output for {}. {}", scriptType.getName(), getPath(),
-              e.getMessage());
-        }
-      }
+    if (uiLibraryCompilationService != null) {
+      return uiLibraryCompilationService.getUiLibraryOutput(this, scriptType, minify);
     }
-    return output;
+    return null;
   }
 
   /**
@@ -265,14 +252,6 @@ public class UiLibrary extends BaseResource {
     throw new InvalidResourceTypeException("", UiLibrary.class);
   }
 
-  private String getDependenciesOutput(final ScriptType scriptType)
-      throws InvalidResourceTypeException {
-    final StringBuilder output = new StringBuilder();
 
-    for (final UiLibrary dependency : getDependencies()) {
-      output.append(dependency.getOutput(scriptType, false));
-    }
-    return output.toString();
-  }
 
 }

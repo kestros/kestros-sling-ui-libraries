@@ -35,8 +35,9 @@ import io.kestros.commons.uilibraries.UiLibrary;
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
 import io.kestros.commons.uilibraries.services.cache.UiLibraryCacheService;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.Nonnull;
-import org.apache.felix.hc.api.FormattingResultLog;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.apache.sling.event.jobs.JobManager;
@@ -192,5 +193,12 @@ public class JcrFileUiLibraryCacheService extends JcrFileCacheService
   @Override
   protected ResourceResolverFactory getResourceResolverFactory() {
     return resourceResolverFactory;
+  }
+
+  @Override
+  protected List<String> getRequiredResourcePaths() {
+    List<String> requiredPaths = new ArrayList<>();
+    requiredPaths.add(getServiceCacheRootPath());
+    return requiredPaths;
   }
 }
