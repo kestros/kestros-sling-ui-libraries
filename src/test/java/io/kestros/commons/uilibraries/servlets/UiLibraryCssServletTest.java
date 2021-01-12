@@ -38,6 +38,7 @@ import io.kestros.commons.osgiserviceutils.exceptions.CacheRetrievalException;
 import io.kestros.commons.uilibraries.UiLibrary;
 import io.kestros.commons.uilibraries.config.UiLibraryConfigurationService;
 import io.kestros.commons.uilibraries.services.cache.UiLibraryCacheService;
+import io.kestros.commons.uilibraries.services.compilation.impl.UiLibraryCompilationServiceImpl;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -59,6 +60,7 @@ public class UiLibraryCssServletTest {
 
   private UiLibraryCacheService uiLibraryCacheService;
   private UiLibraryConfigurationService uiLibraryConfigurationService;
+  private UiLibraryCompilationServiceImpl uiLibraryCompilationService;
 
   private UiLibraryCssServlet servlet;
 
@@ -73,7 +75,10 @@ public class UiLibraryCssServletTest {
     context.addModelsForPackage("io.kestros");
 
     uiLibraryConfigurationService = mock(UiLibraryConfigurationService.class);
+    uiLibraryCompilationService = new UiLibraryCompilationServiceImpl();
     context.registerService(UiLibraryConfigurationService.class, uiLibraryConfigurationService);
+    context.registerInjectActivateService(uiLibraryCompilationService);
+
 
     uiLibraryCacheService = mock(UiLibraryCacheService.class);
     when(uiLibraryCacheService.getCachedOutput(any(), any(), anyBoolean())).thenReturn("output");

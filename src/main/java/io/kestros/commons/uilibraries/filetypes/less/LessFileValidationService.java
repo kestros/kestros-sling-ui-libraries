@@ -23,8 +23,12 @@ import io.kestros.commons.structuredslingmodels.BaseSlingModel;
 import io.kestros.commons.structuredslingmodels.filetypes.FileType;
 import io.kestros.commons.uilibraries.filetypes.BaseScriptFileValidationService;
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
+import io.kestros.commons.validation.services.ModelValidatorRegistrationHandlerService;
 import io.kestros.commons.validation.services.ModelValidatorRegistrationService;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * ModeValidationService for validating {@link LessFile}.
@@ -32,6 +36,15 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true,
            service = ModelValidatorRegistrationService.class)
 public class LessFileValidationService extends BaseScriptFileValidationService {
+
+  @Reference(cardinality = ReferenceCardinality.OPTIONAL,
+             policyOption = ReferencePolicyOption.GREEDY)
+  private ModelValidatorRegistrationHandlerService modelValidatorRegistrationHandlerService;
+
+  @Override
+  public ModelValidatorRegistrationHandlerService getModelValidatorRegistrationHandlerService() {
+    return modelValidatorRegistrationHandlerService;
+  }
 
   @Override
   public FileType getFileType() {

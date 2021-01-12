@@ -26,6 +26,8 @@ import static org.mockito.Mockito.mock;
 import io.kestros.commons.osgiserviceutils.exceptions.CacheRetrievalException;
 import io.kestros.commons.uilibraries.UiLibrary;
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
+import io.kestros.commons.uilibraries.services.compilation.impl.UiLibraryCompilationServiceImpl;
+import io.kestros.commons.uilibraries.services.minification.UiLibraryMinificationService;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.sling.api.resource.Resource;
@@ -42,6 +44,8 @@ public class JcrFileUiLibraryCacheServiceTest {
   public SlingContext context = new SlingContext();
 
   private JcrFileUiLibraryCacheService cacheService;
+  private UiLibraryCompilationServiceImpl uiLibraryCompilationService;
+  private UiLibraryMinificationService uiLibraryMinificationService;
   private ResourceResolverFactory resourceResolverFactory;
   private JobManager jobManager;
   private UiLibrary uiLibrary;
@@ -55,9 +59,11 @@ public class JcrFileUiLibraryCacheServiceTest {
     cacheService = new JcrFileUiLibraryCacheService();
     resourceResolverFactory = mock(ResourceResolverFactory.class);
     jobManager = mock(JobManager.class);
+    uiLibraryCompilationService = new UiLibraryCompilationServiceImpl();
     context.registerService(ResourceResolverFactory.class, resourceResolverFactory);
     context.registerService(JobManager.class, jobManager);
     context.registerInjectActivateService(cacheService);
+    context.registerInjectActivateService(uiLibraryCompilationService);
 
     context.create().resource("/var/cache/ui-libraries");
   }
