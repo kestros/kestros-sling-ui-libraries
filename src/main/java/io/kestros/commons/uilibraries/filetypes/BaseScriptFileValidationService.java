@@ -21,6 +21,7 @@ package io.kestros.commons.uilibraries.filetypes;
 
 import static io.kestros.commons.validation.utils.CommonValidators.hasFileExtension;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.kestros.commons.structuredslingmodels.filetypes.FileType;
 import io.kestros.commons.validation.ModelValidationMessageType;
 import io.kestros.commons.validation.models.BaseModelValidationRegistrationService;
@@ -33,6 +34,7 @@ import java.util.List;
  * Baseline validation for {@link ScriptType} implementations. Checks that nt:file Resources have
  * the proper extension before considering them valid.
  */
+@SuppressFBWarnings("RI_REDUNDANT_INTERFACES")
 public abstract class BaseScriptFileValidationService extends BaseModelValidationRegistrationService
     implements ModelValidatorRegistrationService {
 
