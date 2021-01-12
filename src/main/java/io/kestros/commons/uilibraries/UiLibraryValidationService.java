@@ -45,6 +45,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * ModelValidationService for validation {@link UiLibrary} models.
  */
+@SuppressFBWarnings("RI_REDUNDANT_INTERFACES")
 @Component(immediate = true,
            service = ModelValidatorRegistrationService.class)
 public class UiLibraryValidationService extends BaseModelValidationRegistrationService
