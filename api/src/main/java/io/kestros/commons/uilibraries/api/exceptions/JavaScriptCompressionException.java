@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package io.kestros.commons.uilibraries.exceptions;
+package io.kestros.commons.uilibraries.api.exceptions;
 
 /**
  * Exception thrown when JavaScript output failed to be minified/compressed.

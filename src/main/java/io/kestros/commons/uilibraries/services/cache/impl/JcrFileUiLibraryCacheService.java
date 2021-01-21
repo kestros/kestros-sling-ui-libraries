@@ -32,8 +32,8 @@ import io.kestros.commons.structuredslingmodels.exceptions.InvalidResourceTypeEx
 import io.kestros.commons.structuredslingmodels.exceptions.MatchingResourceTypeNotFoundException;
 import io.kestros.commons.structuredslingmodels.exceptions.ResourceNotFoundException;
 import io.kestros.commons.uilibraries.UiLibrary;
+import io.kestros.commons.uilibraries.api.services.UiLibraryCacheService;
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
-import io.kestros.commons.uilibraries.services.cache.UiLibraryCacheService;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

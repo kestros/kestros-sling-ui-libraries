@@ -23,7 +23,7 @@ import static io.kestros.commons.uilibraries.utils.UiLibraryUtils.getScriptOutpu
 
 import io.kestros.commons.structuredslingmodels.exceptions.InvalidResourceTypeException;
 import io.kestros.commons.uilibraries.UiLibrary;
-import io.kestros.commons.uilibraries.exceptions.ScriptCompressionException;
+import io.kestros.commons.uilibraries.api.exceptions.ScriptCompressionException;
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
 import io.kestros.commons.uilibraries.services.compilation.UiLibraryCompilationService;
 import io.kestros.commons.uilibraries.services.minification.UiLibraryMinificationService;

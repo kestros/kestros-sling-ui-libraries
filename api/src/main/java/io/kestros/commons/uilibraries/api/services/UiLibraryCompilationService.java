@@ -17,15 +17,15 @@
  * under the License.
  */
 
-package io.kestros.commons.uilibraries.services.compilation;
+package io.kestros.commons.uilibraries.api.services;
 
 import io.kestros.commons.osgiserviceutils.services.ManagedService;
 import io.kestros.commons.structuredslingmodels.exceptions.InvalidResourceTypeException;
-import io.kestros.commons.uilibraries.UiLibrary;
-import io.kestros.commons.uilibraries.filetypes.ScriptType;
+import io.kestros.commons.uilibraries.api.models.ScriptTypeInterface;
+import io.kestros.commons.uilibraries.api.models.UiLibraryInterface;
 
 /**
- * Compiles CSS and JS for {@link UiLibrary}.
+ * Compiles CSS and JS for {@link UiLibraryInterface}.
  */
 public interface UiLibraryCompilationService extends ManagedService {
 
@@ -39,7 +39,7 @@ public interface UiLibraryCompilationService extends ManagedService {
    * @throws InvalidResourceTypeException Thrown when a referenced dependency could not be
    *     adapted to UiLibrary.
    */
-  String getUiLibraryOutput(UiLibrary uiLibrary, ScriptType scriptType, Boolean minify)
-      throws InvalidResourceTypeException;
+  String getUiLibraryOutput(UiLibraryInterface uiLibrary, ScriptTypeInterface scriptType,
+      Boolean minify) throws InvalidResourceTypeException;
 
 }

@@ -17,13 +17,13 @@
  * under the License.
  */
 
-package io.kestros.commons.uilibraries.services.cache;
+package io.kestros.commons.uilibraries.api.services;
 
 import io.kestros.commons.osgiserviceutils.exceptions.CacheBuilderException;
 import io.kestros.commons.osgiserviceutils.exceptions.CacheRetrievalException;
 import io.kestros.commons.osgiserviceutils.services.cache.CacheService;
-import io.kestros.commons.uilibraries.UiLibrary;
-import io.kestros.commons.uilibraries.filetypes.ScriptType;
+import io.kestros.commons.uilibraries.api.models.ScriptTypeInterface;
+import io.kestros.commons.uilibraries.api.models.UiLibraryInterface;
 
 /**
  * Service for handling UiLibrary caches.
@@ -39,7 +39,7 @@ public interface UiLibraryCacheService extends CacheService {
    * @return The cached output for a specified UiLibrary.
    * @throws CacheRetrievalException Cached output could not be retrieved.
    */
-  String getCachedOutput(UiLibrary uiLibrary, ScriptType scriptType, boolean minified)
+  String getCachedOutput(UiLibraryInterface uiLibrary, ScriptTypeInterface scriptType, boolean minified)
       throws CacheRetrievalException;
 
   /**
@@ -50,7 +50,7 @@ public interface UiLibraryCacheService extends CacheService {
    * @throws CacheBuilderException Cache failed to build for specified UiLibrary.
    */
   @SuppressWarnings("RedundantThrows")
-  void cacheUiLibraryScripts(UiLibrary uiLibrary, boolean cacheMinified)
+  void cacheUiLibraryScripts(UiLibraryInterface uiLibrary, boolean cacheMinified)
       throws CacheBuilderException;
 
   /**

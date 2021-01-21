@@ -17,26 +17,21 @@
  * under the License.
  */
 
-package io.kestros.commons.uilibraries.services.minification;
-
-import io.kestros.commons.osgiserviceutils.services.ManagedService;
-import io.kestros.commons.uilibraries.exceptions.ScriptCompressionException;
-import io.kestros.commons.uilibraries.filetypes.ScriptType;
+package io.kestros.commons.uilibraries.api.exceptions;
 
 /**
- * Service for determining how CSS and JS scripts will be compressed/minified.
+ * Exception thrown when CSS output failed to be minified/compressed.
  */
-public interface UiLibraryMinificationService extends ManagedService {
+public class CssCompressionException extends ScriptCompressionException {
+
+  private static final long serialVersionUID = 8486128711415674952L;
 
   /**
-   * Compressed the specified string as a ScriptType.
+   * Exception thrown when CSS output failed to be minified/compressed.
    *
-   * @param scriptOutput string to compress.
-   * @param scriptType ScriptType to compress the String as.
-   * @return The specified String, compressed/minified.
-   * @throws ScriptCompressionException Passed script failed to compress.
+   * @param message Cause message.
    */
-  String getMinifiedOutput(String scriptOutput, ScriptType scriptType)
-      throws ScriptCompressionException;
-
+  public CssCompressionException(final String message) {
+    super(message);
+  }
 }
