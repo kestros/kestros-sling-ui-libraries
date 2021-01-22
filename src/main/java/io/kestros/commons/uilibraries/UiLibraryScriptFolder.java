@@ -19,12 +19,6 @@
 
 package io.kestros.commons.uilibraries;
 
-import static io.kestros.commons.structuredslingmodels.utils.FileModelUtils.getChildAsFileType;
-import static io.kestros.commons.structuredslingmodels.utils.SlingModelUtils.getChildAsBaseResource;
-
-import io.kestros.commons.structuredslingmodels.BaseResource;
-import io.kestros.commons.structuredslingmodels.exceptions.ChildResourceNotFoundException;
-import io.kestros.commons.structuredslingmodels.exceptions.InvalidResourceTypeException;
 import io.kestros.commons.uilibraries.filetypes.ScriptFile;
 import io.kestros.commons.uilibraries.filetypes.ScriptType;
 import java.util.ArrayList;
