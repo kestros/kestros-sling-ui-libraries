@@ -25,10 +25,9 @@ import io.kestros.commons.structuredslingmodels.BaseResource;
 import io.kestros.commons.structuredslingmodels.exceptions.ChildResourceNotFoundException;
 import io.kestros.commons.structuredslingmodels.filetypes.BaseFile;
 import io.kestros.commons.structuredslingmodels.utils.SlingModelUtils;
-import io.kestros.commons.uilibraries.api.models.ScriptFileInterface;
-import io.kestros.commons.uilibraries.api.models.ScriptTypeInterface;
-import io.kestros.commons.uilibraries.api.models.UiLibraryInterface;
-import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType;
+import io.kestros.commons.uilibraries.api.models.ScriptFile;
+import io.kestros.commons.uilibraries.api.models.ScriptType;
+import io.kestros.commons.uilibraries.api.models.UiLibrary;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.sling.api.resource.Resource;
@@ -37,43 +36,45 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Sling Model for {@link UiLibraryInterface} resources.
+ * Sling Model for {@link UiLibrary} resources.
  */
 @Model(adaptables = Resource.class,
        resourceType = "kes:UiLibrary")
-public class UiLibraryResource extends BaseResource implements UiLibraryInterface {
+public class UiLibraryResource extends BaseResource implements UiLibrary {
 
   private static final Logger LOG = LoggerFactory.getLogger(UiLibraryResource.class);
 
   @Override
   public String getCssPath() {
-    return getPath() + ScriptType.CSS.getExtension();
+    return getPath() + io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.CSS.getExtension();
   }
 
   @Override
   public String getJsPath() {
-    return getPath() + ScriptType.JAVASCRIPT.getExtension();
+    return getPath() + io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.JAVASCRIPT.getExtension();
   }
 
   @Override
-  public <T extends ScriptFileInterface> List<T> getScriptFiles(
-      List<ScriptTypeInterface> scriptTypes, String folderName) {
+  public <T extends ScriptFile> List<T> getScriptFiles(
+      List<ScriptType> scriptTypes, String folderName) {
     List<T> scriptFileList = new ArrayList<>();
 
     BaseResource folder = null;
     try {
 
-      if (ScriptType.CSS.getRootResourceName().equals(folderName)) {
-        folder = SlingModelUtils.getChildAsBaseResource(ScriptType.CSS.getName(), this);
-      } else if (ScriptType.JAVASCRIPT.getRootResourceName().equals(folderName)) {
-        folder = SlingModelUtils.getChildAsBaseResource(ScriptType.JAVASCRIPT.getName(), this);
+      if (io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.CSS.getRootResourceName().equals(folderName)) {
+        folder = SlingModelUtils.getChildAsBaseResource(
+            io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.CSS.getName(), this);
+      } else if (io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.JAVASCRIPT.getRootResourceName().equals(folderName)) {
+        folder = SlingModelUtils.getChildAsBaseResource(
+            io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.JAVASCRIPT.getName(), this);
       }
     } catch (ChildResourceNotFoundException e) {
       LOG.debug(String.format("Skipping %s retrieval for %s. No folder detected.", folderName,
           getPath()));
     }
     if (folder != null) {
-      for (ScriptTypeInterface scriptType : scriptTypes) {
+      for (ScriptType scriptType : scriptTypes) {
         for (BaseFile file : getChildrenOfFileType(folder, scriptType.getFileModelClass())) {
           scriptFileList.add((T) file);
         }

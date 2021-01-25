@@ -25,8 +25,7 @@ import io.kestros.commons.structuredslingmodels.annotation.KestrosModel;
 import io.kestros.commons.structuredslingmodels.exceptions.ModelAdaptionException;
 import io.kestros.commons.structuredslingmodels.filetypes.FileType;
 import io.kestros.commons.structuredslingmodels.utils.FileModelUtils;
-import io.kestros.commons.uilibraries.api.models.ScriptFileInterface;
-import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptFile;
+import io.kestros.commons.uilibraries.api.models.ScriptFile;
 import java.io.BufferedReader;
 import java.io.IOException;
 import org.apache.commons.lang3.StringUtils;
@@ -41,7 +40,7 @@ import org.slf4j.LoggerFactory;
 @KestrosModel
 @Model(adaptables = Resource.class,
        resourceType = "nt:file")
-public class LessCssFile extends ScriptFile implements ScriptFileInterface {
+public class LessCssFile extends ScriptFile implements ScriptFile {
 
   private static final Logger LOG = LoggerFactory.getLogger(LessCssFile.class);
 

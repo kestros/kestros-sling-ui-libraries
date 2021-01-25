@@ -66,9 +66,9 @@ public interface FrontendLibrary {
    *
    * @param scriptTypes Script types to retrieve.
    * @param folderName Folder to retrieve scripts from.
-   * @param <T> extends {@link ScriptFileInterface}.
+   * @param <T> extends {@link ScriptFile}.
    * @return Included script files.
    */
-  <T extends ScriptFileInterface> List<T> getScriptFiles(
-      final List<ScriptTypeInterface> scriptTypes, String folderName);
+  <T extends ScriptFile> List<T> getScriptFiles(
+      final List<ScriptType> scriptTypes, String folderName);
 }

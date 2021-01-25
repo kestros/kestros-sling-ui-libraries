@@ -25,7 +25,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import io.kestros.commons.uilibraries.api.exceptions.LibraryRetrievalException;
-import io.kestros.commons.uilibraries.api.models.UiLibraryInterface;
+import io.kestros.commons.uilibraries.api.models.UiLibrary;
 import io.kestros.commons.uilibraries.api.services.UiLibraryCacheService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryCompilationService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryConfigurationService;
@@ -75,7 +75,7 @@ public class UiLibraryCssServletTest {
 
   @Test
   public void testGetLibrary() throws LibraryRetrievalException {
-    UiLibraryInterface uiLibrary = mock(UiLibraryInterface.class);
+    UiLibrary uiLibrary = mock(UiLibrary.class);
     when(uiLibraryRetrievalService.getUiLibrary("/ui-library")).thenReturn(uiLibrary);
     assertEquals(uiLibrary, servlet.getLibrary("/ui-library"));
   }

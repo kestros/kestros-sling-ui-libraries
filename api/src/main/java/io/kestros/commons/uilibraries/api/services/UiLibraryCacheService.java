@@ -23,7 +23,7 @@ import io.kestros.commons.osgiserviceutils.exceptions.CacheBuilderException;
 import io.kestros.commons.osgiserviceutils.exceptions.CacheRetrievalException;
 import io.kestros.commons.osgiserviceutils.services.cache.CacheService;
 import io.kestros.commons.uilibraries.api.models.FrontendLibrary;
-import io.kestros.commons.uilibraries.api.models.ScriptTypeInterface;
+import io.kestros.commons.uilibraries.api.models.ScriptType;
 
 /**
  * Service for handling UiLibrary caches.
@@ -39,7 +39,7 @@ public interface UiLibraryCacheService extends CacheService {
    * @return The cached output for a specified UiLibrary.
    * @throws CacheRetrievalException Cached output could not be retrieved.
    */
-  String getCachedOutput(String libraryPath, ScriptTypeInterface scriptType, boolean minified)
+  String getCachedOutput(String libraryPath, ScriptType scriptType, boolean minified)
       throws CacheRetrievalException;
 
   /**
@@ -51,7 +51,7 @@ public interface UiLibraryCacheService extends CacheService {
    * @return The cached output for a specified UiLibrary.
    * @throws CacheRetrievalException Cached output could not be retrieved.
    */
-  String getCachedOutput(FrontendLibrary library, ScriptTypeInterface scriptType, boolean minified)
+  String getCachedOutput(FrontendLibrary library, ScriptType scriptType, boolean minified)
       throws CacheRetrievalException;
 
   /**
@@ -65,5 +65,5 @@ public interface UiLibraryCacheService extends CacheService {
    */
   @SuppressWarnings("RedundantThrows")
   void cacheUiLibraryScript(String libraryPath, String output,
-      ScriptTypeInterface scriptTypeInterface, boolean isMinified) throws CacheBuilderException;
+      ScriptType scriptTypeInterface, boolean isMinified) throws CacheBuilderException;
 }

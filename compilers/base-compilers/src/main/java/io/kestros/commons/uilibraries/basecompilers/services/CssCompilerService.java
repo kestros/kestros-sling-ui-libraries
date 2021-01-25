@@ -21,7 +21,7 @@ package io.kestros.commons.uilibraries.basecompilers.services;
 
 import static io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.CSS;
 
-import io.kestros.commons.uilibraries.api.models.ScriptTypeInterface;
+import io.kestros.commons.uilibraries.api.models.ScriptType;
 import io.kestros.commons.uilibraries.api.services.CssScriptTypeCompilerService;
 import io.kestros.commons.uilibraries.api.services.ScriptTypeCompiler;
 import java.util.Collections;
@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
 public class CssCompilerService implements ScriptTypeCompiler, CssScriptTypeCompilerService {
 
   @Override
-  public List<ScriptTypeInterface> getScriptTypes() {
+  public List<ScriptType> getScriptTypes() {
     return Collections.singletonList(CSS);
   }
 

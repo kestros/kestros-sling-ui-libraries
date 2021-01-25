@@ -29,7 +29,7 @@ import io.kestros.commons.osgiserviceutils.services.cache.impl.JcrFileCacheServi
 import io.kestros.commons.structuredslingmodels.exceptions.ModelAdaptionException;
 import io.kestros.commons.structuredslingmodels.filetypes.BaseFile;
 import io.kestros.commons.uilibraries.api.models.FrontendLibrary;
-import io.kestros.commons.uilibraries.api.models.ScriptTypeInterface;
+import io.kestros.commons.uilibraries.api.models.ScriptType;
 import io.kestros.commons.uilibraries.api.services.UiLibraryCacheService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryCompilationService;
 import java.io.IOException;
@@ -123,7 +123,7 @@ public class JcrFileUiLibraryCacheService extends JcrFileCacheService
   }
 
   @Override
-  public String getCachedOutput(String libraryPath, ScriptTypeInterface scriptType,
+  public String getCachedOutput(String libraryPath, ScriptType scriptType,
       boolean minified) throws CacheRetrievalException {
     String cachedResourcePath = String.format("%s%s%s", getServiceCacheRootPath(), libraryPath,
         scriptType.getExtension());
@@ -141,14 +141,14 @@ public class JcrFileUiLibraryCacheService extends JcrFileCacheService
   }
 
   @Override
-  public String getCachedOutput(FrontendLibrary library, ScriptTypeInterface scriptType,
+  public String getCachedOutput(FrontendLibrary library, ScriptType scriptType,
       boolean minified) throws CacheRetrievalException {
     return getCachedOutput(library.getPath(), scriptType, minified);
   }
 
   @Override
   public void cacheUiLibraryScript(String libraryPath, String content,
-      ScriptTypeInterface scriptType, boolean isMinified) throws CacheBuilderException {
+      ScriptType scriptType, boolean isMinified) throws CacheBuilderException {
     if (isMinified) {
       createCacheFile(content, String.format("%s.min%s", libraryPath, scriptType.getExtension()),
           scriptType);

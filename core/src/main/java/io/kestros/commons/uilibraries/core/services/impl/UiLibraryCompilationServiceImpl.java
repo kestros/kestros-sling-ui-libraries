@@ -24,13 +24,12 @@ import static io.kestros.commons.osgiserviceutils.utils.OsgiServiceUtils.getAllO
 import io.kestros.commons.structuredslingmodels.exceptions.InvalidResourceTypeException;
 import io.kestros.commons.uilibraries.api.exceptions.NoMatchingCompilerException;
 import io.kestros.commons.uilibraries.api.models.FrontendLibrary;
-import io.kestros.commons.uilibraries.api.models.ScriptFileInterface;
-import io.kestros.commons.uilibraries.api.models.ScriptTypeInterface;
+import io.kestros.commons.uilibraries.api.models.ScriptFile;
+import io.kestros.commons.uilibraries.api.models.ScriptType;
 import io.kestros.commons.uilibraries.api.services.CssScriptTypeCompilerService;
 import io.kestros.commons.uilibraries.api.services.JavaScriptScriptTypeCompilerService;
 import io.kestros.commons.uilibraries.api.services.ScriptTypeCompiler;
 import io.kestros.commons.uilibraries.api.services.UiLibraryCompilationService;
-import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -70,30 +69,32 @@ public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationServ
   @Override
   public void runAdditionalHealthChecks(FormattingResultLog log) {
     try {
-      getCompiler(Collections.singletonList(ScriptType.CSS), getCssCompilers());
+      getCompiler(Collections.singletonList(
+          io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.CSS), getCssCompilers());
     } catch (NoMatchingCompilerException e) {
       log.critical("CSS Compiler not found.");
     }
     try {
-      getCompiler(Collections.singletonList(ScriptType.JAVASCRIPT), getJavaScriptCompilers());
+      getCompiler(Collections.singletonList(
+          io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.JAVASCRIPT), getJavaScriptCompilers());
     } catch (NoMatchingCompilerException e) {
       log.critical("JavaScript Compiler not found.");
     }
   }
 
   @Override
-  public List<ScriptTypeInterface> getAllRegisteredScriptTypes() {
-    List<ScriptTypeInterface> scriptTypeList = new ArrayList<>();
+  public List<ScriptType> getAllRegisteredScriptTypes() {
+    List<ScriptType> scriptTypeList = new ArrayList<>();
     scriptTypeList.addAll(getRegisteredCssScriptTypes());
     scriptTypeList.addAll(getRegisteredJavaScriptScriptTypes());
     return scriptTypeList;
   }
 
   @Override
-  public List<ScriptTypeInterface> getRegisteredCssScriptTypes() {
-    List<ScriptTypeInterface> scriptTypeList = new ArrayList<>();
+  public List<ScriptType> getRegisteredCssScriptTypes() {
+    List<ScriptType> scriptTypeList = new ArrayList<>();
     for (CssScriptTypeCompilerService cssCompiler : getCssCompilers()) {
-      for (ScriptTypeInterface scriptType : cssCompiler.getScriptTypes()) {
+      for (ScriptType scriptType : cssCompiler.getScriptTypes()) {
         if (!scriptTypeList.contains(scriptType)) {
           scriptTypeList.add(scriptType);
         }
@@ -103,10 +104,10 @@ public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationServ
   }
 
   @Override
-  public List<ScriptTypeInterface> getRegisteredJavaScriptScriptTypes() {
-    List<ScriptTypeInterface> scriptTypeList = new ArrayList<>();
+  public List<ScriptType> getRegisteredJavaScriptScriptTypes() {
+    List<ScriptType> scriptTypeList = new ArrayList<>();
     for (JavaScriptScriptTypeCompilerService javaScriptCompiler : getJavaScriptCompilers()) {
-      for (ScriptTypeInterface scriptType : javaScriptCompiler.getScriptTypes()) {
+      for (ScriptType scriptType : javaScriptCompiler.getScriptTypes()) {
         if (!scriptTypeList.contains(scriptType)) {
           scriptTypeList.add(scriptType);
         }
@@ -132,10 +133,10 @@ public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationServ
 
   @Override
   public <T extends ScriptTypeCompiler> ScriptTypeCompiler getCompiler(
-      List<ScriptTypeInterface> scriptTypes, List<T> registeredCompilers)
+      List<ScriptType> scriptTypes, List<T> registeredCompilers)
       throws NoMatchingCompilerException {
     for (ScriptTypeCompiler compiler : registeredCompilers) {
-      List<ScriptTypeInterface> compilerScriptTypes = compiler.getScriptTypes();
+      List<ScriptType> compilerScriptTypes = compiler.getScriptTypes();
       if (compilerScriptTypes.size() >= scriptTypes.size() && compilerScriptTypes.containsAll(
           scriptTypes)) {
         return compiler;
@@ -143,7 +144,7 @@ public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationServ
     }
 
     StringBuilder scriptTypesStringBuilder = new StringBuilder();
-    for (ScriptTypeInterface scriptType : scriptTypes) {
+    for (ScriptType scriptType : scriptTypes) {
       if (StringUtils.isNotEmpty(scriptTypesStringBuilder.toString())) {
         scriptTypesStringBuilder.append(" ");
       }
@@ -155,12 +156,12 @@ public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationServ
   }
 
   @Override
-  public String getUiLibraryOutput(FrontendLibrary uiLibrary, ScriptTypeInterface scriptType,
+  public String getUiLibraryOutput(FrontendLibrary uiLibrary, ScriptType scriptType,
       Boolean minify) throws InvalidResourceTypeException, NoMatchingCompilerException {
     ScriptTypeCompiler compiler = getCompiler(
         getLibraryScriptTypes(uiLibrary, scriptType.getRootResourceName()), getCompilers());
     StringBuilder rawOutputStringBuilder = new StringBuilder();
-    for (ScriptFileInterface scriptFile : uiLibrary.getScriptFiles(compiler.getScriptTypes(),
+    for (ScriptFile scriptFile : uiLibrary.getScriptFiles(compiler.getScriptTypes(),
         scriptType.getRootResourceName())) {
       try {
         String fileContent = scriptFile.getFileContent();
@@ -178,12 +179,12 @@ public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationServ
     return compiler.getOutput(rawOutputStringBuilder.toString());
   }
 
-  List<ScriptTypeInterface> getLibraryScriptTypes(FrontendLibrary library, String folderName) {
-    List<ScriptTypeInterface> scriptTypes = new ArrayList<>();
-    for (ScriptFileInterface scriptFile : library.getScriptFiles(getAllRegisteredScriptTypes(),
+  List<ScriptType> getLibraryScriptTypes(FrontendLibrary library, String folderName) {
+    List<ScriptType> scriptTypes = new ArrayList<>();
+    for (ScriptFile scriptFile : library.getScriptFiles(getAllRegisteredScriptTypes(),
         folderName)) {
       if (!scriptTypes.contains(scriptFile.getFileType())) {
-        scriptTypes.add((ScriptTypeInterface) scriptFile.getFileType());
+        scriptTypes.add((ScriptType) scriptFile.getFileType());
       }
     }
     return scriptTypes;

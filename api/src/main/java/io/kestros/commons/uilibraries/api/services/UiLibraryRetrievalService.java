@@ -21,10 +21,10 @@ package io.kestros.commons.uilibraries.api.services;
 
 import io.kestros.commons.osgiserviceutils.services.ManagedService;
 import io.kestros.commons.uilibraries.api.exceptions.LibraryRetrievalException;
-import io.kestros.commons.uilibraries.api.models.UiLibraryInterface;
+import io.kestros.commons.uilibraries.api.models.UiLibrary;
 
 /**
- * Provides {@link UiLibraryInterface} instances.
+ * Provides {@link UiLibrary} instances.
  */
 public interface UiLibraryRetrievalService extends ManagedService {
 
@@ -35,6 +35,6 @@ public interface UiLibraryRetrievalService extends ManagedService {
    * @return UiLibrary.
    * @throws LibraryRetrievalException Failed to retrieve a UiLibrary at the given path.
    */
-  UiLibraryInterface getUiLibrary(String path) throws LibraryRetrievalException;
+  UiLibrary getUiLibrary(String path) throws LibraryRetrievalException;
 
 }

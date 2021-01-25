@@ -19,7 +19,7 @@
 
 package io.kestros.commons.uilibraries.api.exceptions;
 
-import io.kestros.commons.uilibraries.api.models.ScriptTypeInterface;
+import io.kestros.commons.uilibraries.api.models.ScriptType;
 
 /**
  * Generic Exception thrown when CSS or JavaScript output failed to minify/compress.
@@ -45,7 +45,7 @@ public class ScriptCompressionException extends Exception {
    * @param message Cause message.
    */
   @SuppressWarnings("unused")
-  public ScriptCompressionException(final String resourcePath, final ScriptTypeInterface scriptType,
+  public ScriptCompressionException(final String resourcePath, final ScriptType scriptType,
       final String message) {
     super(String.format("Unable to compress %s script for '%s'. %s.", scriptType.getName(),
         resourcePath, message));

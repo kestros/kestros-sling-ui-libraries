@@ -23,12 +23,12 @@ import io.kestros.commons.osgiserviceutils.services.ManagedService;
 import io.kestros.commons.structuredslingmodels.exceptions.InvalidResourceTypeException;
 import io.kestros.commons.uilibraries.api.exceptions.NoMatchingCompilerException;
 import io.kestros.commons.uilibraries.api.models.FrontendLibrary;
-import io.kestros.commons.uilibraries.api.models.ScriptTypeInterface;
-import io.kestros.commons.uilibraries.api.models.UiLibraryInterface;
+import io.kestros.commons.uilibraries.api.models.ScriptType;
+import io.kestros.commons.uilibraries.api.models.UiLibrary;
 import java.util.List;
 
 /**
- * Compiles CSS and JS for {@link UiLibraryInterface}.
+ * Compiles CSS and JS for {@link UiLibrary}.
  */
 public interface UiLibraryCompilationService extends ManagedService {
 
@@ -37,21 +37,21 @@ public interface UiLibraryCompilationService extends ManagedService {
    *
    * @return All registered script types.
    */
-  List<ScriptTypeInterface> getAllRegisteredScriptTypes();
+  List<ScriptType> getAllRegisteredScriptTypes();
 
   /**
    * All registered CSS script types.
    *
    * @return All registered CSS script types.
    */
-  List<ScriptTypeInterface> getRegisteredCssScriptTypes();
+  List<ScriptType> getRegisteredCssScriptTypes();
 
   /**
    * All registered JavaScript script types.
    *
    * @return All registered JavaScript script types.
    */
-  List<ScriptTypeInterface> getRegisteredJavaScriptScriptTypes();
+  List<ScriptType> getRegisteredJavaScriptScriptTypes();
 
   /**
    * All registered CSS compilers.
@@ -82,10 +82,10 @@ public interface UiLibraryCompilationService extends ManagedService {
    * @param <T> Extends ScriptTypeCompiler.
    * @return Specified ScriptType compiler.
    * @throws NoMatchingCompilerException No compiler could be found for the specified {@link
-   *     ScriptTypeInterface}.
+   *     ScriptType}.
    */
   <T extends ScriptTypeCompiler> ScriptTypeCompiler getCompiler(
-      List<ScriptTypeInterface> scriptTypes, List<T> registeredCompilers)
+      List<ScriptType> scriptTypes, List<T> registeredCompilers)
       throws NoMatchingCompilerException;
 
   /**
@@ -96,11 +96,11 @@ public interface UiLibraryCompilationService extends ManagedService {
    * @param minify Whether to minify the output.
    * @return The uncached ScriptType output.
    * @throws NoMatchingCompilerException No compiler could be found for the specified {@link
-   *     ScriptTypeInterface}.
+   *     ScriptType}.
    * @throws InvalidResourceTypeException Thrown when a referenced dependency could not be
    *     adapted to UiLibrary.
    */
-  String getUiLibraryOutput(FrontendLibrary library, ScriptTypeInterface scriptType, Boolean minify)
+  String getUiLibraryOutput(FrontendLibrary library, ScriptType scriptType, Boolean minify)
       throws InvalidResourceTypeException, NoMatchingCompilerException;
 
 }

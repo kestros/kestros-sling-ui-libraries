@@ -22,11 +22,10 @@ package io.kestros.commons.uilibraries.core.services.impl;
 import static io.kestros.commons.osgiserviceutils.utils.OsgiServiceUtils.getAllOsgiServicesOfType;
 
 import io.kestros.commons.uilibraries.api.exceptions.ScriptCompressionException;
-import io.kestros.commons.uilibraries.api.models.ScriptTypeInterface;
+import io.kestros.commons.uilibraries.api.models.ScriptType;
 import io.kestros.commons.uilibraries.api.services.ScriptMinifierService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryCompilationService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryMinificationService;
-import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -90,16 +89,18 @@ public class UiLibraryMinificationServiceImpl implements UiLibraryMinificationSe
 
   @Override
   public List<ScriptMinifierService> getCssMinificationServices() {
-    return getMinificationServicesForScriptType(ScriptType.CSS);
+    return getMinificationServicesForScriptType(
+        io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.CSS);
   }
 
   @Override
   public List<ScriptMinifierService> getJavaScriptMinificationServices() {
-    return getMinificationServicesForScriptType(ScriptType.JAVASCRIPT);
+    return getMinificationServicesForScriptType(
+        io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.JAVASCRIPT);
   }
 
   @Override
-  public String getMinifiedOutput(String scriptOutput, ScriptTypeInterface scriptType)
+  public String getMinifiedOutput(String scriptOutput, ScriptType scriptType)
       throws ScriptCompressionException {
     List<ScriptMinifierService> minifierServices = getMinificationServicesForScriptType(scriptType);
     if (CollectionUtils.isNotEmpty(minifierServices)) {
@@ -109,7 +110,7 @@ public class UiLibraryMinificationServiceImpl implements UiLibraryMinificationSe
   }
 
   private List<ScriptMinifierService> getMinificationServicesForScriptType(
-      ScriptTypeInterface scriptType) {
+      ScriptType scriptType) {
     List<ScriptMinifierService> scriptMinifierServiceList = new ArrayList<>();
     for (ScriptMinifierService minifierService : getMinificationServices()) {
       if (minifierService.getSupportedScriptTypes().contains(scriptType)) {

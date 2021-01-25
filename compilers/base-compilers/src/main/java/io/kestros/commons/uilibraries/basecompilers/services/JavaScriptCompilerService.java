@@ -19,10 +19,9 @@
 
 package io.kestros.commons.uilibraries.basecompilers.services;
 
-import io.kestros.commons.uilibraries.api.models.ScriptTypeInterface;
+import io.kestros.commons.uilibraries.api.models.ScriptType;
 import io.kestros.commons.uilibraries.api.services.JavaScriptScriptTypeCompilerService;
 import io.kestros.commons.uilibraries.api.services.ScriptTypeCompiler;
-import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType;
 import java.util.Collections;
 import java.util.List;
 import org.osgi.service.component.annotations.Component;
@@ -36,8 +35,9 @@ public class JavaScriptCompilerService
     implements JavaScriptScriptTypeCompilerService, ScriptTypeCompiler {
 
   @Override
-  public List<ScriptTypeInterface> getScriptTypes() {
-    return Collections.singletonList(ScriptType.JAVASCRIPT);
+  public List<ScriptType> getScriptTypes() {
+    return Collections.singletonList(
+        io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.JAVASCRIPT);
   }
 
   @Override

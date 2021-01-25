@@ -20,11 +20,11 @@
 package io.kestros.commons.uilibraries.basecompilers.filetypes;
 
 import io.kestros.commons.structuredslingmodels.filetypes.BaseFile;
-import io.kestros.commons.uilibraries.api.models.ScriptFileInterface;
 
 /**
  * Generic Model for CSS, JavaScript, LESS script files.
  */
-public abstract class ScriptFile extends BaseFile implements ScriptFileInterface {
+public abstract class ScriptFile extends BaseFile implements
+                                                  io.kestros.commons.uilibraries.api.models.ScriptFile {
 
 }

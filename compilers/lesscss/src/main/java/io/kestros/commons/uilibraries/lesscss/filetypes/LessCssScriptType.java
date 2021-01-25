@@ -21,7 +21,7 @@ package io.kestros.commons.uilibraries.lesscss.filetypes;
 
 import io.kestros.commons.structuredslingmodels.filetypes.BaseFile;
 import io.kestros.commons.structuredslingmodels.filetypes.FileType;
-import io.kestros.commons.uilibraries.api.models.ScriptTypeInterface;
+import io.kestros.commons.uilibraries.api.models.ScriptType;
 import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptFile;
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +30,7 @@ import javax.annotation.Nonnull;
 /**
  * Script {@link FileType} implementations used by UiLibraries for LessCSS.
  */
-public enum LessCssScriptType implements ScriptTypeInterface, FileType {
+public enum LessCssScriptType implements ScriptType, FileType {
   LESS("less", "css", Arrays.asList("css", "less"), "text/css",
       Arrays.asList("text/css", "text/less", "application/octet-stream"), LessCssFile.class);
 

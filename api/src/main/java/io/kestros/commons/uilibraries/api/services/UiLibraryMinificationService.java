@@ -21,7 +21,7 @@ package io.kestros.commons.uilibraries.api.services;
 
 import io.kestros.commons.osgiserviceutils.services.ManagedService;
 import io.kestros.commons.uilibraries.api.exceptions.ScriptCompressionException;
-import io.kestros.commons.uilibraries.api.models.ScriptTypeInterface;
+import io.kestros.commons.uilibraries.api.models.ScriptType;
 import java.util.List;
 import org.apache.sling.api.SlingHttpServletRequest;
 
@@ -68,6 +68,6 @@ public interface UiLibraryMinificationService extends ManagedService {
    * @return The specified String, compressed/minified.
    * @throws ScriptCompressionException Passed script failed to compress.
    */
-  String getMinifiedOutput(String scriptOutput, ScriptTypeInterface scriptType)
+  String getMinifiedOutput(String scriptOutput, ScriptType scriptType)
       throws ScriptCompressionException;
 }

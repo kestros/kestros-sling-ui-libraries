@@ -32,11 +32,10 @@ import static org.mockito.Mockito.when;
 
 import io.kestros.commons.structuredslingmodels.exceptions.InvalidResourceTypeException;
 import io.kestros.commons.uilibraries.api.exceptions.NoMatchingCompilerException;
-import io.kestros.commons.uilibraries.api.models.ScriptFileInterface;
-import io.kestros.commons.uilibraries.api.models.ScriptTypeInterface;
-import io.kestros.commons.uilibraries.api.models.UiLibraryInterface;
+import io.kestros.commons.uilibraries.api.models.ScriptFile;
+import io.kestros.commons.uilibraries.api.models.ScriptType;
+import io.kestros.commons.uilibraries.api.models.UiLibrary;
 import io.kestros.commons.uilibraries.api.services.UiLibraryCompilationService;
-import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType;
 import io.kestros.commons.uilibraries.basecompilers.services.CssCompilerService;
 import io.kestros.commons.uilibraries.basecompilers.services.JavaScriptCompilerService;
 import java.io.IOException;
@@ -120,13 +119,16 @@ public class UiLibraryCompilationServiceImplTest {
     context.registerInjectActivateService(javaScriptCompilerService);
     context.registerInjectActivateService(compilationService);
 
-    assertNotNull(compilationService.getCompiler(Collections.singletonList(ScriptType.CSS),
+    assertNotNull(compilationService.getCompiler(Collections.singletonList(
+        io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.CSS),
         compilationService.getCompilers()));
     assertEquals(cssCompilerService,
-        compilationService.getCompiler(Collections.singletonList(ScriptType.CSS),
+        compilationService.getCompiler(Collections.singletonList(
+            io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.CSS),
             compilationService.getCompilers()));
     assertEquals(javaScriptCompilerService,
-        compilationService.getCompiler(Collections.singletonList(ScriptType.JAVASCRIPT),
+        compilationService.getCompiler(Collections.singletonList(
+            io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.JAVASCRIPT),
             compilationService.getCompilers()));
   }
 
@@ -137,7 +139,7 @@ public class UiLibraryCompilationServiceImplTest {
     context.registerInjectActivateService(compilationService);
 
     Exception exception = null;
-    ScriptTypeInterface scriptType = mock(ScriptTypeInterface.class);
+    ScriptType scriptType = mock(ScriptType.class);
     when(scriptType.getName()).thenReturn("abc");
     try {
       compilationService.getCompiler(Collections.singletonList(scriptType),
@@ -156,23 +158,25 @@ public class UiLibraryCompilationServiceImplTest {
     context.registerInjectActivateService(javaScriptCompilerService);
     context.registerInjectActivateService(compilationService);
 
-    UiLibraryInterface uiLibrary = mock(UiLibraryInterface.class);
+    UiLibrary uiLibrary = mock(UiLibrary.class);
 
-    ScriptFileInterface scriptFile1 = mock(ScriptFileInterface.class);
+    ScriptFile scriptFile1 = mock(ScriptFile.class);
     when(scriptFile1.getFileContent()).thenReturn("body{}");
-    when(scriptFile1.getFileType()).thenReturn(ScriptType.CSS);
-    ScriptFileInterface scriptFile2 = mock(ScriptFileInterface.class);
+    when(scriptFile1.getFileType()).thenReturn(
+        io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.CSS);
+    ScriptFile scriptFile2 = mock(ScriptFile.class);
     when(scriptFile2.getFileContent()).thenReturn("p{}");
-    when(scriptFile2.getFileType()).thenReturn(ScriptType.CSS);
+    when(scriptFile2.getFileType()).thenReturn(
+        io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.CSS);
 
-    List<ScriptFileInterface> scriptFileList = new ArrayList<>();
+    List<ScriptFile> scriptFileList = new ArrayList<>();
     scriptFileList.add(scriptFile1);
     scriptFileList.add(scriptFile2);
 
     when(uiLibrary.getScriptFiles(any(), eq("css"))).thenReturn(scriptFileList);
 
     assertEquals("body{}\np{}",
-        compilationService.getUiLibraryOutput(uiLibrary, ScriptType.CSS, false));
+        compilationService.getUiLibraryOutput(uiLibrary, io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.CSS, false));
     verify(cssCompilerService, times(1)).getOutput(any());
     verify(javaScriptCompilerService, never()).getOutput(any());
   }
@@ -184,23 +188,25 @@ public class UiLibraryCompilationServiceImplTest {
     context.registerInjectActivateService(javaScriptCompilerService);
     context.registerInjectActivateService(compilationService);
 
-    UiLibraryInterface uiLibrary = mock(UiLibraryInterface.class);
+    UiLibrary uiLibrary = mock(UiLibrary.class);
 
-    ScriptFileInterface scriptFile1 = mock(ScriptFileInterface.class);
+    ScriptFile scriptFile1 = mock(ScriptFile.class);
     when(scriptFile1.getFileContent()).thenReturn("console.log('1')");
-    when(scriptFile1.getFileType()).thenReturn(ScriptType.JAVASCRIPT);
-    ScriptFileInterface scriptFile2 = mock(ScriptFileInterface.class);
+    when(scriptFile1.getFileType()).thenReturn(
+        io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.JAVASCRIPT);
+    ScriptFile scriptFile2 = mock(ScriptFile.class);
     when(scriptFile2.getFileContent()).thenReturn("console.log('2')");
-    when(scriptFile2.getFileType()).thenReturn(ScriptType.JAVASCRIPT);
+    when(scriptFile2.getFileType()).thenReturn(
+        io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.JAVASCRIPT);
 
-    List<ScriptFileInterface> scriptFileList = new ArrayList<>();
+    List<ScriptFile> scriptFileList = new ArrayList<>();
     scriptFileList.add(scriptFile1);
     scriptFileList.add(scriptFile2);
 
     when(uiLibrary.getScriptFiles(any(), eq("js"))).thenReturn(scriptFileList);
 
     assertEquals("console.log('1')\nconsole.log('2')",
-        compilationService.getUiLibraryOutput(uiLibrary, ScriptType.JAVASCRIPT, false));
+        compilationService.getUiLibraryOutput(uiLibrary, io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.JAVASCRIPT, false));
     verify(cssCompilerService, never()).getOutput(any());
     verify(javaScriptCompilerService, times(1)).getOutput(any());
   }
@@ -212,23 +218,25 @@ public class UiLibraryCompilationServiceImplTest {
     context.registerInjectActivateService(javaScriptCompilerService);
     context.registerInjectActivateService(compilationService);
 
-    UiLibraryInterface uiLibrary = mock(UiLibraryInterface.class);
+    UiLibrary uiLibrary = mock(UiLibrary.class);
 
-    ScriptFileInterface scriptFile1 = mock(ScriptFileInterface.class);
+    ScriptFile scriptFile1 = mock(ScriptFile.class);
     when(scriptFile1.getFileContent()).thenReturn("body{}");
-    when(scriptFile1.getFileType()).thenReturn(ScriptType.CSS);
-    ScriptFileInterface scriptFile2 = mock(ScriptFileInterface.class);
-    when(scriptFile2.getFileType()).thenReturn(ScriptType.CSS);
+    when(scriptFile1.getFileType()).thenReturn(
+        io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.CSS);
+    ScriptFile scriptFile2 = mock(ScriptFile.class);
+    when(scriptFile2.getFileType()).thenReturn(
+        io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.CSS);
     when(scriptFile2.getFileContent()).thenThrow(new IOException());
 
-    List<ScriptFileInterface> scriptFileList = new ArrayList<>();
+    List<ScriptFile> scriptFileList = new ArrayList<>();
     scriptFileList.add(scriptFile1);
     scriptFileList.add(scriptFile2);
 
     when(uiLibrary.getScriptFiles(any(), eq("css"))).thenReturn(
         scriptFileList);
 
-    assertEquals("body{}", compilationService.getUiLibraryOutput(uiLibrary, ScriptType.CSS, false));
+    assertEquals("body{}", compilationService.getUiLibraryOutput(uiLibrary, io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.CSS, false));
     verify(cssCompilerService, times(1)).getOutput(any());
     verify(javaScriptCompilerService, never()).getOutput(any());
   }

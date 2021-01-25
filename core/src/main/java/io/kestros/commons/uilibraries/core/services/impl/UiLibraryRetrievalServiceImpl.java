@@ -23,7 +23,7 @@ import static io.kestros.commons.structuredslingmodels.utils.SlingModelUtils.get
 
 import io.kestros.commons.osgiserviceutils.services.BaseServiceResolverService;
 import io.kestros.commons.uilibraries.api.exceptions.LibraryRetrievalException;
-import io.kestros.commons.uilibraries.api.models.UiLibraryInterface;
+import io.kestros.commons.uilibraries.api.models.UiLibrary;
 import io.kestros.commons.uilibraries.api.services.UiLibraryRetrievalService;
 import io.kestros.commons.uilibraries.core.UiLibraryResource;
 import org.apache.sling.api.resource.ResourceResolverFactory;
@@ -46,7 +46,7 @@ public class UiLibraryRetrievalServiceImpl extends BaseServiceResolverService
   private ResourceResolverFactory resourceResolverFactory;
 
   @Override
-  public UiLibraryInterface getUiLibrary(String path) throws LibraryRetrievalException {
+  public UiLibrary getUiLibrary(String path) throws LibraryRetrievalException {
     try {
       return getResourceAsType(path, getServiceResourceResolver(), UiLibraryResource.class);
     } catch (Exception e) {

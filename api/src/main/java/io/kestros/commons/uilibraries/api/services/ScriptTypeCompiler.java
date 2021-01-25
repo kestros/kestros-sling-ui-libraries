@@ -19,7 +19,7 @@
 
 package io.kestros.commons.uilibraries.api.services;
 
-import io.kestros.commons.uilibraries.api.models.ScriptTypeInterface;
+import io.kestros.commons.uilibraries.api.models.ScriptType;
 import java.util.List;
 
 /**
@@ -32,7 +32,7 @@ public interface ScriptTypeCompiler {
    *
    * @return ScriptTypes the compiler can read.
    */
-  List<ScriptTypeInterface> getScriptTypes();
+  List<ScriptType> getScriptTypes();
 
   /**
    * Retrieves script output from a UiLibrary. ScriptTypes are defined by {@link #getScriptTypes()}

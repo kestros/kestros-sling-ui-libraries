@@ -26,7 +26,7 @@ import java.io.IOException;
 /**
  * Interface for CSS or JavaScript  files(or file types that can compile into them).
  */
-public interface ScriptFileInterface {
+public interface ScriptFile {
 
   /**
    * File name.
