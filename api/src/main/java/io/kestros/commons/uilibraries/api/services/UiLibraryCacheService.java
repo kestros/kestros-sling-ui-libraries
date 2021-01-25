@@ -22,8 +22,8 @@ package io.kestros.commons.uilibraries.api.services;
 import io.kestros.commons.osgiserviceutils.exceptions.CacheBuilderException;
 import io.kestros.commons.osgiserviceutils.exceptions.CacheRetrievalException;
 import io.kestros.commons.osgiserviceutils.services.cache.CacheService;
+import io.kestros.commons.uilibraries.api.models.FrontendLibrary;
 import io.kestros.commons.uilibraries.api.models.ScriptTypeInterface;
-import io.kestros.commons.uilibraries.api.models.UiLibraryInterface;
 
 /**
  * Service for handling UiLibrary caches.
@@ -33,33 +33,37 @@ public interface UiLibraryCacheService extends CacheService {
   /**
    * Retrieves the cached output for a specified UiLibrary.
    *
-   * @param uiLibrary UiLibrary to retrieve cached script for.
+   * @param libraryPath UiLibrary to retrieve cached script for.
    * @param scriptType ScriptType (CSS or JS) to retrieve.
    * @param minified Whether to retrieved the minified version.
    * @return The cached output for a specified UiLibrary.
    * @throws CacheRetrievalException Cached output could not be retrieved.
    */
-  String getCachedOutput(UiLibraryInterface uiLibrary, ScriptTypeInterface scriptType, boolean minified)
+  String getCachedOutput(String libraryPath, ScriptTypeInterface scriptType, boolean minified)
+      throws CacheRetrievalException;
+
+  /**
+   * Retrieves the cached output for a specified UiLibrary.
+   *
+   * @param library UiLibrary to retrieve cached script for.
+   * @param scriptType ScriptType (CSS or JS) to retrieve.
+   * @param minified Whether to retrieved the minified version.
+   * @return The cached output for a specified UiLibrary.
+   * @throws CacheRetrievalException Cached output could not be retrieved.
+   */
+  String getCachedOutput(FrontendLibrary library, ScriptTypeInterface scriptType, boolean minified)
       throws CacheRetrievalException;
 
   /**
    * Caches all scripts for the specified UiLibrary.
    *
-   * @param uiLibrary UiLibrary to cache.
-   * @param cacheMinified Whether to cache minified scripts.
+   * @param libraryPath Path to cached library to cache.
+   * @param output Compiled output.
+   * @param scriptTypeInterface Script type that will be cached.
+   * @param isMinified Whether the output is minified.
    * @throws CacheBuilderException Cache failed to build for specified UiLibrary.
    */
   @SuppressWarnings("RedundantThrows")
-  void cacheUiLibraryScripts(UiLibraryInterface uiLibrary, boolean cacheMinified)
-      throws CacheBuilderException;
-
-  /**
-   * Caches all scripts for the specified UiLibrary.
-   *
-   * @param uiLibraryPath UiLibrary to cache.
-   * @param cacheMinified Whether to cache minified scripts.
-   * @throws CacheBuilderException Cache failed to build for specified UiLibrary.
-   */
-  void cacheUiLibraryScripts(String uiLibraryPath, boolean cacheMinified)
-      throws CacheBuilderException;
+  void cacheUiLibraryScript(String libraryPath, String output,
+      ScriptTypeInterface scriptTypeInterface, boolean isMinified) throws CacheBuilderException;
 }

@@ -17,30 +17,11 @@
  * under the License.
  */
 
-package io.kestros.commons.uilibraries.api.models;
-
-import io.kestros.commons.structuredslingmodels.filetypes.FileType;
-import java.util.List;
-import javax.annotation.Nonnull;
+package io.kestros.commons.uilibraries.api.services;
 
 /**
- * Filetypes that can be compiled into either CSS or JavaScript (including .css and .js).
+ * CSS Compiler service.
  */
-public interface ScriptTypeInterface extends FileType {
-
-  /**
-   * Resource folder name where scripts of this type should live.
-   *
-   * @return Resource folder name where scripts of this type should live.
-   */
-  @Nonnull
-  String getRootResourceName();
-
-  /**
-   * Extensions that can be interpreted by this FileType and its associated Model.
-   *
-   * @return Extensions that can be interpreted by this FileType and its associated Model.
-   */
-  List<String> getReadableExtensions();
+public interface CssScriptTypeCompilerService extends ScriptTypeCompiler {
 
 }

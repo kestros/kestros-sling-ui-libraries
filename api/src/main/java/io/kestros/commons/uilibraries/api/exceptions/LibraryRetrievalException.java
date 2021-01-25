@@ -17,30 +17,20 @@
  * under the License.
  */
 
-package io.kestros.commons.uilibraries.api.models;
-
-import io.kestros.commons.structuredslingmodels.filetypes.FileType;
-import java.util.List;
-import javax.annotation.Nonnull;
+package io.kestros.commons.uilibraries.api.exceptions;
 
 /**
- * Filetypes that can be compiled into either CSS or JavaScript (including .css and .js).
+ * Thrown when a service fails to retrieve a UiLibrary.
  */
-public interface ScriptTypeInterface extends FileType {
+public class LibraryRetrievalException extends Exception {
 
   /**
-   * Resource folder name where scripts of this type should live.
+   * Exception thrown a specified frontend library could not be found..
    *
-   * @return Resource folder name where scripts of this type should live.
+   * @param message Cause message.
    */
-  @Nonnull
-  String getRootResourceName();
-
-  /**
-   * Extensions that can be interpreted by this FileType and its associated Model.
-   *
-   * @return Extensions that can be interpreted by this FileType and its associated Model.
-   */
-  List<String> getReadableExtensions();
+  public LibraryRetrievalException(final String message) {
+    super(message);
+  }
 
 }

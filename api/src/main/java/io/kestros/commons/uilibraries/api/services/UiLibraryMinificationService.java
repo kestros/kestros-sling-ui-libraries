@@ -22,11 +22,43 @@ package io.kestros.commons.uilibraries.api.services;
 import io.kestros.commons.osgiserviceutils.services.ManagedService;
 import io.kestros.commons.uilibraries.api.exceptions.ScriptCompressionException;
 import io.kestros.commons.uilibraries.api.models.ScriptTypeInterface;
+import java.util.List;
+import org.apache.sling.api.SlingHttpServletRequest;
 
 /**
  * Service for determining how CSS and JS scripts will be compressed/minified.
  */
 public interface UiLibraryMinificationService extends ManagedService {
+
+  /**
+   * Whether a request should be minified.
+   *
+   * @param request Request.
+   * @return Whether a request should be minified.
+   */
+  boolean isMinifiedRequest(SlingHttpServletRequest request);
+
+  /**
+   * All registered {@link ScriptMinifierService} instances.
+   *
+   * @return All registered {@link ScriptMinifierService} instances.
+   */
+  List<ScriptMinifierService> getMinificationServices();
+
+  /**
+   * All registered {@link ScriptMinifierService} instances, which can minify CSS scripts.
+   *
+   * @return All registered {@link ScriptMinifierService} instances, which can minify CSS scripts.
+   */
+  List<ScriptMinifierService> getCssMinificationServices();
+
+  /**
+   * All registered {@link ScriptMinifierService} instances, which can minify JavaScript scripts.
+   *
+   * @return All registered {@link ScriptMinifierService} instances, which can minify JavaScript
+   *     scripts.
+   */
+  List<ScriptMinifierService> getJavaScriptMinificationServices();
 
   /**
    * Compressed the specified string as a ScriptType.

@@ -20,24 +20,38 @@
 package io.kestros.commons.uilibraries.api.services;
 
 import io.kestros.commons.osgiserviceutils.services.ManagedService;
+import io.kestros.commons.uilibraries.api.exceptions.ScriptCompressionException;
+import io.kestros.commons.uilibraries.api.models.ScriptTypeInterface;
+import java.util.List;
 
 /**
- * Provides UI Library Configuration Settings.
+ * Minifies CSS or JavaScript output.
  */
-public interface UiLibraryConfigurationService extends ManagedService {
+public interface ScriptMinifierService extends ManagedService {
 
   /**
-   * Name of the default CSS minifier.
+   * Service name.
    *
-   * @return Name of the default CSS minifier.
+   * @return Service name.
    */
-  String getDefaultCssMinifierName();
+  String getName();
 
   /**
-   * Name of the default JavaScript minifier.
+   * ScriptTypes that the service can minify.
    *
-   * @return Name of the default JavaScript minifier.
+   * @return ScriptTypes that the service can minify.
    */
-  String getDefaultJsMinifierName();
+  List<ScriptTypeInterface> getSupportedScriptTypes();
+
+  /**
+   * Retrieves minified output of the specified ScriptType.
+   *
+   * @param rawOutput Unminified output.
+   * @param scriptType ScriptType.
+   * @return Minified output of the specified ScriptType.
+   * @throws ScriptCompressionException Failed to compress script.
+   */
+  String getMinifiedScript(String rawOutput, ScriptTypeInterface scriptType)
+      throws ScriptCompressionException;
 
 }

@@ -17,30 +17,28 @@
  * under the License.
  */
 
-package io.kestros.commons.uilibraries.api.models;
+package io.kestros.commons.uilibraries.api.services;
 
-import io.kestros.commons.structuredslingmodels.filetypes.FileType;
+import io.kestros.commons.uilibraries.api.models.ScriptTypeInterface;
 import java.util.List;
-import javax.annotation.Nonnull;
 
 /**
- * Filetypes that can be compiled into either CSS or JavaScript (including .css and .js).
+ * Modular compiler service for a given ScriptType.
  */
-public interface ScriptTypeInterface extends FileType {
+public interface ScriptTypeCompiler {
 
   /**
-   * Resource folder name where scripts of this type should live.
+   * ScriptTypes the compiler can read.
    *
-   * @return Resource folder name where scripts of this type should live.
+   * @return ScriptTypes the compiler can read.
    */
-  @Nonnull
-  String getRootResourceName();
+  List<ScriptTypeInterface> getScriptTypes();
 
   /**
-   * Extensions that can be interpreted by this FileType and its associated Model.
+   * Retrieves script output from a UiLibrary. ScriptTypes are defined by {@link #getScriptTypes()}
    *
-   * @return Extensions that can be interpreted by this FileType and its associated Model.
+   * @param source Source String.
+   * @return Retrieves script output from a UiLibrary.
    */
-  List<String> getReadableExtensions();
-
+  String getOutput(String source);
 }

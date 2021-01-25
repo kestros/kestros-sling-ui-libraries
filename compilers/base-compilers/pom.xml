@@ -30,10 +30,10 @@
     <relativePath/>
   </parent>
 
-  <artifactId>kestros-sling-ui-libraries-core</artifactId>
+  <artifactId>kestros-sling-ui-libraries-base-compilers</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
-  <name>Kestros Commons - Sling UI Libraries - Core</name>
+  <name>Kestros Commons - Sling UI Libraries - Base Compilers</name>
   <description>Provides UI Libraries to Sling instances, which are used for maintaining and
     rendering CSS and JavaScript.
   </description>
@@ -41,7 +41,7 @@
   <packaging>bundle</packaging>
 
   <properties>
-    <rootPackage>io.kestros.commons.uilibraries.core</rootPackage>
+    <rootPackage>io.kestros.commons.uilibraries.basecompilers</rootPackage>
     <bundleCategory>kestros</bundleCategory>
   </properties>
 
@@ -55,12 +55,6 @@
     <dependency>
       <groupId>io.kestros.commons</groupId>
       <artifactId>kestros-sling-ui-libraries-api</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-
-    <dependency>
-      <groupId>io.kestros.commons</groupId>
-      <artifactId>kestros-sling-ui-libraries-base-compilers</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
 
@@ -86,6 +80,18 @@
       <artifactId>org.apache.felix.healthcheck.annotation</artifactId>
     </dependency>
 
+    <!-- LESS Compiler -->
+    <dependency>
+      <groupId>de.inetsoftware</groupId>
+      <artifactId>jlessc</artifactId>
+      <version>1.10</version>
+    </dependency>
+    <!-- CSS and JS Compressor -->
+    <dependency>
+      <groupId>com.yahoo.platform.yui</groupId>
+      <artifactId>yuicompressor</artifactId>
+      <version>2.4.8</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -102,14 +108,12 @@
         <artifactId>maven-bundle-plugin</artifactId>
         <configuration>
           <instructions>
-            <Embed-Dependency>yuicompressor;inline=true,jlessc;inline=true</Embed-Dependency>
-            <Export-Package>io.kestros.commons.uilibraries.core*</Export-Package>
-            <Sling-Model-Packages>io.kestros.commons.uilibraries.core
-            </Sling-Model-Packages>
+            <Embed-Dependency>yuicompressor;inline=true</Embed-Dependency>
+            <Export-Package>io.kestros.commons.uilibraries.basecompilers*</Export-Package>
+            <Sling-Model-Packages>io.kestros.commons.uilibraries.basecompilers</Sling-Model-Packages>
             <Sling-Initial-Content>
               content/ui-libraries.html;overwrite:=true;path:=/libs/kestros/commons;
             </Sling-Initial-Content>
-            <Sling-Nodetypes>nodetypes.cnd</Sling-Nodetypes>
           </instructions>
         </configuration>
       </plugin>

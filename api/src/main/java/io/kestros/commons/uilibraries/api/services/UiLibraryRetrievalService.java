@@ -17,30 +17,24 @@
  * under the License.
  */
 
-package io.kestros.commons.uilibraries.api.models;
+package io.kestros.commons.uilibraries.api.services;
 
-import io.kestros.commons.structuredslingmodels.filetypes.FileType;
-import java.util.List;
-import javax.annotation.Nonnull;
+import io.kestros.commons.osgiserviceutils.services.ManagedService;
+import io.kestros.commons.uilibraries.api.exceptions.LibraryRetrievalException;
+import io.kestros.commons.uilibraries.api.models.UiLibraryInterface;
 
 /**
- * Filetypes that can be compiled into either CSS or JavaScript (including .css and .js).
+ * Provides {@link UiLibraryInterface} instances.
  */
-public interface ScriptTypeInterface extends FileType {
+public interface UiLibraryRetrievalService extends ManagedService {
 
   /**
-   * Resource folder name where scripts of this type should live.
+   * Retrieves a specified UiLibrary.
    *
-   * @return Resource folder name where scripts of this type should live.
+   * @param path Path to the UiLibrary resource.
+   * @return UiLibrary.
+   * @throws LibraryRetrievalException Failed to retrieve a UiLibrary at the given path.
    */
-  @Nonnull
-  String getRootResourceName();
-
-  /**
-   * Extensions that can be interpreted by this FileType and its associated Model.
-   *
-   * @return Extensions that can be interpreted by this FileType and its associated Model.
-   */
-  List<String> getReadableExtensions();
+  UiLibraryInterface getUiLibrary(String path) throws LibraryRetrievalException;
 
 }

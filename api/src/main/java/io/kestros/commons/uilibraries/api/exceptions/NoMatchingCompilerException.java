@@ -17,30 +17,22 @@
  * under the License.
  */
 
-package io.kestros.commons.uilibraries.api.models;
+package io.kestros.commons.uilibraries.api.exceptions;
 
-import io.kestros.commons.structuredslingmodels.filetypes.FileType;
-import java.util.List;
-import javax.annotation.Nonnull;
+import io.kestros.commons.uilibraries.api.services.ScriptTypeCompiler;
 
 /**
- * Filetypes that can be compiled into either CSS or JavaScript (including .css and .js).
+ * Thrown when a Service cannot find a {@link ScriptTypeCompiler} service.
  */
-public interface ScriptTypeInterface extends FileType {
+public class NoMatchingCompilerException extends Exception {
 
   /**
-   * Resource folder name where scripts of this type should live.
+   * Exception thrown there are no registered compilers to handle a compilation request.
    *
-   * @return Resource folder name where scripts of this type should live.
+   * @param message Cause message.
    */
-  @Nonnull
-  String getRootResourceName();
-
-  /**
-   * Extensions that can be interpreted by this FileType and its associated Model.
-   *
-   * @return Extensions that can be interpreted by this FileType and its associated Model.
-   */
-  List<String> getReadableExtensions();
+  public NoMatchingCompilerException(final String message) {
+    super(message);
+  }
 
 }

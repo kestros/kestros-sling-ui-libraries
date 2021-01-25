@@ -17,30 +17,14 @@
  * under the License.
  */
 
-package io.kestros.commons.uilibraries.api.models;
+package io.kestros.commons.uilibraries.basecompilers.filetypes;
 
-import io.kestros.commons.structuredslingmodels.filetypes.FileType;
-import java.util.List;
-import javax.annotation.Nonnull;
+import io.kestros.commons.structuredslingmodels.filetypes.BaseFile;
+import io.kestros.commons.uilibraries.api.models.ScriptFileInterface;
 
 /**
- * Filetypes that can be compiled into either CSS or JavaScript (including .css and .js).
+ * Generic Model for CSS, JavaScript, LESS script files.
  */
-public interface ScriptTypeInterface extends FileType {
-
-  /**
-   * Resource folder name where scripts of this type should live.
-   *
-   * @return Resource folder name where scripts of this type should live.
-   */
-  @Nonnull
-  String getRootResourceName();
-
-  /**
-   * Extensions that can be interpreted by this FileType and its associated Model.
-   *
-   * @return Extensions that can be interpreted by this FileType and its associated Model.
-   */
-  List<String> getReadableExtensions();
+public abstract class ScriptFile extends BaseFile implements ScriptFileInterface {
 
 }

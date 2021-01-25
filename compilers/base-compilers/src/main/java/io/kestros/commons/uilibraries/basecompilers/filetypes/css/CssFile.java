@@ -17,30 +17,26 @@
  * under the License.
  */
 
-package io.kestros.commons.uilibraries.api.models;
+package io.kestros.commons.uilibraries.basecompilers.filetypes.css;
 
+import static io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.CSS;
+
+import io.kestros.commons.structuredslingmodels.annotation.KestrosModel;
 import io.kestros.commons.structuredslingmodels.filetypes.FileType;
-import java.util.List;
-import javax.annotation.Nonnull;
+import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptFile;
+import org.apache.sling.api.resource.Resource;
+import org.apache.sling.models.annotations.Model;
 
 /**
- * Filetypes that can be compiled into either CSS or JavaScript (including .css and .js).
+ * Model type for CSS files to be adapted to.
  */
-public interface ScriptTypeInterface extends FileType {
+@KestrosModel
+@Model(adaptables = Resource.class,
+       resourceType = "nt:file")
+public class CssFile extends ScriptFile {
 
-  /**
-   * Resource folder name where scripts of this type should live.
-   *
-   * @return Resource folder name where scripts of this type should live.
-   */
-  @Nonnull
-  String getRootResourceName();
-
-  /**
-   * Extensions that can be interpreted by this FileType and its associated Model.
-   *
-   * @return Extensions that can be interpreted by this FileType and its associated Model.
-   */
-  List<String> getReadableExtensions();
-
+  @Override
+  public FileType getFileType() {
+    return CSS;
+  }
 }
