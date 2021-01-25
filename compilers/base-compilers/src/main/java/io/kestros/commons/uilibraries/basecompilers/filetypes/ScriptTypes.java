@@ -21,6 +21,7 @@ package io.kestros.commons.uilibraries.basecompilers.filetypes;
 
 import io.kestros.commons.structuredslingmodels.filetypes.BaseFile;
 import io.kestros.commons.structuredslingmodels.filetypes.FileType;
+import io.kestros.commons.uilibraries.api.models.ScriptType;
 import io.kestros.commons.uilibraries.basecompilers.filetypes.css.CssFile;
 import io.kestros.commons.uilibraries.basecompilers.filetypes.javascript.JavaScriptFile;
 import java.util.Arrays;
@@ -31,7 +32,7 @@ import javax.annotation.Nonnull;
 /**
  * Script {@link FileType} implementations used by UiLibraries for CSS and JavaScript output.
  */
-public enum ScriptType implements io.kestros.commons.uilibraries.api.models.ScriptType, FileType {
+public enum ScriptTypes implements ScriptType, FileType {
   CSS("css", "css", Collections.singletonList("css"), "text/css",
       Collections.singletonList("text/css"), CssFile.class), JAVASCRIPT("js", "js",
       Arrays.asList("js"), "application/javascript",
@@ -45,7 +46,7 @@ public enum ScriptType implements io.kestros.commons.uilibraries.api.models.Scri
   private final String extension;
   private final Class<?> scriptFileType;
 
-  <S extends ScriptFile> ScriptType(final String name, final String rootResourceName,
+  <S extends BaseScriptFile> ScriptTypes(final String name, final String rootResourceName,
       final List<String> readableExtensions, final String outputContentType,
       final List<String> readableContentTypes, final Class<S> scriptFileType) {
     this.name = name;

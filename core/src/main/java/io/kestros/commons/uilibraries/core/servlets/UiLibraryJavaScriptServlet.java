@@ -26,7 +26,7 @@ import io.kestros.commons.uilibraries.api.services.UiLibraryCompilationService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryConfigurationService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryMinificationService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryRetrievalService;
-import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType;
+import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptTypes;
 import javax.servlet.Servlet;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -100,7 +100,7 @@ public class UiLibraryJavaScriptServlet extends BaseUiLibraryServlet {
   }
 
   @Override
-  protected ScriptType getScriptType() {
-    return ScriptType.JAVASCRIPT;
+  protected ScriptTypes getScriptType() {
+    return ScriptTypes.JAVASCRIPT;
   }
 }

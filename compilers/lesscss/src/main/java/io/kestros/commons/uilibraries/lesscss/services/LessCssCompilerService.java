@@ -23,6 +23,7 @@ import com.inet.lib.less.Less;
 import io.kestros.commons.uilibraries.api.models.ScriptType;
 import io.kestros.commons.uilibraries.api.services.CssScriptTypeCompilerService;
 import io.kestros.commons.uilibraries.api.services.ScriptTypeCompiler;
+import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptTypes;
 import io.kestros.commons.uilibraries.lesscss.filetypes.LessCssScriptType;
 import java.util.Arrays;
 import java.util.List;
@@ -37,7 +38,7 @@ public class LessCssCompilerService implements ScriptTypeCompiler, CssScriptType
 
   @Override
   public List<ScriptType> getScriptTypes() {
-    return Arrays.asList(ScriptType.CSS, LessCssScriptType.LESS);
+    return Arrays.asList(ScriptTypes.CSS, LessCssScriptType.LESS);
   }
 
   @Override

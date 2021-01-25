@@ -28,6 +28,7 @@ import io.kestros.commons.structuredslingmodels.utils.SlingModelUtils;
 import io.kestros.commons.uilibraries.api.models.ScriptFile;
 import io.kestros.commons.uilibraries.api.models.ScriptType;
 import io.kestros.commons.uilibraries.api.models.UiLibrary;
+import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptTypes;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.sling.api.resource.Resource;
@@ -46,12 +47,12 @@ public class UiLibraryResource extends BaseResource implements UiLibrary {
 
   @Override
   public String getCssPath() {
-    return getPath() + io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.CSS.getExtension();
+    return getPath() + ScriptTypes.CSS.getExtension();
   }
 
   @Override
   public String getJsPath() {
-    return getPath() + io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.JAVASCRIPT.getExtension();
+    return getPath() + ScriptTypes.JAVASCRIPT.getExtension();
   }
 
   @Override
@@ -62,12 +63,12 @@ public class UiLibraryResource extends BaseResource implements UiLibrary {
     BaseResource folder = null;
     try {
 
-      if (io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.CSS.getRootResourceName().equals(folderName)) {
+      if (ScriptTypes.CSS.getRootResourceName().equals(folderName)) {
         folder = SlingModelUtils.getChildAsBaseResource(
-            io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.CSS.getName(), this);
-      } else if (io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.JAVASCRIPT.getRootResourceName().equals(folderName)) {
+            ScriptTypes.CSS.getName(), this);
+      } else if (ScriptTypes.JAVASCRIPT.getRootResourceName().equals(folderName)) {
         folder = SlingModelUtils.getChildAsBaseResource(
-            io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.JAVASCRIPT.getName(), this);
+            ScriptTypes.JAVASCRIPT.getName(), this);
       }
     } catch (ChildResourceNotFoundException e) {
       LOG.debug(String.format("Skipping %s retrieval for %s. No folder detected.", folderName,

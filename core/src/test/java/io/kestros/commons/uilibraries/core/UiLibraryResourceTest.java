@@ -21,7 +21,7 @@ package io.kestros.commons.uilibraries.core;
 
 import static org.junit.Assert.assertEquals;
 
-import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType;
+import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptTypes;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -90,9 +90,9 @@ public class UiLibraryResourceTest {
 
     uiLibrary = resource.adaptTo(UiLibraryResource.class);
 
-    assertEquals(2, uiLibrary.getScriptFiles(Collections.singletonList(ScriptType.CSS), "css").size());
-    assertEquals("file-1.css", uiLibrary.getScriptFiles(Collections.singletonList(ScriptType.CSS), "css").get(0).getName());
-    assertEquals("file-2.css", uiLibrary.getScriptFiles(Collections.singletonList(ScriptType.CSS), "css").get(1).getName());
+    assertEquals(2, uiLibrary.getScriptFiles(Collections.singletonList(ScriptTypes.CSS), "css").size());
+    assertEquals("file-1.css", uiLibrary.getScriptFiles(Collections.singletonList(ScriptTypes.CSS), "css").get(0).getName());
+    assertEquals("file-2.css", uiLibrary.getScriptFiles(Collections.singletonList(ScriptTypes.CSS), "css").get(1).getName());
   }
 
   @Test
@@ -107,9 +107,10 @@ public class UiLibraryResourceTest {
 
     uiLibrary = resource.adaptTo(UiLibraryResource.class);
 
-    assertEquals(2, uiLibrary.getScriptFiles(Collections.singletonList(ScriptType.JAVASCRIPT), "js").size());
-    assertEquals("file-1.js", uiLibrary.getScriptFiles(Collections.singletonList(ScriptType.JAVASCRIPT), "js").get(0).getName());
-    assertEquals("file-2.js", uiLibrary.getScriptFiles(Collections.singletonList(ScriptType.JAVASCRIPT), "js").get(1).getName());
+    assertEquals(2, uiLibrary.getScriptFiles(Collections.singletonList(
+        ScriptTypes.JAVASCRIPT), "js").size());
+    assertEquals("file-1.js", uiLibrary.getScriptFiles(Collections.singletonList(ScriptTypes.JAVASCRIPT), "js").get(0).getName());
+    assertEquals("file-2.js", uiLibrary.getScriptFiles(Collections.singletonList(ScriptTypes.JAVASCRIPT), "js").get(1).getName());
 
   }
 }

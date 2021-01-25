@@ -26,7 +26,7 @@ import io.kestros.commons.uilibraries.api.services.UiLibraryCacheService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryCompilationService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryConfigurationService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryMinificationService;
-import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType;
+import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptTypes;
 import java.io.IOException;
 import javax.annotation.Nonnull;
 import org.apache.commons.lang3.StringUtils;
@@ -53,7 +53,7 @@ public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
 
   protected abstract UiLibraryCacheService getUiLibraryCacheService();
 
-  protected abstract ScriptType getScriptType();
+  protected abstract ScriptTypes getScriptType();
 
   /**
    * Writes the GET response for the current UiLibrary.
@@ -107,7 +107,7 @@ public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
     response.setContentType("text/plain");
   }
 
-  void cacheOutput(FrontendLibrary library, String content, ScriptType scriptType,
+  void cacheOutput(FrontendLibrary library, String content, ScriptTypes scriptType,
       boolean minified) {
     if (getUiLibraryCacheService() != null) {
       try {

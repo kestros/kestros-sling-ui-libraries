@@ -22,8 +22,8 @@ package io.kestros.commons.uilibraries.basecompilers.filetypes.javascript;
 
 import io.kestros.commons.structuredslingmodels.annotation.KestrosModel;
 import io.kestros.commons.structuredslingmodels.filetypes.FileType;
-import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptFile;
-import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType;
+import io.kestros.commons.uilibraries.basecompilers.filetypes.BaseScriptFile;
+import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptTypes;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Model;
 
@@ -33,10 +33,10 @@ import org.apache.sling.models.annotations.Model;
 @KestrosModel
 @Model(adaptables = Resource.class,
        resourceType = "nt:file")
-public class JavaScriptFile extends ScriptFile {
+public class JavaScriptFile extends BaseScriptFile {
 
   @Override
   public FileType getFileType() {
-    return ScriptType.JAVASCRIPT;
+    return ScriptTypes.JAVASCRIPT;
   }
 }

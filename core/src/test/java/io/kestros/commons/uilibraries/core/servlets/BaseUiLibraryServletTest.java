@@ -39,7 +39,7 @@ import io.kestros.commons.uilibraries.api.services.UiLibraryCacheService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryCompilationService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryMinificationService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryRetrievalService;
-import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType;
+import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptTypes;
 import io.kestros.commons.uilibraries.core.services.impl.UiLibraryCompilationServiceImpl;
 import io.kestros.commons.uilibraries.basecompilers.services.CssCompilerService;
 import io.kestros.commons.uilibraries.core.UiLibraryResource;
@@ -122,7 +122,7 @@ public class BaseUiLibraryServletTest {
     assertEquals("text/css", context.response().getContentType());
     assertEquals("css-output", context.response().getOutputAsString());
     verify(uiLibraryCompilationService, times(1)).getUiLibraryOutput(any(), any(), any());
-    verify(uiLibraryCacheService, times(1)).cacheUiLibraryScript("/ui-library", "css-output", ScriptType.CSS, false);
+    verify(uiLibraryCacheService, times(1)).cacheUiLibraryScript("/ui-library", "css-output", ScriptTypes.CSS, false);
   }
 
 
@@ -135,7 +135,7 @@ public class BaseUiLibraryServletTest {
     resource = context.create().resource("/ui-library", properties);
     context.request().setResource(resource);
 
-    when(uiLibraryCacheService.getCachedOutput("/ui-library", ScriptType.CSS, false)).thenReturn(
+    when(uiLibraryCacheService.getCachedOutput("/ui-library", ScriptTypes.CSS, false)).thenReturn(
         "cached-output");
 
     context.registerService(UiLibraryCacheService.class, uiLibraryCacheService);
@@ -149,7 +149,7 @@ public class BaseUiLibraryServletTest {
     assertEquals("text/css", context.response().getContentType());
     assertEquals("cached-output", context.response().getOutputAsString());
     verify(uiLibraryCompilationService, never()).getUiLibraryOutput(any(), any(), any());
-    verify(uiLibraryCacheService, times(1)).getCachedOutput("/ui-library", ScriptType.CSS, false);
+    verify(uiLibraryCacheService, times(1)).getCachedOutput("/ui-library", ScriptTypes.CSS, false);
   }
 
   @Test
@@ -161,7 +161,7 @@ public class BaseUiLibraryServletTest {
     resource = context.create().resource("/ui-library", properties);
     context.request().setResource(resource);
 
-    when(uiLibraryCacheService.getCachedOutput("/ui-library", ScriptType.CSS, true)).thenReturn(
+    when(uiLibraryCacheService.getCachedOutput("/ui-library", ScriptTypes.CSS, true)).thenReturn(
         "cached-minified-output");
 
     context.registerService(UiLibraryMinificationService.class, uiLibraryMinificationService);
@@ -178,7 +178,7 @@ public class BaseUiLibraryServletTest {
     assertEquals("text/css", context.response().getContentType());
     assertEquals("cached-minified-output", context.response().getOutputAsString());
     verify(uiLibraryCompilationService, never()).getUiLibraryOutput(any(), any(), any());
-    verify(uiLibraryCacheService, times(1)).getCachedOutput("/ui-library", ScriptType.CSS, true);
+    verify(uiLibraryCacheService, times(1)).getCachedOutput("/ui-library", ScriptTypes.CSS, true);
   }
 
   @Test

@@ -30,6 +30,7 @@ import io.kestros.commons.uilibraries.api.services.CssScriptTypeCompilerService;
 import io.kestros.commons.uilibraries.api.services.JavaScriptScriptTypeCompilerService;
 import io.kestros.commons.uilibraries.api.services.ScriptTypeCompiler;
 import io.kestros.commons.uilibraries.api.services.UiLibraryCompilationService;
+import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptTypes;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -70,13 +71,13 @@ public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationServ
   public void runAdditionalHealthChecks(FormattingResultLog log) {
     try {
       getCompiler(Collections.singletonList(
-          io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.CSS), getCssCompilers());
+          ScriptTypes.CSS), getCssCompilers());
     } catch (NoMatchingCompilerException e) {
       log.critical("CSS Compiler not found.");
     }
     try {
       getCompiler(Collections.singletonList(
-          io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.JAVASCRIPT), getJavaScriptCompilers());
+          ScriptTypes.JAVASCRIPT), getJavaScriptCompilers());
     } catch (NoMatchingCompilerException e) {
       log.critical("JavaScript Compiler not found.");
     }

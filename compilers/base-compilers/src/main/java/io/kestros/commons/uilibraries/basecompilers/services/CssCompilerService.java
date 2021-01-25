@@ -19,7 +19,7 @@
 
 package io.kestros.commons.uilibraries.basecompilers.services;
 
-import static io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.CSS;
+import static io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptTypes.CSS;
 
 import io.kestros.commons.uilibraries.api.models.ScriptType;
 import io.kestros.commons.uilibraries.api.services.CssScriptTypeCompilerService;

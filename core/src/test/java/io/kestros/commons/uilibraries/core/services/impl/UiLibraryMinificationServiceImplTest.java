@@ -33,7 +33,7 @@ import static org.mockito.Mockito.when;
 
 import io.kestros.commons.uilibraries.api.exceptions.ScriptCompressionException;
 import io.kestros.commons.uilibraries.api.services.ScriptMinifierService;
-import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType;
+import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptTypes;
 import org.apache.felix.hc.api.FormattingResultLog;
 import org.apache.sling.testing.mock.sling.junit.SlingContext;
 import org.junit.Before;
@@ -59,11 +59,11 @@ public class UiLibraryMinificationServiceImplTest {
     scriptMinifierService3 = mock(ScriptMinifierService.class);
 
     when(scriptMinifierService1.getSupportedScriptTypes()).thenReturn(
-        singletonList(ScriptType.CSS));
+        singletonList(ScriptTypes.CSS));
     when(scriptMinifierService2.getSupportedScriptTypes()).thenReturn(
-        singletonList(ScriptType.CSS));
+        singletonList(ScriptTypes.CSS));
     when(scriptMinifierService3.getSupportedScriptTypes()).thenReturn(
-        singletonList(ScriptType.JAVASCRIPT));
+        singletonList(ScriptTypes.JAVASCRIPT));
   }
 
   @Test
@@ -162,13 +162,13 @@ public class UiLibraryMinificationServiceImplTest {
 
     context.registerInjectActivateService(minificationService);
 
-    when(scriptMinifierService1.getMinifiedScript("unminified", ScriptType.CSS)).thenReturn("css-1-minified");
-    when(scriptMinifierService3.getMinifiedScript("unminified", ScriptType.JAVASCRIPT)).thenReturn("js-1-minified");
+    when(scriptMinifierService1.getMinifiedScript("unminified", ScriptTypes.CSS)).thenReturn("css-1-minified");
+    when(scriptMinifierService3.getMinifiedScript("unminified", ScriptTypes.JAVASCRIPT)).thenReturn("js-1-minified");
 
     assertEquals("css-1-minified",
-        minificationService.getMinifiedOutput("unminified", ScriptType.CSS));
+        minificationService.getMinifiedOutput("unminified", ScriptTypes.CSS));
     assertEquals("js-1-minified",
-        minificationService.getMinifiedOutput("unminified", ScriptType.JAVASCRIPT));
+        minificationService.getMinifiedOutput("unminified", ScriptTypes.JAVASCRIPT));
   }
 
   @Test
@@ -176,8 +176,8 @@ public class UiLibraryMinificationServiceImplTest {
     context.registerInjectActivateService(minificationService);
 
     assertEquals("unminified",
-        minificationService.getMinifiedOutput("unminified", ScriptType.CSS));
+        minificationService.getMinifiedOutput("unminified", ScriptTypes.CSS));
     assertEquals("unminified",
-        minificationService.getMinifiedOutput("unminified", ScriptType.JAVASCRIPT));
+        minificationService.getMinifiedOutput("unminified", ScriptTypes.JAVASCRIPT));
   }
 }

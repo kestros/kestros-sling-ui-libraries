@@ -31,7 +31,7 @@ import io.kestros.commons.uilibraries.api.services.UiLibraryCompilationService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryConfigurationService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryMinificationService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryRetrievalService;
-import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType;
+import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptTypes;
 import org.apache.sling.testing.mock.sling.junit.SlingContext;
 import org.junit.Before;
 import org.junit.Rule;
@@ -110,6 +110,6 @@ public class UiLibraryCssServletTest {
 
   @Test
   public void testGetScriptType() {
-    assertEquals(ScriptType.CSS, servlet.getScriptType());
+    assertEquals(ScriptTypes.CSS, servlet.getScriptType());
   }
 }

@@ -21,8 +21,8 @@ package io.kestros.commons.uilibraries.lesscss.filetypes;
 
 import io.kestros.commons.structuredslingmodels.filetypes.BaseFile;
 import io.kestros.commons.structuredslingmodels.filetypes.FileType;
+import io.kestros.commons.uilibraries.api.models.ScriptFile;
 import io.kestros.commons.uilibraries.api.models.ScriptType;
-import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptFile;
 import java.util.Arrays;
 import java.util.List;
 import javax.annotation.Nonnull;

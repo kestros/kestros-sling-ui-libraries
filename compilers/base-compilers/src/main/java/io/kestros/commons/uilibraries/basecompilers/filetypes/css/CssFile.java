@@ -19,11 +19,11 @@
 
 package io.kestros.commons.uilibraries.basecompilers.filetypes.css;
 
-import static io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.CSS;
+import static io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptTypes.CSS;
 
 import io.kestros.commons.structuredslingmodels.annotation.KestrosModel;
 import io.kestros.commons.structuredslingmodels.filetypes.FileType;
-import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptFile;
+import io.kestros.commons.uilibraries.basecompilers.filetypes.BaseScriptFile;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Model;
 
@@ -33,7 +33,7 @@ import org.apache.sling.models.annotations.Model;
 @KestrosModel
 @Model(adaptables = Resource.class,
        resourceType = "nt:file")
-public class CssFile extends ScriptFile {
+public class CssFile extends BaseScriptFile {
 
   @Override
   public FileType getFileType() {

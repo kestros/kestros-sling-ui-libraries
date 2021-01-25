@@ -26,6 +26,7 @@ import io.kestros.commons.uilibraries.api.models.ScriptType;
 import io.kestros.commons.uilibraries.api.services.ScriptMinifierService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryCompilationService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryMinificationService;
+import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptTypes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -90,13 +91,13 @@ public class UiLibraryMinificationServiceImpl implements UiLibraryMinificationSe
   @Override
   public List<ScriptMinifierService> getCssMinificationServices() {
     return getMinificationServicesForScriptType(
-        io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.CSS);
+        ScriptTypes.CSS);
   }
 
   @Override
   public List<ScriptMinifierService> getJavaScriptMinificationServices() {
     return getMinificationServicesForScriptType(
-        io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType.JAVASCRIPT);
+        ScriptTypes.JAVASCRIPT);
   }
 
   @Override

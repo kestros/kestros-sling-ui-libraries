@@ -21,7 +21,7 @@ package io.kestros.commons.uilibraries.basecompilers.filetypes.javascript;
 
 import static org.junit.Assert.*;
 
-import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptType;
+import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptTypes;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.junit.SlingContext;
 import org.junit.Before;
@@ -48,6 +48,6 @@ public class JavaScriptFileTest {
     resource = context.create().resource("/file.js");
     jsFile = resource.adaptTo(JavaScriptFile.class);
 
-    assertEquals(ScriptType.JAVASCRIPT, jsFile.getFileType());
+    assertEquals(ScriptTypes.JAVASCRIPT, jsFile.getFileType());
   }
 }
