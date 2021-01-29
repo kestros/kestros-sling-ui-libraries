@@ -70,14 +70,12 @@ public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationServ
   @Override
   public void runAdditionalHealthChecks(FormattingResultLog log) {
     try {
-      getCompiler(Collections.singletonList(
-          ScriptTypes.CSS), getCssCompilers());
+      getCompiler(Collections.singletonList(ScriptTypes.CSS), getCssCompilers());
     } catch (NoMatchingCompilerException e) {
       log.critical("CSS Compiler not found.");
     }
     try {
-      getCompiler(Collections.singletonList(
-          ScriptTypes.JAVASCRIPT), getJavaScriptCompilers());
+      getCompiler(Collections.singletonList(ScriptTypes.JAVASCRIPT), getJavaScriptCompilers());
     } catch (NoMatchingCompilerException e) {
       log.critical("JavaScript Compiler not found.");
     }
@@ -133,9 +131,8 @@ public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationServ
   }
 
   @Override
-  public <T extends ScriptTypeCompiler> ScriptTypeCompiler getCompiler(
-      List<ScriptType> scriptTypes, List<T> registeredCompilers)
-      throws NoMatchingCompilerException {
+  public <T extends ScriptTypeCompiler> ScriptTypeCompiler getCompiler(List<ScriptType> scriptTypes,
+      List<T> registeredCompilers) throws NoMatchingCompilerException {
     for (ScriptTypeCompiler compiler : registeredCompilers) {
       List<ScriptType> compilerScriptTypes = compiler.getScriptTypes();
       if (compilerScriptTypes.size() >= scriptTypes.size() && compilerScriptTypes.containsAll(
@@ -157,13 +154,23 @@ public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationServ
   }
 
   @Override
-  public String getUiLibraryOutput(FrontendLibrary uiLibrary, ScriptType scriptType,
-      Boolean minify) throws InvalidResourceTypeException, NoMatchingCompilerException {
+  public String getUiLibraryOutput(FrontendLibrary uiLibrary, ScriptType scriptType)
+      throws InvalidResourceTypeException, NoMatchingCompilerException {
     ScriptTypeCompiler compiler = getCompiler(
         getLibraryScriptTypes(uiLibrary, scriptType.getRootResourceName()), getCompilers());
+    return compiler.getOutput(getUiLibrarySource(uiLibrary, scriptType));
+  }
+
+  @Override
+  public String getUiLibrarySource(FrontendLibrary library, ScriptType scriptType)
+      throws InvalidResourceTypeException, NoMatchingCompilerException {
+    ScriptTypeCompiler compiler = getCompiler(
+        getLibraryScriptTypes(library, scriptType.getRootResourceName()), getCompilers());
     StringBuilder rawOutputStringBuilder = new StringBuilder();
-    for (ScriptFile scriptFile : uiLibrary.getScriptFiles(compiler.getScriptTypes(),
+
+    for (ScriptFile scriptFile : library.getScriptFiles(compiler.getScriptTypes(),
         scriptType.getRootResourceName())) {
+
       try {
         String fileContent = scriptFile.getFileContent();
         if (StringUtils.isNotEmpty(rawOutputStringBuilder.toString()) && StringUtils.isNotEmpty(
@@ -177,11 +184,13 @@ public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationServ
             scriptFile.getFileType().getFileModelClass(), scriptFile.getName());
       }
     }
-    return compiler.getOutput(rawOutputStringBuilder.toString());
+    return rawOutputStringBuilder.toString();
   }
 
-  List<ScriptType> getLibraryScriptTypes(FrontendLibrary library, String folderName) {
+  @Override
+  public List<ScriptType> getLibraryScriptTypes(FrontendLibrary library, String folderName) {
     List<ScriptType> scriptTypes = new ArrayList<>();
+
     for (ScriptFile scriptFile : library.getScriptFiles(getAllRegisteredScriptTypes(),
         folderName)) {
       if (!scriptTypes.contains(scriptFile.getFileType())) {

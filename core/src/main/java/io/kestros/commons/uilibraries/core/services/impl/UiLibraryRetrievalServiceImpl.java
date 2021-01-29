@@ -26,6 +26,8 @@ import io.kestros.commons.uilibraries.api.exceptions.LibraryRetrievalException;
 import io.kestros.commons.uilibraries.api.models.UiLibrary;
 import io.kestros.commons.uilibraries.api.services.UiLibraryRetrievalService;
 import io.kestros.commons.uilibraries.core.UiLibraryResource;
+import java.util.Collections;
+import java.util.List;
 import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Component;
@@ -57,6 +59,11 @@ public class UiLibraryRetrievalServiceImpl extends BaseServiceResolverService
   @Override
   protected String getServiceUserName() {
     return "ui-library-retrieval";
+  }
+
+  @Override
+  protected List<String> getRequiredResourcePaths() {
+    return Collections.emptyList();
   }
 
   @Override

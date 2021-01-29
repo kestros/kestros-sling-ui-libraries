@@ -86,8 +86,12 @@ public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
     FrontendLibrary library = getLibrary(libraryPath);
     if (library != null) {
       try {
-        output = getUiLibraryCompilationService().getUiLibraryOutput(library, getScriptType(),
-            isMinified);
+        output = getUiLibraryCompilationService().getUiLibraryOutput(library, getScriptType());
+
+        if (isMinified) {
+          output = getUiLibraryMinificationService().getMinifiedOutput(output, getScriptType());
+        }
+
         writeResponse(output, SlingHttpServletResponse.SC_OK, response);
 
         try {

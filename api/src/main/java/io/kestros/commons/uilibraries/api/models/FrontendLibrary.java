@@ -20,11 +20,19 @@
 package io.kestros.commons.uilibraries.api.models;
 
 import java.util.List;
+import org.apache.sling.api.resource.Resource;
 
 /**
  * Baseline interface for frontend libraries, which can render CSS and JavaScript.
  */
 public interface FrontendLibrary {
+
+  /**
+   * Library Resource.
+   *
+   * @return Library Resource.
+   */
+  Resource getResource();
 
   /**
    * Library title.
@@ -39,6 +47,13 @@ public interface FrontendLibrary {
    * @return Library description.
    */
   String getDescription();
+
+  /**
+   * Library shorthand name.
+   *
+   * @return Library shorthand name.
+   */
+  String getName();
 
   /**
    * Path to library resource.
@@ -62,6 +77,14 @@ public interface FrontendLibrary {
   String getJsPath();
 
   /**
+   * Files to include, for a specified script type.
+   *
+   * @param scriptType ScriptType
+   * @return Files to include, for a specified script type.
+   */
+  List<String> getIncludedFileNames(ScriptType scriptType);
+
+  /**
    * Included script files.
    *
    * @param scriptTypes Script types to retrieve.
@@ -69,6 +92,6 @@ public interface FrontendLibrary {
    * @param <T> extends {@link ScriptFile}.
    * @return Included script files.
    */
-  <T extends ScriptFile> List<T> getScriptFiles(
-      final List<ScriptType> scriptTypes, String folderName);
+  <T extends ScriptFile> List<T> getScriptFiles(final List<ScriptType> scriptTypes,
+      String folderName);
 }

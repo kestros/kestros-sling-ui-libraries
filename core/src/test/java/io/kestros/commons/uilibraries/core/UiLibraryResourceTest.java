@@ -90,15 +90,36 @@ public class UiLibraryResourceTest {
 
     uiLibrary = resource.adaptTo(UiLibraryResource.class);
 
-    assertEquals(2, uiLibrary.getScriptFiles(Collections.singletonList(ScriptTypes.CSS), "css").size());
-    assertEquals("file-1.css", uiLibrary.getScriptFiles(Collections.singletonList(ScriptTypes.CSS), "css").get(0).getName());
-    assertEquals("file-2.css", uiLibrary.getScriptFiles(Collections.singletonList(ScriptTypes.CSS), "css").get(1).getName());
+    assertEquals(2,
+        uiLibrary.getScriptFiles(Collections.singletonList(ScriptTypes.CSS), "css").size());
+    assertEquals("file-1.css", uiLibrary.getScriptFiles(Collections.singletonList(ScriptTypes.CSS),
+        "css").get(0).getName());
+    assertEquals("file-2.css", uiLibrary.getScriptFiles(Collections.singletonList(ScriptTypes.CSS),
+        "css").get(1).getName());
+  }
+
+  @Test
+  public void testGetScriptFilesCssWhenNotAllFilesAreIncluded() {
+    resource = context.create().resource("/ui-library", properties);
+    cssFolderProperties.put("include", new String[]{"file-1.css"});
+    context.create().resource("/ui-library/css", cssFolderProperties);
+    context.create().resource("/ui-library/css/file-1.css", fileProperties);
+    context.create().resource("/ui-library/css/file-1.css/jcr:content", cssFileProperties);
+    context.create().resource("/ui-library/css/file-2.css", fileProperties);
+    context.create().resource("/ui-library/css/file-2.css/jcr:content", cssFileProperties);
+
+    uiLibrary = resource.adaptTo(UiLibraryResource.class);
+
+    assertEquals(1,
+        uiLibrary.getScriptFiles(Collections.singletonList(ScriptTypes.CSS), "css").size());
+    assertEquals("file-1.css", uiLibrary.getScriptFiles(Collections.singletonList(ScriptTypes.CSS),
+        "css").get(0).getName());
   }
 
   @Test
   public void testGetScriptFilesWhenJavaScript() {
     resource = context.create().resource("/ui-library", properties);
-    cssFolderProperties.put("include", new String[]{"file-1.js", "file-2.js"});
+    jsFolderProperties.put("include", new String[]{"file-1.js", "file-2.js"});
     context.create().resource("/ui-library/js", jsFolderProperties);
     context.create().resource("/ui-library/js/file-1.js", fileProperties);
     context.create().resource("/ui-library/js/file-1.js/jcr:content", jsFileProperties);
@@ -107,10 +128,12 @@ public class UiLibraryResourceTest {
 
     uiLibrary = resource.adaptTo(UiLibraryResource.class);
 
-    assertEquals(2, uiLibrary.getScriptFiles(Collections.singletonList(
-        ScriptTypes.JAVASCRIPT), "js").size());
-    assertEquals("file-1.js", uiLibrary.getScriptFiles(Collections.singletonList(ScriptTypes.JAVASCRIPT), "js").get(0).getName());
-    assertEquals("file-2.js", uiLibrary.getScriptFiles(Collections.singletonList(ScriptTypes.JAVASCRIPT), "js").get(1).getName());
+    assertEquals(2,
+        uiLibrary.getScriptFiles(Collections.singletonList(ScriptTypes.JAVASCRIPT), "js").size());
+    assertEquals("file-1.js", uiLibrary.getScriptFiles(
+        Collections.singletonList(ScriptTypes.JAVASCRIPT), "js").get(0).getName());
+    assertEquals("file-2.js", uiLibrary.getScriptFiles(
+        Collections.singletonList(ScriptTypes.JAVASCRIPT), "js").get(1).getName());
 
   }
 }

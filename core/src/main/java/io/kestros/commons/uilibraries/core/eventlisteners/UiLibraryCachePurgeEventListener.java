@@ -23,6 +23,7 @@ import static io.kestros.commons.osgiserviceutils.utils.OsgiServiceUtils.getAllO
 
 import io.kestros.commons.osgiserviceutils.services.eventlisteners.impl.BaseCachePurgeOnResourceChangeEventListener;
 import io.kestros.commons.uilibraries.api.services.UiLibraryCacheService;
+import java.util.Collections;
 import java.util.List;
 import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.apache.sling.api.resource.observation.ResourceChangeListener;
@@ -65,6 +66,11 @@ public class UiLibraryCachePurgeEventListener extends BaseCachePurgeOnResourceCh
   @Override
   protected String getServiceUserName() {
     return "ui-library-cache-purge";
+  }
+
+  @Override
+  protected List<String> getRequiredResourcePaths() {
+    return Collections.emptyList();
   }
 
   @Override

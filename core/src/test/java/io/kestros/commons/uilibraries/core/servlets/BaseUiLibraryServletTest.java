@@ -40,9 +40,9 @@ import io.kestros.commons.uilibraries.api.services.UiLibraryCompilationService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryMinificationService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryRetrievalService;
 import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptTypes;
-import io.kestros.commons.uilibraries.core.services.impl.UiLibraryCompilationServiceImpl;
 import io.kestros.commons.uilibraries.basecompilers.services.CssCompilerService;
 import io.kestros.commons.uilibraries.core.UiLibraryResource;
+import io.kestros.commons.uilibraries.core.services.impl.UiLibraryCompilationServiceImpl;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -63,6 +63,7 @@ public class BaseUiLibraryServletTest {
   private Resource resource;
 
   private Map<String, Object> properties = new HashMap<>();
+  private Map<String, Object> cssFolderProperties = new HashMap<>();
   private Map<String, Object> fileProperties = new HashMap<>();
   private Map<String, Object> cssFileProperties = new HashMap<>();
 
@@ -93,7 +94,6 @@ public class BaseUiLibraryServletTest {
     cssFileProperties.put("jcr:primaryType", "nt:resource");
     cssFileProperties.put("jcr:mimeType", "text/css");
     cssFileProperties.put("jcr:data", inputStream);
-
   }
 
   @Test
@@ -102,7 +102,8 @@ public class BaseUiLibraryServletTest {
              CacheBuilderException {
     properties.put("jcr:primaryType", "kes:UiLibrary");
     resource = context.create().resource("/ui-library", properties);
-    context.create().resource("/ui-library/css");
+    cssFolderProperties.put("include", new String[]{"file-1.css"});
+    context.create().resource("/ui-library/css", cssFolderProperties);
     context.create().resource("/ui-library/css/file-1.css", fileProperties);
     context.create().resource("/ui-library/css/file-1.css/jcr:content", cssFileProperties);
 
@@ -113,7 +114,7 @@ public class BaseUiLibraryServletTest {
 
     context.registerService(UiLibraryCacheService.class, uiLibraryCacheService);
     context.registerService(UiLibraryRetrievalService.class, uiLibraryRetrievalService);
-    context.registerService(ScriptTypeCompiler.class, cssCompilerService);
+    context.registerInjectActivateService(cssCompilerService);
     context.registerInjectActivateService(uiLibraryCompilationService);
     context.registerInjectActivateService(servlet);
 
@@ -121,8 +122,9 @@ public class BaseUiLibraryServletTest {
     assertEquals(200, context.response().getStatus());
     assertEquals("text/css", context.response().getContentType());
     assertEquals("css-output", context.response().getOutputAsString());
-    verify(uiLibraryCompilationService, times(1)).getUiLibraryOutput(any(), any(), any());
-    verify(uiLibraryCacheService, times(1)).cacheUiLibraryScript("/ui-library", "css-output", ScriptTypes.CSS, false);
+    verify(uiLibraryCompilationService, times(1)).getUiLibraryOutput(any(), any());
+    verify(uiLibraryCacheService, times(1)).cacheUiLibraryScript("/ui-library", "css-output",
+        ScriptTypes.CSS, false);
   }
 
 
@@ -148,7 +150,7 @@ public class BaseUiLibraryServletTest {
     assertEquals(200, context.response().getStatus());
     assertEquals("text/css", context.response().getContentType());
     assertEquals("cached-output", context.response().getOutputAsString());
-    verify(uiLibraryCompilationService, never()).getUiLibraryOutput(any(), any(), any());
+    verify(uiLibraryCompilationService, never()).getUiLibraryOutput(any(), any());
     verify(uiLibraryCacheService, times(1)).getCachedOutput("/ui-library", ScriptTypes.CSS, false);
   }
 
@@ -177,7 +179,7 @@ public class BaseUiLibraryServletTest {
     assertEquals(200, context.response().getStatus());
     assertEquals("text/css", context.response().getContentType());
     assertEquals("cached-minified-output", context.response().getOutputAsString());
-    verify(uiLibraryCompilationService, never()).getUiLibraryOutput(any(), any(), any());
+    verify(uiLibraryCompilationService, never()).getUiLibraryOutput(any(), any());
     verify(uiLibraryCacheService, times(1)).getCachedOutput("/ui-library", ScriptTypes.CSS, true);
   }
 
@@ -200,13 +202,13 @@ public class BaseUiLibraryServletTest {
     context.registerInjectActivateService(servlet);
 
     doThrow(new NoMatchingCompilerException("")).when(
-        uiLibraryCompilationService).getUiLibraryOutput(any(), any(), any());
+        uiLibraryCompilationService).getUiLibraryOutput(any(), any());
 
     servlet.doGet(context.request(), context.response());
     assertEquals(400, context.response().getStatus());
     assertEquals("text/plain", context.response().getContentType());
     assertEquals("", context.response().getOutputAsString());
-    verify(uiLibraryCompilationService, times(1)).getUiLibraryOutput(any(), any(), any());
+    verify(uiLibraryCompilationService, times(1)).getUiLibraryOutput(any(), any());
   }
 
   @Test

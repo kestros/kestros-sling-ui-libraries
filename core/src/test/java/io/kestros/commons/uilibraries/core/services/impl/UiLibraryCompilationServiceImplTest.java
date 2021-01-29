@@ -177,7 +177,7 @@ public class UiLibraryCompilationServiceImplTest {
     when(uiLibrary.getScriptFiles(any(), eq("css"))).thenReturn(scriptFileList);
 
     assertEquals("body{}\np{}",
-        compilationService.getUiLibraryOutput(uiLibrary, ScriptTypes.CSS, false));
+        compilationService.getUiLibraryOutput(uiLibrary, ScriptTypes.CSS));
     verify(cssCompilerService, times(1)).getOutput(any());
     verify(javaScriptCompilerService, never()).getOutput(any());
   }
@@ -207,7 +207,7 @@ public class UiLibraryCompilationServiceImplTest {
     when(uiLibrary.getScriptFiles(any(), eq("js"))).thenReturn(scriptFileList);
 
     assertEquals("console.log('1')\nconsole.log('2')",
-        compilationService.getUiLibraryOutput(uiLibrary, ScriptTypes.JAVASCRIPT, false));
+        compilationService.getUiLibraryOutput(uiLibrary, ScriptTypes.JAVASCRIPT));
     verify(cssCompilerService, never()).getOutput(any());
     verify(javaScriptCompilerService, times(1)).getOutput(any());
   }
@@ -237,7 +237,7 @@ public class UiLibraryCompilationServiceImplTest {
     when(uiLibrary.getScriptFiles(any(), eq("css"))).thenReturn(
         scriptFileList);
 
-    assertEquals("body{}", compilationService.getUiLibraryOutput(uiLibrary, ScriptTypes.CSS, false));
+    assertEquals("body{}", compilationService.getUiLibraryOutput(uiLibrary, ScriptTypes.CSS));
     verify(cssCompilerService, times(1)).getOutput(any());
     verify(javaScriptCompilerService, never()).getOutput(any());
   }

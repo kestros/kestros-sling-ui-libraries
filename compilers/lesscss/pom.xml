@@ -27,7 +27,6 @@
     <groupId>io.kestros.commons</groupId>
     <artifactId>kestros-sling-ui-library-compilers</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <relativePath/>
   </parent>
 
   <artifactId>kestros-sling-ui-libraries-lesscss</artifactId>

@@ -105,4 +105,24 @@ public enum ScriptTypes implements ScriptType, FileType {
   public <T extends BaseFile> Class<T> getFileModelClass() {
     return (Class<T>) this.scriptFileType;
   }
+
+  /**
+   * Retrieves a specified ScriptType.
+   *
+   * @param name Script type to look up.
+   * @return Specified ScriptType.
+   */
+  public static ScriptType lookup(String name) {
+    ScriptType[] scriptTypes = values();
+    int var2 = scriptTypes.length;
+
+    for (int var3 = 0; var3 < var2; ++var3) {
+      ScriptType scriptType = scriptTypes[var3];
+      if (scriptType.getName().equals(name)) {
+        return scriptType;
+      }
+    }
+
+    return null;
+  }
 }

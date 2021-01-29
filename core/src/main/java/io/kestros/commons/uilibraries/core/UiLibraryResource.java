@@ -19,17 +19,19 @@
 
 package io.kestros.commons.uilibraries.core;
 
-import static io.kestros.commons.structuredslingmodels.utils.FileModelUtils.getChildrenOfFileType;
+import static io.kestros.commons.structuredslingmodels.utils.FileModelUtils.getChildAsFileType;
 
 import io.kestros.commons.structuredslingmodels.BaseResource;
 import io.kestros.commons.structuredslingmodels.exceptions.ChildResourceNotFoundException;
-import io.kestros.commons.structuredslingmodels.filetypes.BaseFile;
+import io.kestros.commons.structuredslingmodels.exceptions.InvalidResourceTypeException;
 import io.kestros.commons.structuredslingmodels.utils.SlingModelUtils;
 import io.kestros.commons.uilibraries.api.models.ScriptFile;
 import io.kestros.commons.uilibraries.api.models.ScriptType;
 import io.kestros.commons.uilibraries.api.models.UiLibrary;
 import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptTypes;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Model;
@@ -56,33 +58,42 @@ public class UiLibraryResource extends BaseResource implements UiLibrary {
   }
 
   @Override
-  public <T extends ScriptFile> List<T> getScriptFiles(
-      List<ScriptType> scriptTypes, String folderName) {
+  public List<String> getIncludedFileNames(ScriptType scriptType) {
+    try {
+      BaseResource folderResource = SlingModelUtils.getChildAsBaseResource(scriptType.getName(),
+          this);
+      return Arrays.asList(folderResource.getProperty("include", new String[]{}));
+    } catch (ChildResourceNotFoundException e) {
+      LOG.debug("Failed to find folder resource {} for {}.", scriptType.getName(), getPath());
+    }
+    return Collections.emptyList();
+  }
+
+  @Override
+  public <T extends ScriptFile> List<T> getScriptFiles(List<ScriptType> scriptTypes,
+      String folderName) {
     List<T> scriptFileList = new ArrayList<>();
 
-    BaseResource folder = null;
+    BaseResource folderResource = null;
     try {
+      folderResource = SlingModelUtils.getChildAsBaseResource(folderName, this);
+      for (String includedFileName : getIncludedFileNames(ScriptTypes.lookup(folderName))) {
+        for (ScriptType scriptType : scriptTypes) {
 
-      if (ScriptTypes.CSS.getRootResourceName().equals(folderName)) {
-        folder = SlingModelUtils.getChildAsBaseResource(
-            ScriptTypes.CSS.getName(), this);
-      } else if (ScriptTypes.JAVASCRIPT.getRootResourceName().equals(folderName)) {
-        folder = SlingModelUtils.getChildAsBaseResource(
-            ScriptTypes.JAVASCRIPT.getName(), this);
-      }
-    } catch (ChildResourceNotFoundException e) {
-      LOG.debug(String.format("Skipping %s retrieval for %s. No folder detected.", folderName,
-          getPath()));
-    }
-    if (folder != null) {
-      for (ScriptType scriptType : scriptTypes) {
-        for (BaseFile file : getChildrenOfFileType(folder, scriptType.getFileModelClass())) {
-          scriptFileList.add((T) file);
+          try {
+            T script = (T) getChildAsFileType(includedFileName, folderResource,
+                scriptType.getFileModelClass());
+            scriptFileList.add(script);
+          } catch (ChildResourceNotFoundException e) {
+            LOG.warn(e.getMessage());
+          } catch (InvalidResourceTypeException e) {
+            LOG.warn(e.getMessage());
+          }
+
         }
       }
-    } else {
-      LOG.debug(String.format("Skipping %s retrieval for %s. No folder detected.", folderName,
-          getPath()));
+    } catch (ChildResourceNotFoundException e) {
+      LOG.debug(e.getMessage());
     }
     return scriptFileList;
   }
