@@ -20,6 +20,7 @@
 package io.kestros.commons.uilibraries.core;
 
 import static io.kestros.commons.structuredslingmodels.utils.FileModelUtils.getChildAsFileType;
+import static io.kestros.commons.structuredslingmodels.utils.SlingModelUtils.getChildAsBaseResource;
 
 import io.kestros.commons.structuredslingmodels.BaseResource;
 import io.kestros.commons.structuredslingmodels.exceptions.ChildResourceNotFoundException;
@@ -60,7 +61,7 @@ public class UiLibraryResource extends BaseResource implements UiLibrary {
   @Override
   public List<String> getIncludedFileNames(ScriptType scriptType) {
     try {
-      BaseResource folderResource = SlingModelUtils.getChildAsBaseResource(scriptType.getName(),
+      BaseResource folderResource = getChildAsBaseResource(scriptType.getName(),
           this);
       return Arrays.asList(folderResource.getProperty("include", new String[]{}));
     } catch (ChildResourceNotFoundException e) {
@@ -76,7 +77,7 @@ public class UiLibraryResource extends BaseResource implements UiLibrary {
 
     BaseResource folderResource = null;
     try {
-      folderResource = SlingModelUtils.getChildAsBaseResource(folderName, this);
+      folderResource = getChildAsBaseResource(folderName, this);
       for (String includedFileName : getIncludedFileNames(ScriptTypes.lookup(folderName))) {
         for (ScriptType scriptType : scriptTypes) {
 
@@ -89,7 +90,6 @@ public class UiLibraryResource extends BaseResource implements UiLibrary {
           } catch (InvalidResourceTypeException e) {
             LOG.warn(e.getMessage());
           }
-
         }
       }
     } catch (ChildResourceNotFoundException e) {
