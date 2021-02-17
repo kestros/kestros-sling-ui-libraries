@@ -20,6 +20,7 @@
 package io.kestros.commons.uilibraries.lesscss.filetypes;
 
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.kestros.commons.structuredslingmodels.BaseResource;
 import io.kestros.commons.structuredslingmodels.annotation.KestrosModel;
 import io.kestros.commons.structuredslingmodels.exceptions.ModelAdaptionException;
@@ -38,6 +39,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Sling Model for .less files.
  */
+@SuppressFBWarnings("RI_REDUNDANT_INTERFACES")
 @KestrosModel
 @Model(adaptables = Resource.class,
        resourceType = "nt:file")
