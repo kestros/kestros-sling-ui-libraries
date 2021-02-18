@@ -42,6 +42,7 @@ import org.slf4j.LoggerFactory;
 public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
 
   private static final Logger LOG = LoggerFactory.getLogger(BaseUiLibraryServlet.class);
+  private static final long serialVersionUID = 6096929924192138730L;
 
   protected abstract <T extends FrontendLibrary> T getLibrary(String libraryPath);
 

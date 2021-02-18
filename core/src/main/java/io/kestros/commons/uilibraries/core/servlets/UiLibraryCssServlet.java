@@ -53,19 +53,19 @@ public class UiLibraryCssServlet extends BaseUiLibraryServlet {
 
   @Reference(cardinality = ReferenceCardinality.OPTIONAL,
              policyOption = ReferencePolicyOption.GREEDY)
-  private UiLibraryConfigurationService uiLibraryConfigurationService;
+  private transient UiLibraryConfigurationService uiLibraryConfigurationService;
 
   @Reference(cardinality = ReferenceCardinality.OPTIONAL,
              policyOption = ReferencePolicyOption.GREEDY)
-  private UiLibraryRetrievalService uiLibraryRetrievalService;
+  private transient UiLibraryRetrievalService uiLibraryRetrievalService;
 
   @Reference(cardinality = ReferenceCardinality.OPTIONAL,
              policyOption = ReferencePolicyOption.GREEDY)
-  private UiLibraryCompilationService uiLibraryCompilationService;
+  private transient UiLibraryCompilationService uiLibraryCompilationService;
 
   @Reference(cardinality = ReferenceCardinality.OPTIONAL,
              policyOption = ReferencePolicyOption.GREEDY)
-  private UiLibraryMinificationService uiLibraryMinificationService;
+  private transient UiLibraryMinificationService uiLibraryMinificationService;
 
   @Override
   protected <T extends FrontendLibrary> T getLibrary(String libraryPath) {
