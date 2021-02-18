@@ -63,7 +63,7 @@ public class JcrFileUiLibraryCacheService extends JcrFileCacheService
 
   @Reference(cardinality = ReferenceCardinality.OPTIONAL,
              policyOption = ReferencePolicyOption.GREEDY)
-  private UiLibraryCompilationService uiLibraryCompilationService;
+  private transient UiLibraryCompilationService uiLibraryCompilationService;
 
   @SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
   @Reference
@@ -123,8 +123,8 @@ public class JcrFileUiLibraryCacheService extends JcrFileCacheService
   }
 
   @Override
-  public String getCachedOutput(String libraryPath, ScriptType scriptType,
-      boolean minified) throws CacheRetrievalException {
+  public String getCachedOutput(String libraryPath, ScriptType scriptType, boolean minified)
+      throws CacheRetrievalException {
     String cachedResourcePath = String.format("%s%s%s", getServiceCacheRootPath(), libraryPath,
         scriptType.getExtension());
     if (minified) {
@@ -141,14 +141,14 @@ public class JcrFileUiLibraryCacheService extends JcrFileCacheService
   }
 
   @Override
-  public String getCachedOutput(FrontendLibrary library, ScriptType scriptType,
-      boolean minified) throws CacheRetrievalException {
+  public String getCachedOutput(FrontendLibrary library, ScriptType scriptType, boolean minified)
+      throws CacheRetrievalException {
     return getCachedOutput(library.getPath(), scriptType, minified);
   }
 
   @Override
-  public void cacheUiLibraryScript(String libraryPath, String content,
-      ScriptType scriptType, boolean isMinified) throws CacheBuilderException {
+  public void cacheUiLibraryScript(String libraryPath, String content, ScriptType scriptType,
+      boolean isMinified) throws CacheBuilderException {
     if (isMinified) {
       createCacheFile(content, String.format("%s.min%s", libraryPath, scriptType.getExtension()),
           scriptType);
