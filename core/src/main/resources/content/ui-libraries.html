@@ -18,10 +18,17 @@
   /*-->
 
 <template data-sly-template.includeCss="${ @ uiLibrary, id}">
+  <sly data-sly-list.cndCssScript="${uiLibrary.includedCdnCssScripts}">
+    <link rel="stylesheet" type="text/css"
+          href="${cndCssScript}">
+  </sly>
   <link rel="stylesheet" type="text/css"
         href="${uiLibrary.cssPath}" id="${id}">
 </template>
 
 <template data-sly-template.includeJs="${ @ uiLibrary}">
+  <sly data-sly-list.cndJsScript="${uiLibrary.includedCdnJsScripts}">
+    <script src="${cndJsScript}"></script>
+  </sly>
   <script data-sly-test="${uiLibrary.jsPath}" src="${uiLibrary.jsPath}"></script>
 </template>

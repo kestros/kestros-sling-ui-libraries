@@ -88,7 +88,7 @@ public class UiLibraryResource extends BaseResource implements UiLibrary {
           } catch (ChildResourceNotFoundException e) {
             LOG.warn(e.getMessage());
           } catch (InvalidResourceTypeException e) {
-            LOG.warn(e.getMessage());
+            LOG.debug(e.getMessage());
           }
         }
       }

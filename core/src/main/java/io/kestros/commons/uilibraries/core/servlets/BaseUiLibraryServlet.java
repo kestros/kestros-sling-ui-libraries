@@ -94,6 +94,7 @@ public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
           output = getUiLibraryMinificationService().getMinifiedOutput(output, getScriptType());
         }
 
+        response.setContentType(getScriptType().getOutputContentType());
         writeResponse(output, SlingHttpServletResponse.SC_OK, response);
 
         try {
