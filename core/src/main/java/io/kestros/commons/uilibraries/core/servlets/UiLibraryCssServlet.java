@@ -19,6 +19,7 @@
 
 package io.kestros.commons.uilibraries.core.servlets;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.kestros.commons.uilibraries.api.exceptions.LibraryRetrievalException;
 import io.kestros.commons.uilibraries.api.models.FrontendLibrary;
 import io.kestros.commons.uilibraries.api.services.UiLibraryCacheService;
@@ -51,21 +52,25 @@ public class UiLibraryCssServlet extends BaseUiLibraryServlet {
              policyOption = ReferencePolicyOption.GREEDY)
   private UiLibraryCacheService uiLibraryCacheService;
 
+  @SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
   @Reference(cardinality = ReferenceCardinality.OPTIONAL,
              policyOption = ReferencePolicyOption.GREEDY)
-  private transient UiLibraryConfigurationService uiLibraryConfigurationService;
+  private UiLibraryConfigurationService uiLibraryConfigurationService;
 
+  @SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
   @Reference(cardinality = ReferenceCardinality.OPTIONAL,
              policyOption = ReferencePolicyOption.GREEDY)
-  private transient UiLibraryRetrievalService uiLibraryRetrievalService;
+  private UiLibraryRetrievalService uiLibraryRetrievalService;
 
+  @SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
   @Reference(cardinality = ReferenceCardinality.OPTIONAL,
              policyOption = ReferencePolicyOption.GREEDY)
-  private transient UiLibraryCompilationService uiLibraryCompilationService;
+  private UiLibraryCompilationService uiLibraryCompilationService;
 
+  @SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
   @Reference(cardinality = ReferenceCardinality.OPTIONAL,
              policyOption = ReferencePolicyOption.GREEDY)
-  private transient UiLibraryMinificationService uiLibraryMinificationService;
+  private UiLibraryMinificationService uiLibraryMinificationService;
 
   @Override
   protected <T extends FrontendLibrary> T getLibrary(String libraryPath) {
