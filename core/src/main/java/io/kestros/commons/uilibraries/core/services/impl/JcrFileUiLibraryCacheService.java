@@ -61,21 +61,22 @@ public class JcrFileUiLibraryCacheService extends JcrFileCacheService
   private static final String UI_LIBRARY_CACHE_PURGE_SERVICE_USER = "ui-library-cache-service";
   private static final long serialVersionUID = 8442978263338882415L;
 
+  @SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
   @Reference(cardinality = ReferenceCardinality.OPTIONAL,
              policyOption = ReferencePolicyOption.GREEDY)
-  private transient UiLibraryCompilationService uiLibraryCompilationService;
+  private UiLibraryCompilationService uiLibraryCompilationService;
 
   @SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
   @Reference
-  private transient ResourceResolverFactory resourceResolverFactory;
+  private ResourceResolverFactory resourceResolverFactory;
 
   @SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
   @Reference
-  private transient ModelFactory modelFactory;
+  private ModelFactory modelFactory;
 
   @SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
   @Reference
-  private transient JobManager jobManager;
+  private JobManager jobManager;
 
   @Override
   public JobManager getJobManager() {
