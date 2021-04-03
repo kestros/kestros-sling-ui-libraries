@@ -61,20 +61,20 @@ public class JcrFileUiLibraryCacheService extends JcrFileCacheService
   private static final String UI_LIBRARY_CACHE_PURGE_SERVICE_USER = "ui-library-cache-service";
   private static final long serialVersionUID = 8442978263338882415L;
 
-  @SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
+  @SuppressFBWarnings({"SE_TRANSIENT_FIELD_NOT_RESTORED", "SE_BAD_FIELD"})
   @Reference(cardinality = ReferenceCardinality.OPTIONAL,
              policyOption = ReferencePolicyOption.GREEDY)
   private UiLibraryCompilationService uiLibraryCompilationService;
 
-  @SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
+  @SuppressFBWarnings({"SE_TRANSIENT_FIELD_NOT_RESTORED", "SE_BAD_FIELD"})
   @Reference
   private ResourceResolverFactory resourceResolverFactory;
 
-  @SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
+  @SuppressFBWarnings({"SE_TRANSIENT_FIELD_NOT_RESTORED", "SE_BAD_FIELD"})
   @Reference
   private ModelFactory modelFactory;
 
-  @SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
+  @SuppressFBWarnings({"SE_TRANSIENT_FIELD_NOT_RESTORED", "SE_BAD_FIELD"})
   @Reference
   private JobManager jobManager;
 

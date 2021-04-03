@@ -52,22 +52,22 @@ public class UiLibraryCssServlet extends BaseUiLibraryServlet {
              policyOption = ReferencePolicyOption.GREEDY)
   private UiLibraryCacheService uiLibraryCacheService;
 
-  @SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
+  @SuppressFBWarnings({"SE_TRANSIENT_FIELD_NOT_RESTORED", "SE_BAD_FIELD"})
   @Reference(cardinality = ReferenceCardinality.OPTIONAL,
              policyOption = ReferencePolicyOption.GREEDY)
   private UiLibraryConfigurationService uiLibraryConfigurationService;
 
-  @SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
+  @SuppressFBWarnings({"SE_TRANSIENT_FIELD_NOT_RESTORED", "SE_BAD_FIELD"})
   @Reference(cardinality = ReferenceCardinality.OPTIONAL,
              policyOption = ReferencePolicyOption.GREEDY)
   private UiLibraryRetrievalService uiLibraryRetrievalService;
 
-  @SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
+  @SuppressFBWarnings({"SE_TRANSIENT_FIELD_NOT_RESTORED", "SE_BAD_FIELD"})
   @Reference(cardinality = ReferenceCardinality.OPTIONAL,
              policyOption = ReferencePolicyOption.GREEDY)
   private UiLibraryCompilationService uiLibraryCompilationService;
 
-  @SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
+  @SuppressFBWarnings({"SE_TRANSIENT_FIELD_NOT_RESTORED", "SE_BAD_FIELD"})
   @Reference(cardinality = ReferenceCardinality.OPTIONAL,
              policyOption = ReferencePolicyOption.GREEDY)
   private UiLibraryMinificationService uiLibraryMinificationService;
