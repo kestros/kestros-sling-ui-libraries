@@ -19,17 +19,10 @@
 
 package io.kestros.commons.uilibraries.core.healthchecks;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.kestros.commons.osgiserviceutils.healthchecks.BaseManagedServiceHealthCheck;
 import io.kestros.commons.osgiserviceutils.services.ManagedService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryConfigurationService;
-import org.apache.felix.hc.annotation.Async;
-import org.apache.felix.hc.annotation.HealthCheckMBean;
-import org.apache.felix.hc.annotation.HealthCheckService;
-import org.apache.felix.hc.annotation.ResultTTL;
-import org.apache.felix.hc.annotation.Sticky;
 import org.apache.felix.hc.api.HealthCheck;
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
@@ -37,14 +30,14 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * Health Check for {@link UiLibraryConfigurationService}.
  */
-@SuppressFBWarnings("RI_REDUNDANT_INTERFACES")
-@Component
-@HealthCheckService(name = "UI Library Configuration Service Health Check",
-                    tags = {"kestros", "ui-libraries"})
-@Async(intervalInSec = 60)
-@ResultTTL(resultCacheTtlInMs = 10000)
-@HealthCheckMBean(name = "UiLibraryConfigurationServiceHealthCheck")
-@Sticky(keepNonOkResultsStickyForSec = 10)
+//@SuppressFBWarnings("RI_REDUNDANT_INTERFACES")
+//@Component
+//@HealthCheckService(name = "UI Library Configuration Service Health Check",
+//                    tags = {"kestros", "ui-libraries"})
+//@Async(intervalInSec = 60)
+//@ResultTTL(resultCacheTtlInMs = 10000)
+//@HealthCheckMBean(name = "UiLibraryConfigurationServiceHealthCheck")
+//@Sticky(keepNonOkResultsStickyForSec = 10)
 public class UiLibraryConfigurationServiceHealthCheck extends BaseManagedServiceHealthCheck
     implements HealthCheck {
 
@@ -53,7 +46,7 @@ public class UiLibraryConfigurationServiceHealthCheck extends BaseManagedService
   private UiLibraryConfigurationService uiLibraryConfigurationService;
 
   @Override
-  public ManagedService getCacheService() {
+  public ManagedService getManagedService() {
     return uiLibraryConfigurationService;
   }
 

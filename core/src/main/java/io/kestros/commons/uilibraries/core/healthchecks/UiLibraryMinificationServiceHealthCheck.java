@@ -53,7 +53,7 @@ public class UiLibraryMinificationServiceHealthCheck extends BaseManagedServiceH
   private UiLibraryMinificationService uiLibraryMinificationService;
 
   @Override
-  public ManagedService getCacheService() {
+  public ManagedService getManagedService() {
     return uiLibraryMinificationService;
   }
 

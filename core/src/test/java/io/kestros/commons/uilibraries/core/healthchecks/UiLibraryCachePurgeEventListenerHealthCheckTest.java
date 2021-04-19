@@ -47,7 +47,7 @@ public class UiLibraryCachePurgeEventListenerHealthCheckTest {
 
   @Test
   public void testGetCacheService() {
-    assertEquals(eventListener, healthCheck.getCacheService());
+    assertEquals(eventListener, healthCheck.getManagedService());
   }
 
   @Test

@@ -53,7 +53,7 @@ public class UiLibraryCompilationServiceHealthCheck extends BaseManagedServiceHe
   private UiLibraryCompilationService uiLibraryCompilationService;
 
   @Override
-  public ManagedService getCacheService() {
+  public ManagedService getManagedService() {
     return uiLibraryCompilationService;
   }
 

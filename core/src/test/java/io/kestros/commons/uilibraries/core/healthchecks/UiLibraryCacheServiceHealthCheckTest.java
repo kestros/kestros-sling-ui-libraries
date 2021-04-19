@@ -23,7 +23,6 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
 import io.kestros.commons.uilibraries.api.services.UiLibraryCacheService;
-import io.kestros.commons.uilibraries.core.eventlisteners.UiLibraryCachePurgeEventListener;
 import org.apache.sling.testing.mock.sling.junit.SlingContext;
 import org.junit.Before;
 import org.junit.Rule;
@@ -49,7 +48,7 @@ public class UiLibraryCacheServiceHealthCheckTest {
 
   @Test
   public void testGetCacheService() {
-    assertEquals(service, healthCheck.getCacheService());
+    assertEquals(service, healthCheck.getManagedService());
   }
 
   @Test

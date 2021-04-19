@@ -47,7 +47,7 @@ public class UiLibraryConfigurationServiceHealthCheckTest {
 
   @Test
   public void testGetCacheService() {
-    assertEquals(service, healthCheck.getCacheService());
+    assertEquals(service, healthCheck.getManagedService());
   }
 
   @Test

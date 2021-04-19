@@ -53,7 +53,7 @@ public class UiLibraryCachePurgeEventListenerHealthCheck extends BaseManagedServ
   private UiLibraryCachePurgeEventListener uiLibraryCachePurgeEventListener;
 
   @Override
-  public ManagedService getCacheService() {
+  public ManagedService getManagedService() {
     return uiLibraryCachePurgeEventListener;
   }
 
