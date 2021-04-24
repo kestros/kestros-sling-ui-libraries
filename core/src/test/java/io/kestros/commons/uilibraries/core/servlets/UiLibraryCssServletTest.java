@@ -77,14 +77,14 @@ public class UiLibraryCssServletTest {
   public void testGetLibrary() throws LibraryRetrievalException {
     UiLibrary uiLibrary = mock(UiLibrary.class);
     when(uiLibraryRetrievalService.getUiLibrary("/ui-library")).thenReturn(uiLibrary);
-    assertEquals(uiLibrary, servlet.getLibrary("/ui-library"));
+    assertEquals(uiLibrary, servlet.getLibrary("/ui-library", context.resourceResolver()));
   }
 
   @Test
   public void testGetLibraryWhenLibraryNotFound() throws LibraryRetrievalException {
     when(uiLibraryRetrievalService.getUiLibrary("/ui-library")).thenThrow(
         new LibraryRetrievalException("message"));
-    assertNull(servlet.getLibrary("/ui-library"));
+    assertNull(servlet.getLibrary("/ui-library", context.resourceResolver()));
   }
 
   @Test

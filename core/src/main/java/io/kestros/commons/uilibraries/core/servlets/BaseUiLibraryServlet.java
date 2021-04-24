@@ -32,6 +32,7 @@ import javax.annotation.Nonnull;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
+import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +45,8 @@ public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
   private static final Logger LOG = LoggerFactory.getLogger(BaseUiLibraryServlet.class);
   private static final long serialVersionUID = 6096929924192138730L;
 
-  protected abstract <T extends FrontendLibrary> T getLibrary(String libraryPath);
+  protected abstract <T extends FrontendLibrary> T getLibrary(String libraryPath,
+      ResourceResolver resourceResolver);
 
   protected abstract UiLibraryCompilationService getUiLibraryCompilationService();
 
@@ -85,7 +87,7 @@ public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
       }
 
     }
-    FrontendLibrary library = getLibrary(libraryPath);
+    FrontendLibrary library = getLibrary(libraryPath, request.getResourceResolver());
     if (library != null) {
       try {
         output = getUiLibraryCompilationService().getUiLibraryOutput(library, getScriptType());
