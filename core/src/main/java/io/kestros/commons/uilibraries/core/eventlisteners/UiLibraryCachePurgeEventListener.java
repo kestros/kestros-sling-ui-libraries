@@ -30,6 +30,8 @@ import org.apache.sling.api.resource.observation.ResourceChangeListener;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,15 +44,18 @@ import org.slf4j.LoggerFactory;
                ResourceChangeListener.CHANGES + "=REMOVED",
                ResourceChangeListener.CHANGES + "=PROVIDER_ADDED",
                ResourceChangeListener.CHANGES + "=PROVIDER_REMOVED",
-               ResourceChangeListener.PATHS + "=/apps", ResourceChangeListener.PATHS + "=/etc",
-               ResourceChangeListener.PATHS + "=/libs"},
+               ResourceChangeListener.PATHS + "=/apps",
+               ResourceChangeListener.PATHS + "=/etc/ui-frameworks",
+               ResourceChangeListener.PATHS + "=/etc/vendor-libraries",
+               ResourceChangeListener.PATHS + "=/libs/kestros"},
            immediate = true)
 public class UiLibraryCachePurgeEventListener extends BaseCachePurgeOnResourceChangeEventListener {
 
   private static final Logger LOG = LoggerFactory.getLogger(
       BaseCachePurgeOnResourceChangeEventListener.class);
 
-  @Reference
+  @Reference(cardinality = ReferenceCardinality.OPTIONAL,
+             policyOption = ReferencePolicyOption.GREEDY)
   private ResourceResolverFactory resourceResolverFactory;
 
   @Override
