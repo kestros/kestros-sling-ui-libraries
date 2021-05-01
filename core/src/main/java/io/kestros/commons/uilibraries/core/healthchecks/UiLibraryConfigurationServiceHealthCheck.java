@@ -22,7 +22,6 @@ package io.kestros.commons.uilibraries.core.healthchecks;
 import io.kestros.commons.osgiserviceutils.healthchecks.BaseManagedServiceHealthCheck;
 import io.kestros.commons.osgiserviceutils.services.ManagedService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryConfigurationService;
-import org.apache.felix.hc.api.HealthCheck;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
@@ -30,7 +29,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * Health Check for {@link UiLibraryConfigurationService}.
  */
-//@SuppressFBWarnings("RI_REDUNDANT_INTERFACES")
 //@Component
 //@HealthCheckService(name = "UI Library Configuration Service Health Check",
 //                    tags = {"kestros", "ui-libraries"})
@@ -38,8 +36,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 //@ResultTTL(resultCacheTtlInMs = 10000)
 //@HealthCheckMBean(name = "UiLibraryConfigurationServiceHealthCheck")
 //@Sticky(keepNonOkResultsStickyForSec = 10)
-public class UiLibraryConfigurationServiceHealthCheck extends BaseManagedServiceHealthCheck
-    implements HealthCheck {
+public class UiLibraryConfigurationServiceHealthCheck extends BaseManagedServiceHealthCheck {
 
   @Reference(cardinality = ReferenceCardinality.OPTIONAL,
              policyOption = ReferencePolicyOption.GREEDY)
