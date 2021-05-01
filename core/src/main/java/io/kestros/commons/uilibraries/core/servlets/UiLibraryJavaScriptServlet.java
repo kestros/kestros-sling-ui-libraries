@@ -29,6 +29,7 @@ import io.kestros.commons.uilibraries.api.services.UiLibraryMinificationService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryRetrievalService;
 import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptTypes;
 import javax.servlet.Servlet;
+import org.apache.sling.api.resource.ResourceResolver;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -72,6 +73,19 @@ public class UiLibraryJavaScriptServlet extends BaseUiLibraryServlet {
   @Reference(cardinality = ReferenceCardinality.OPTIONAL,
              policyOption = ReferencePolicyOption.GREEDY)
   private UiLibraryMinificationService uiLibraryMinificationService;
+
+  @Override
+  protected <T extends FrontendLibrary> T getLibrary(String libraryPath,
+      ResourceResolver resourceResolver) {
+    if (uiLibraryRetrievalService != null) {
+      try {
+        return ((T) (uiLibraryRetrievalService.getUiLibrary(libraryPath, resourceResolver)));
+      } catch (LibraryRetrievalException e) {
+        LOG.error("Unable to retrieve library {}, {}.", libraryPath, e.getMessage());
+      }
+    }
+    return null;
+  }
 
   @Override
   protected <T extends FrontendLibrary> T getLibrary(String libraryPath) {

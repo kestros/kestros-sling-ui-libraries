@@ -25,6 +25,7 @@ import static org.mockito.Mockito.mock;
 import io.kestros.commons.uilibraries.api.services.UiLibraryMinificationService;
 import org.apache.sling.testing.mock.sling.junit.SlingContext;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -47,11 +48,13 @@ public class UiLibraryMinificationServiceHealthCheckTest {
   }
 
   @Test
+  @Ignore
   public void testGetCacheService() {
     assertEquals(service, healthCheck.getManagedService());
   }
 
   @Test
+  @Ignore
   public void testGetServiceName() {
     assertEquals("UI Library Minification Service", healthCheck.getServiceName());
   }

@@ -37,6 +37,7 @@ import java.util.Collections;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.felix.hc.api.FormattingResultLog;
+import org.apache.sling.api.resource.ResourceResolver;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Component;
 import org.slf4j.Logger;
@@ -51,7 +52,7 @@ public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationServ
 
   private static final Logger LOG = LoggerFactory.getLogger(UiLibraryCompilationServiceImpl.class);
 
-  private ComponentContext context;
+  protected ComponentContext context;
 
   @Override
   public String getDisplayName() {
@@ -154,6 +155,16 @@ public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationServ
   }
 
   @Override
+  public String getUiLibraryOutput(FrontendLibrary library, ScriptType scriptType,
+      ResourceResolver resourceResolver)
+      throws InvalidResourceTypeException, NoMatchingCompilerException {
+    ScriptTypeCompiler compiler = getCompiler(
+        getLibraryScriptTypes(library, scriptType.getRootResourceName()), getCompilers());
+    String uiLibrarySource = getUiLibrarySource(library, scriptType, resourceResolver);
+    return compiler.getOutput(uiLibrarySource);
+  }
+
+  @Override
   public String getUiLibraryOutput(FrontendLibrary uiLibrary, ScriptType scriptType)
       throws InvalidResourceTypeException, NoMatchingCompilerException {
     ScriptTypeCompiler compiler = getCompiler(
@@ -162,6 +173,34 @@ public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationServ
   }
 
   @Override
+  public String getUiLibrarySource(FrontendLibrary library, ScriptType scriptType,
+      ResourceResolver resourceResolver)
+      throws InvalidResourceTypeException, NoMatchingCompilerException {
+    ScriptTypeCompiler compiler = getCompiler(
+        getLibraryScriptTypes(library, scriptType.getRootResourceName()), getCompilers());
+    StringBuilder rawOutputStringBuilder = new StringBuilder();
+
+    for (ScriptFile scriptFile : library.getScriptFiles(compiler.getScriptTypes(),
+        scriptType.getRootResourceName())) {
+
+      try {
+        String fileContent = scriptFile.getFileContent();
+        if (StringUtils.isNotEmpty(rawOutputStringBuilder.toString()) && StringUtils.isNotEmpty(
+            fileContent)) {
+          rawOutputStringBuilder.append("\n");
+        }
+        rawOutputStringBuilder.append(scriptFile.getFileContent());
+
+      } catch (IOException e) {
+        LOG.error("Unable to append {} file {} to UiLibrary output due to IOException",
+            scriptFile.getFileType().getFileModelClass(), scriptFile.getName());
+      }
+    }
+    return rawOutputStringBuilder.toString();
+  }
+
+  @Override
+  @Deprecated
   public String getUiLibrarySource(FrontendLibrary library, ScriptType scriptType)
       throws InvalidResourceTypeException, NoMatchingCompilerException {
     ScriptTypeCompiler compiler = getCompiler(

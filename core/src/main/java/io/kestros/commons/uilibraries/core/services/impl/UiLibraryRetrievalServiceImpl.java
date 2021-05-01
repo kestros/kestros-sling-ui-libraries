@@ -28,8 +28,8 @@ import io.kestros.commons.uilibraries.api.services.UiLibraryRetrievalService;
 import io.kestros.commons.uilibraries.core.UiLibraryResource;
 import java.util.Collections;
 import java.util.List;
+import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ResourceResolverFactory;
-import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -48,12 +48,19 @@ public class UiLibraryRetrievalServiceImpl extends BaseServiceResolverService
   private ResourceResolverFactory resourceResolverFactory;
 
   @Override
-  public UiLibrary getUiLibrary(String path) throws LibraryRetrievalException {
+  public UiLibrary getUiLibrary(String path, ResourceResolver resourceResolver)
+      throws LibraryRetrievalException {
     try {
-      return getResourceAsType(path, getServiceResourceResolver(), UiLibraryResource.class);
+      return getResourceAsType(path, resourceResolver, UiLibraryResource.class);
     } catch (Exception e) {
       throw new LibraryRetrievalException(e.getMessage());
     }
+  }
+
+  @Override
+  public UiLibrary getUiLibrary(String path) throws LibraryRetrievalException {
+    getServiceResourceResolver().refresh();
+    return getUiLibrary(path, getServiceResourceResolver());
   }
 
   @Override
@@ -74,10 +81,6 @@ public class UiLibraryRetrievalServiceImpl extends BaseServiceResolverService
   @Override
   public String getDisplayName() {
     return "UI Library Retrieval Service";
-  }
-
-  @Override
-  public void deactivate(ComponentContext componentContext) {
   }
 
 }

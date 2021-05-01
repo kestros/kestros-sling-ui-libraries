@@ -25,7 +25,6 @@ import static io.kestros.commons.structuredslingmodels.utils.SlingModelUtils.get
 import io.kestros.commons.structuredslingmodels.BaseResource;
 import io.kestros.commons.structuredslingmodels.exceptions.ChildResourceNotFoundException;
 import io.kestros.commons.structuredslingmodels.exceptions.InvalidResourceTypeException;
-import io.kestros.commons.structuredslingmodels.utils.SlingModelUtils;
 import io.kestros.commons.uilibraries.api.models.ScriptFile;
 import io.kestros.commons.uilibraries.api.models.ScriptType;
 import io.kestros.commons.uilibraries.api.models.UiLibrary;
@@ -86,9 +85,9 @@ public class UiLibraryResource extends BaseResource implements UiLibrary {
                 scriptType.getFileModelClass());
             scriptFileList.add(script);
           } catch (ChildResourceNotFoundException e) {
-            LOG.warn(e.getMessage());
+            LOG.trace(e.getMessage());
           } catch (InvalidResourceTypeException e) {
-            LOG.debug(e.getMessage());
+            LOG.trace(e.getMessage());
           }
         }
       }

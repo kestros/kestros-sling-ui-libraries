@@ -22,11 +22,23 @@ package io.kestros.commons.uilibraries.api.services;
 import io.kestros.commons.osgiserviceutils.services.ManagedService;
 import io.kestros.commons.uilibraries.api.exceptions.LibraryRetrievalException;
 import io.kestros.commons.uilibraries.api.models.UiLibrary;
+import org.apache.sling.api.resource.ResourceResolver;
 
 /**
  * Provides {@link UiLibrary} instances.
  */
 public interface UiLibraryRetrievalService extends ManagedService {
+
+  /**
+   * Retrieves a specified UiLibrary.
+   *
+   * @param path Path to the UiLibrary resource.
+   * @param resourceResolver ResourceResolver.
+   * @return UiLibrary.
+   * @throws LibraryRetrievalException Failed to retrieve a UiLibrary at the given path.
+   */
+  UiLibrary getUiLibrary(String path, ResourceResolver resourceResolver)
+      throws LibraryRetrievalException;
 
   /**
    * Retrieves a specified UiLibrary.

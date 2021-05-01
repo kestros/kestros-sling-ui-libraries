@@ -26,6 +26,7 @@ import io.kestros.commons.uilibraries.api.models.FrontendLibrary;
 import io.kestros.commons.uilibraries.api.models.ScriptType;
 import io.kestros.commons.uilibraries.api.models.UiLibrary;
 import java.util.List;
+import org.apache.sling.api.resource.ResourceResolver;
 
 /**
  * Compiles CSS and JS for {@link UiLibrary}.
@@ -92,13 +93,46 @@ public interface UiLibraryCompilationService extends ManagedService {
    *
    * @param library UI Library to retrieve output for.
    * @param scriptType ScriptType to retrieve.
+   * @param resourceResolver ResourceResolver.
    * @return The uncached ScriptType output.
    * @throws NoMatchingCompilerException No compiler could be found for the specified {@link
    *     ScriptType}.
    * @throws InvalidResourceTypeException Thrown when a referenced dependency could not be
    *     adapted to UiLibrary.
    */
+  String getUiLibraryOutput(FrontendLibrary library, ScriptType scriptType,
+      ResourceResolver resourceResolver)
+      throws InvalidResourceTypeException, NoMatchingCompilerException;
+
+  /**
+   * Returns the uncached ScriptType output.
+   *
+   * @param library UI Library to retrieve output for.
+   * @param scriptType ScriptType to retrieve.
+   * @return The uncached ScriptType output.
+   * @throws NoMatchingCompilerException No compiler could be found for the specified {@link
+   *     ScriptType}.
+   * @throws InvalidResourceTypeException Thrown when a referenced dependency could not be
+   *     adapted to UiLibrary.
+   */
+  @Deprecated
   String getUiLibraryOutput(FrontendLibrary library, ScriptType scriptType)
+      throws InvalidResourceTypeException, NoMatchingCompilerException;
+
+  /**
+   * Returns the library's source content.
+   *
+   * @param library UI Library to retrieve output for.
+   * @param scriptType ScriptType to retrieve.
+   * @param resourceResolver ResourceResolver.
+   * @return The library's source content.
+   * @throws NoMatchingCompilerException No compiler could be found for the specified {@link
+   *     ScriptType}.
+   * @throws InvalidResourceTypeException Thrown when a referenced dependency could not be
+   *     adapted to UiLibrary.
+   */
+  String getUiLibrarySource(FrontendLibrary library, ScriptType scriptType,
+      ResourceResolver resourceResolver)
       throws InvalidResourceTypeException, NoMatchingCompilerException;
 
   /**
@@ -112,8 +146,10 @@ public interface UiLibraryCompilationService extends ManagedService {
    * @throws InvalidResourceTypeException Thrown when a referenced dependency could not be
    *     adapted to UiLibrary.
    */
+  @Deprecated
   String getUiLibrarySource(FrontendLibrary library, ScriptType scriptType)
       throws InvalidResourceTypeException, NoMatchingCompilerException;
+
 
   /**
    * Retrieves all ScriptTypes within a specified FrontendLibrary's script folder.

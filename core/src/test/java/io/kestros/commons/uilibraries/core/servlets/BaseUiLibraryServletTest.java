@@ -110,7 +110,7 @@ public class BaseUiLibraryServletTest {
     UiLibraryResource uiLibrary = resource.adaptTo(UiLibraryResource.class);
     context.request().setResource(resource);
 
-    when(uiLibraryRetrievalService.getUiLibrary("/ui-library")).thenReturn(uiLibrary);
+    when(uiLibraryRetrievalService.getUiLibrary("/ui-library", context.resourceResolver())).thenReturn(uiLibrary);
 
     context.registerService(UiLibraryCacheService.class, uiLibraryCacheService);
     context.registerService(UiLibraryRetrievalService.class, uiLibraryRetrievalService);
@@ -122,11 +122,10 @@ public class BaseUiLibraryServletTest {
     assertEquals(200, context.response().getStatus());
     assertEquals("text/css", context.response().getContentType());
     assertEquals("css-output", context.response().getOutputAsString());
-    verify(uiLibraryCompilationService, times(1)).getUiLibraryOutput(any(), any());
+    verify(uiLibraryCompilationService, times(1)).getUiLibraryOutput(any(), any(), any());
     verify(uiLibraryCacheService, times(1)).cacheUiLibraryScript("/ui-library", "css-output",
         ScriptTypes.CSS, false);
   }
-
 
   @Test
   public void testDoGetWhenCachedOutputIsRetrieved()
@@ -193,7 +192,7 @@ public class BaseUiLibraryServletTest {
     UiLibraryResource uiLibrary = resource.adaptTo(UiLibraryResource.class);
     context.request().setResource(resource);
 
-    when(uiLibraryRetrievalService.getUiLibrary("/ui-library")).thenReturn(uiLibrary);
+    when(uiLibraryRetrievalService.getUiLibrary("/ui-library", context.resourceResolver())).thenReturn(uiLibrary);
 
     context.registerService(UiLibraryCacheService.class, uiLibraryCacheService);
     context.registerService(UiLibraryRetrievalService.class, uiLibraryRetrievalService);
@@ -202,13 +201,13 @@ public class BaseUiLibraryServletTest {
     context.registerInjectActivateService(servlet);
 
     doThrow(new NoMatchingCompilerException("")).when(
-        uiLibraryCompilationService).getUiLibraryOutput(any(), any());
+        uiLibraryCompilationService).getUiLibraryOutput(any(), any(),any());
 
     servlet.doGet(context.request(), context.response());
     assertEquals(400, context.response().getStatus());
     assertEquals("text/plain", context.response().getContentType());
     assertEquals("", context.response().getOutputAsString());
-    verify(uiLibraryCompilationService, times(1)).getUiLibraryOutput(any(), any());
+    verify(uiLibraryCompilationService, times(1)).getUiLibraryOutput(any(), any(), any());
   }
 
   @Test
