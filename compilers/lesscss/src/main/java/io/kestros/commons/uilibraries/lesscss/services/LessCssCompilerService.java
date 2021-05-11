@@ -33,7 +33,8 @@ import org.osgi.service.component.annotations.Component;
  * LessCSS Compiler Service.
  */
 @Component(immediate = true,
-           service = {CssScriptTypeCompilerService.class, ScriptTypeCompiler.class})
+           service = {CssScriptTypeCompilerService.class, ScriptTypeCompiler.class},
+           property = "service.ranking:Integer=100")
 public class LessCssCompilerService implements ScriptTypeCompiler, CssScriptTypeCompilerService {
 
   @Override

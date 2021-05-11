@@ -32,7 +32,8 @@ import org.osgi.service.component.annotations.Component;
  * Compiles CSS by simply passing back the source value.
  */
 @Component(immediate = true,
-           service = {CssScriptTypeCompilerService.class, ScriptTypeCompiler.class})
+           service = {CssScriptTypeCompilerService.class, ScriptTypeCompiler.class},
+           property = "service.ranking:Integer=1")
 public class CssCompilerService implements ScriptTypeCompiler, CssScriptTypeCompilerService {
 
   @Override
