@@ -55,7 +55,7 @@
     <dependency>
       <groupId>io.kestros.commons</groupId>
       <artifactId>kestros-sling-ui-libraries-api</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+      <version>0.0.1</version>
     </dependency>
 
     <!-- OSGI Service Utils -->
