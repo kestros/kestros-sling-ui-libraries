@@ -30,7 +30,7 @@
   </parent>
 
   <artifactId>kestros-sling-ui-libraries-base-compilers</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
 
   <name>Kestros Commons - Sling UI Libraries - Base Compilers</name>
   <description>Provides UI Libraries to Sling instances, which are used for maintaining and
@@ -62,14 +62,14 @@
     <dependency>
       <groupId>io.kestros.commons</groupId>
       <artifactId>kestros-osgi-service-utils</artifactId>
-      <version>0.1.3</version>
+      <version>0.1.4</version>
     </dependency>
 
     <!-- Kestros Validation -->
     <dependency>
       <groupId>io.kestros.commons</groupId>
-      <artifactId>kestros-validation-foundation</artifactId>
-      <version>0.0.2</version>
+      <artifactId>kestros-validation-api</artifactId>
+      <version>0.0.3</version>
     </dependency>
 
     <dependency>
