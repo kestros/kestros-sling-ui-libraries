@@ -26,11 +26,11 @@
   <parent>
     <groupId>io.kestros.commons</groupId>
     <artifactId>kestros-sling-ui-library-compilers</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
   </parent>
 
   <artifactId>kestros-sling-ui-libraries-base-compilers</artifactId>
-  <version>0.0.2</version>
+  <version>0.0.3-SNAPSHOT</version>
 
   <name>Kestros Commons - Sling UI Libraries - Base Compilers</name>
   <description>Provides UI Libraries to Sling instances, which are used for maintaining and
@@ -49,37 +49,23 @@
     <dependency>
       <groupId>io.kestros.commons</groupId>
       <artifactId>kestros-structured-sling-models</artifactId>
-      <version>0.2.1</version>
     </dependency>
 
     <dependency>
       <groupId>io.kestros.commons</groupId>
       <artifactId>kestros-sling-ui-libraries-api</artifactId>
-      <version>0.0.2</version>
     </dependency>
 
     <!-- OSGI Service Utils -->
     <dependency>
       <groupId>io.kestros.commons</groupId>
       <artifactId>kestros-osgi-service-utils</artifactId>
-      <version>0.1.4</version>
     </dependency>
 
     <!-- Kestros Validation -->
     <dependency>
       <groupId>io.kestros.commons</groupId>
       <artifactId>kestros-validation-api</artifactId>
-      <version>0.0.3</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.felix</groupId>
-      <artifactId>org.apache.felix.healthcheck.api</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.felix</groupId>
-      <artifactId>org.apache.felix.healthcheck.annotation</artifactId>
     </dependency>
   </dependencies>
 
