@@ -150,6 +150,8 @@ public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
       throws IOException {
     response.getWriter().write(output);
     response.setContentType(getScriptType().getOutputContentType());
-    response.setStatus(responseStatus);
+    if (responseStatus != SlingHttpServletResponse.SC_OK) {
+      response.setStatus(responseStatus);
+    }
   }
 }
