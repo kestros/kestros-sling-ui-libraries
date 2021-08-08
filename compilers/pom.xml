@@ -40,7 +40,6 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>base-compilers</module>
     <module>lesscss</module>
   </modules>
 

@@ -41,8 +41,7 @@
   <packaging>pom</packaging>
 
   <modules>
-    <!--<module>api</module>-->
-    <!--    <module>compilers</module>-->
+    <module>compilers</module>
     <module>core</module>
     <module>minifiers</module>
   </modules>
