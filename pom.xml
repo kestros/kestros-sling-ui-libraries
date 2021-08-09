@@ -31,7 +31,7 @@
   </parent>
 
   <artifactId>kestros-sling-ui-libraries</artifactId>
-  <version>0.2.3-SNAPSHOT</version>
+  <version>0.2.3</version>
 
   <name>Kestros Commons - Sling UI Libraries - Reactor</name>
   <description>Provides UI Libraries to Sling instances, which are used for maintaining and

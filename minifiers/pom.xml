@@ -30,7 +30,7 @@
   </parent>
 
   <artifactId>kestros-sling-ui-library-minifiers</artifactId>
-  <version>0.0.2-SNAPSHOT</version>
+  <version>0.0.2</version>
 
   <name>Kestros Commons - Sling UI Library Minifiers - Reactor</name>
   <description>Provides UI Libraries to Sling instances, which are used for maintaining and
