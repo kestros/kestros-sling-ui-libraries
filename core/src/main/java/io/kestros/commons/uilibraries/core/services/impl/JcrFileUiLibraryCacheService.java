@@ -58,7 +58,7 @@ public class JcrFileUiLibraryCacheService extends JcrFileCacheService
 
   private static final Logger LOG = LoggerFactory.getLogger(JcrFileUiLibraryCacheService.class);
 
-  private static final String UI_LIBRARY_CACHE_PURGE_SERVICE_USER = "ui-library-cache-service";
+  private static final String UI_LIBRARY_CACHE_PURGE_SERVICE_USER = "ui-library-manager";
   private static final long serialVersionUID = 8442978263338882415L;
 
   @SuppressFBWarnings({"SE_TRANSIENT_FIELD_NOT_RESTORED", "SE_BAD_FIELD"})
@@ -151,9 +151,11 @@ public class JcrFileUiLibraryCacheService extends JcrFileCacheService
   public void cacheUiLibraryScript(String libraryPath, String content, ScriptType scriptType,
       boolean isMinified) throws CacheBuilderException {
     if (isMinified) {
+      LOG.info("Attempting to cache minified script for library {}", libraryPath);
       createCacheFile(content, String.format("%s.min%s", libraryPath, scriptType.getExtension()),
           scriptType);
     } else {
+      LOG.info("Attempting to cache non-minified script for library {}", libraryPath);
       createCacheFile(content, String.format("%s%s", libraryPath, scriptType.getExtension()),
           scriptType);
     }
