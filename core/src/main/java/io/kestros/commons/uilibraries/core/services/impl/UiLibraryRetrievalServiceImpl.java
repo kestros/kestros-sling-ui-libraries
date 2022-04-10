@@ -65,7 +65,7 @@ public class UiLibraryRetrievalServiceImpl extends BaseServiceResolverService
 
   @Override
   protected String getServiceUserName() {
-    return "ui-library-retrieval";
+    return "ui-library-manager";
   }
 
   @Override
