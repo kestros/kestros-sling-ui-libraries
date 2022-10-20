@@ -30,7 +30,7 @@
   </parent>
 
   <artifactId>kestros-sling-ui-libraries-core</artifactId>
-  <version>0.2.3</version>
+  <version>0.2.4-SNAPSHOT</version>
 
   <name>Kestros Commons - Sling UI Libraries - Core</name>
   <description>Provides UI Libraries to Sling instances, which are used for maintaining and
@@ -93,7 +93,7 @@
             <Sling-Model-Packages>io.kestros.commons.uilibraries.core
             </Sling-Model-Packages>
             <Sling-Initial-Content>
-              content/ui-libraries.html;overwrite:=true;path:=/libs/kestros/commons;
+              /libs/kestros/commons/ui-libraries.html;overwrite:=true;path:=/libs/kestros/commons/ui-libraries
             </Sling-Initial-Content>
             <Sling-Nodetypes>nodetypes.cnd</Sling-Nodetypes>
           </instructions>
