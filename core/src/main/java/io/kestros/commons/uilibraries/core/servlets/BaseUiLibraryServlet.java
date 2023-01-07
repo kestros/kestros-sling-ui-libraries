@@ -64,7 +64,7 @@ public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
   /**
    * Writes the GET response for the current UiLibrary.
    *
-   * @param request SlingHttpServletRequest
+   * @param request  SlingHttpServletRequest
    * @param response SlingHttpServletResponse to write to.
    */
   @Override
@@ -78,7 +78,8 @@ public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
       isMinified = getUiLibraryMinificationService().isMinifiedRequest(request);
     }
 
-    String output = getCachedOutputOrEmptyString(libraryPath, isMinified);
+    String output = getCachedOutputOrEmptyString(libraryPath, isMinified,
+        request.getResourceResolver());
     if (StringUtils.isNotEmpty(output)) {
       try {
         response.setContentType(getScriptType().getOutputContentType());
@@ -104,7 +105,7 @@ public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
         writeResponse(output, SlingHttpServletResponse.SC_OK, response);
 
         try {
-          cacheOutput(library, output, getScriptType(), isMinified);
+          cacheOutput(library, output, getScriptType(), isMinified, request.getResourceResolver());
           return;
         } catch (Exception e) {
           LOG.error("Could not cache {} script for {}. {}.", getScriptType().getName(), libraryPath,
@@ -121,21 +122,23 @@ public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
   }
 
   void cacheOutput(FrontendLibrary library, String content, ScriptTypes scriptType,
-      boolean minified) {
+      boolean minified, ResourceResolver resourceResolver) {
     if (getUiLibraryCacheService() != null) {
       try {
         getUiLibraryCacheService().cacheUiLibraryScript(library.getPath(), content, scriptType,
-            minified);
+            minified, resourceResolver);
       } catch (CacheBuilderException e) {
         LOG.warn("Unable to build cache for library {}. {}", library.getPath(), e.getMessage());
       }
     }
   }
 
-  String getCachedOutputOrEmptyString(String libraryPath, Boolean isMinified) {
+  String getCachedOutputOrEmptyString(String libraryPath, Boolean isMinified,
+      ResourceResolver resourceResolver) {
     if (getUiLibraryCacheService() != null) {
       try {
-        return getUiLibraryCacheService().getCachedOutput(libraryPath, getScriptType(), isMinified);
+        return getUiLibraryCacheService().getCachedOutput(libraryPath, getScriptType(), isMinified,
+            resourceResolver);
       } catch (CacheRetrievalException e) {
         LOG.debug("Unable to retrieve cached value for {}. {}", libraryPath, e.getMessage());
       }

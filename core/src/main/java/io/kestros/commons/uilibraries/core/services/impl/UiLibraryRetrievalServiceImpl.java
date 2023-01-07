@@ -28,24 +28,30 @@ import io.kestros.commons.uilibraries.api.services.UiLibraryRetrievalService;
 import io.kestros.commons.uilibraries.core.UiLibraryResource;
 import java.util.Collections;
 import java.util.List;
+import org.apache.sling.api.resource.LoginException;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Retrieve {@link UiLibraryResource} Sling Models.
  */
 @Component(immediate = true,
-           service = UiLibraryRetrievalService.class)
+    service = UiLibraryRetrievalService.class)
 public class UiLibraryRetrievalServiceImpl extends BaseServiceResolverService
     implements UiLibraryRetrievalService {
 
   @Reference(cardinality = ReferenceCardinality.OPTIONAL,
-             policyOption = ReferencePolicyOption.GREEDY)
+      policyOption = ReferencePolicyOption.GREEDY)
   private ResourceResolverFactory resourceResolverFactory;
+
+  private static final Logger LOG = LoggerFactory.getLogger(UiLibraryRetrievalServiceImpl.class);
 
   @Override
   public UiLibrary getUiLibrary(String path, ResourceResolver resourceResolver)
@@ -59,13 +65,22 @@ public class UiLibraryRetrievalServiceImpl extends BaseServiceResolverService
 
   @Override
   public UiLibrary getUiLibrary(String path) throws LibraryRetrievalException {
-    getServiceResourceResolver().refresh();
-    return getUiLibrary(path, getServiceResourceResolver());
+    try (ResourceResolver resourceResolver = getServiceResourceResolver()) {
+      return getUiLibrary(path, resourceResolver);
+    } catch (LoginException e) {
+      throw new LibraryRetrievalException(e.getMessage());
+    }
+
   }
 
   @Override
   protected String getServiceUserName() {
     return "ui-library-manager";
+  }
+
+  @Override
+  protected Logger getLogger() {
+    return LOG;
   }
 
   @Override

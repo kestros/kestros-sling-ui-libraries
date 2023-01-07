@@ -114,6 +114,11 @@ public class JcrFileUiLibraryCacheService extends JcrFileCacheService
   }
 
   @Override
+  protected Logger getLogger() {
+    return LOG;
+  }
+
+  @Override
   protected ResourceResolverFactory getResourceResolverFactory() {
     return resourceResolverFactory;
   }
@@ -124,7 +129,8 @@ public class JcrFileUiLibraryCacheService extends JcrFileCacheService
   }
 
   @Override
-  public String getCachedOutput(String libraryPath, ScriptType scriptType, boolean minified)
+  public String getCachedOutput(String libraryPath, ScriptType scriptType, boolean minified,
+      ResourceResolver resourceResolver)
       throws CacheRetrievalException {
     String cachedResourcePath = String.format("%s%s%s", getServiceCacheRootPath(), libraryPath,
         scriptType.getExtension());
@@ -133,7 +139,7 @@ public class JcrFileUiLibraryCacheService extends JcrFileCacheService
           scriptType.getExtension());
     }
     try {
-      BaseFile file = getResourceAsType(cachedResourcePath, getServiceResourceResolver(),
+      BaseFile file = getResourceAsType(cachedResourcePath, resourceResolver,
           scriptType.getFileModelClass());
       return file.getFileContent();
     } catch (ModelAdaptionException | IOException e) {
@@ -142,22 +148,23 @@ public class JcrFileUiLibraryCacheService extends JcrFileCacheService
   }
 
   @Override
-  public String getCachedOutput(FrontendLibrary library, ScriptType scriptType, boolean minified)
+  public String getCachedOutput(FrontendLibrary library, ScriptType scriptType, boolean minified,
+      ResourceResolver resourceResolver)
       throws CacheRetrievalException {
-    return getCachedOutput(library.getPath(), scriptType, minified);
+    return getCachedOutput(library.getPath(), scriptType, minified, resourceResolver);
   }
 
   @Override
   public void cacheUiLibraryScript(String libraryPath, String content, ScriptType scriptType,
-      boolean isMinified) throws CacheBuilderException {
+      boolean isMinified, ResourceResolver resourceResolver) throws CacheBuilderException {
     if (isMinified) {
       LOG.info("Attempting to cache minified script for library {}", libraryPath);
       createCacheFile(content, String.format("%s.min%s", libraryPath, scriptType.getExtension()),
-          scriptType);
+          scriptType, resourceResolver);
     } else {
       LOG.info("Attempting to cache non-minified script for library {}", libraryPath);
       createCacheFile(content, String.format("%s%s", libraryPath, scriptType.getExtension()),
-          scriptType);
+          scriptType, resourceResolver);
     }
   }
 }

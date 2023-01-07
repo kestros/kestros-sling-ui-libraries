@@ -69,6 +69,11 @@ public class UiLibraryCachePurgeEventListener extends BaseCachePurgeOnResourceCh
   }
 
   @Override
+  protected Logger getLogger() {
+    return LOG;
+  }
+
+  @Override
   protected String getServiceUserName() {
     return "ui-library-cache-purge";
   }
