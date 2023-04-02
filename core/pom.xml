@@ -25,8 +25,8 @@
 
   <parent>
     <groupId>io.kestros.commons</groupId>
-    <artifactId>kestros-parent-strict</artifactId>
-    <version>0.2.4-SNAPSHOT</version>
+    <artifactId>kestros-parent</artifactId>
+    <version>0.3.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>kestros-sling-ui-libraries-core</artifactId>
@@ -49,28 +49,33 @@
     <dependency>
       <groupId>io.kestros.commons</groupId>
       <artifactId>kestros-structured-sling-models</artifactId>
+      <version>0.2.3-SNAPSHOT</version>
     </dependency>
 
     <!-- OSGI Service Utils -->
     <dependency>
       <groupId>io.kestros.commons</groupId>
       <artifactId>kestros-osgi-service-utils</artifactId>
+      <version>0.1.8-SNAPSHOT</version>
     </dependency>
 
     <!-- Kestros Validation -->
     <dependency>
       <groupId>io.kestros.commons</groupId>
       <artifactId>kestros-validation-api</artifactId>
+      <version>0.0.4</version>
     </dependency>
 
     <dependency>
       <groupId>io.kestros.commons</groupId>
       <artifactId>kestros-sling-ui-libraries-api</artifactId>
+      <version>0.0.4-SNAPSHOT</version>
     </dependency>
 
     <dependency>
       <groupId>io.kestros.commons</groupId>
       <artifactId>kestros-sling-ui-libraries-base-compilers</artifactId>
+      <version>0.0.4-SNAPSHOT</version>
     </dependency>
   </dependencies>
 
