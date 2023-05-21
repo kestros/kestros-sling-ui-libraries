@@ -64,6 +64,10 @@ public class UiLibraryJavaScriptServletTest {
     uiLibraryCacheService = mock(UiLibraryCacheService.class);
     uiLibraryRetrievalService = mock(UiLibraryRetrievalService.class);
 
+  }
+
+  @Test
+  public void testGetLibrary() throws LibraryRetrievalException {
     context.registerService(UiLibraryCompilationService.class, uiLibraryCompilationService);
     context.registerService(UiLibraryConfigurationService.class, uiLibraryConfigurationService);
     context.registerService(UiLibraryMinificationService.class, uiLibraryMinificationService);
@@ -71,17 +75,47 @@ public class UiLibraryJavaScriptServletTest {
     context.registerService(UiLibraryRetrievalService.class, uiLibraryRetrievalService);
 
     context.registerInjectActivateService(servlet);
-  }
 
-  @Test
-  public void testGetLibrary() throws LibraryRetrievalException {
     UiLibrary uiLibrary = mock(UiLibrary.class);
     when(uiLibraryRetrievalService.getUiLibrary("/ui-library")).thenReturn(uiLibrary);
     assertEquals(uiLibrary, servlet.getLibrary("/ui-library"));
   }
 
+    @Test
+    public void testGetLibraryWhenUsingResourceResolver() throws LibraryRetrievalException {
+        context.registerService(UiLibraryCompilationService.class, uiLibraryCompilationService);
+        context.registerService(UiLibraryConfigurationService.class, uiLibraryConfigurationService);
+        context.registerService(UiLibraryMinificationService.class, uiLibraryMinificationService);
+        context.registerService(UiLibraryCacheService.class, uiLibraryCacheService);
+        context.registerService(UiLibraryRetrievalService.class, uiLibraryRetrievalService);
+
+        context.registerInjectActivateService(servlet);
+
+        UiLibrary uiLibrary = mock(UiLibrary.class);
+        when(uiLibraryRetrievalService.getUiLibrary("/ui-library", context.resourceResolver())).thenReturn(uiLibrary);
+        assertEquals(uiLibrary, servlet.getLibrary("/ui-library", context.resourceResolver()));
+    }
+
+  @Test
+  public void testGetLibraryWhenServiceIsNull() throws LibraryRetrievalException {
+    context.registerInjectActivateService(servlet);
+
+
+    UiLibrary uiLibrary = mock(UiLibrary.class);
+    when(uiLibraryRetrievalService.getUiLibrary("/ui-library")).thenReturn(uiLibrary);
+    assertNull( servlet.getLibrary("/ui-library"));
+  }
+
   @Test
   public void testGetLibraryWhenLibraryNotFound() throws LibraryRetrievalException {
+      context.registerService(UiLibraryCompilationService.class, uiLibraryCompilationService);
+      context.registerService(UiLibraryConfigurationService.class, uiLibraryConfigurationService);
+      context.registerService(UiLibraryMinificationService.class, uiLibraryMinificationService);
+      context.registerService(UiLibraryCacheService.class, uiLibraryCacheService);
+      context.registerService(UiLibraryRetrievalService.class, uiLibraryRetrievalService);
+
+      context.registerInjectActivateService(servlet);
+
     when(uiLibraryRetrievalService.getUiLibrary("/ui-library")).thenThrow(
         new LibraryRetrievalException("message"));
     assertNull(servlet.getLibrary("/ui-library"));
@@ -89,27 +123,66 @@ public class UiLibraryJavaScriptServletTest {
 
   @Test
   public void testGetUiLibraryCompilationService() {
+      context.registerService(UiLibraryCompilationService.class, uiLibraryCompilationService);
+      context.registerService(UiLibraryConfigurationService.class, uiLibraryConfigurationService);
+      context.registerService(UiLibraryMinificationService.class, uiLibraryMinificationService);
+      context.registerService(UiLibraryCacheService.class, uiLibraryCacheService);
+      context.registerService(UiLibraryRetrievalService.class, uiLibraryRetrievalService);
+
+      context.registerInjectActivateService(servlet);
+
     assertEquals(uiLibraryCompilationService, servlet.getUiLibraryCompilationService());
   }
 
   @Test
   public void testGetUiLibraryConfigurationService() {
+      context.registerService(UiLibraryCompilationService.class, uiLibraryCompilationService);
+      context.registerService(UiLibraryConfigurationService.class, uiLibraryConfigurationService);
+      context.registerService(UiLibraryMinificationService.class, uiLibraryMinificationService);
+      context.registerService(UiLibraryCacheService.class, uiLibraryCacheService);
+      context.registerService(UiLibraryRetrievalService.class, uiLibraryRetrievalService);
+
+      context.registerInjectActivateService(servlet);
 
     assertEquals(uiLibraryConfigurationService, servlet.getUiLibraryConfigurationService());
   }
 
   @Test
   public void testGetUiLibraryMinificationService() {
+      context.registerService(UiLibraryCompilationService.class, uiLibraryCompilationService);
+      context.registerService(UiLibraryConfigurationService.class, uiLibraryConfigurationService);
+      context.registerService(UiLibraryMinificationService.class, uiLibraryMinificationService);
+      context.registerService(UiLibraryCacheService.class, uiLibraryCacheService);
+      context.registerService(UiLibraryRetrievalService.class, uiLibraryRetrievalService);
+
+      context.registerInjectActivateService(servlet);
+
     assertEquals(uiLibraryMinificationService, servlet.getUiLibraryMinificationService());
   }
 
   @Test
   public void testGetUiLibraryCacheService() {
+      context.registerService(UiLibraryCompilationService.class, uiLibraryCompilationService);
+      context.registerService(UiLibraryConfigurationService.class, uiLibraryConfigurationService);
+      context.registerService(UiLibraryMinificationService.class, uiLibraryMinificationService);
+      context.registerService(UiLibraryCacheService.class, uiLibraryCacheService);
+      context.registerService(UiLibraryRetrievalService.class, uiLibraryRetrievalService);
+
+      context.registerInjectActivateService(servlet);
+
     assertEquals(uiLibraryCacheService, servlet.getUiLibraryCacheService());
   }
 
   @Test
   public void testGetScriptType() {
-    assertEquals(ScriptTypes.JAVASCRIPT, servlet.getScriptType());
+      context.registerService(UiLibraryCompilationService.class, uiLibraryCompilationService);
+      context.registerService(UiLibraryConfigurationService.class, uiLibraryConfigurationService);
+      context.registerService(UiLibraryMinificationService.class, uiLibraryMinificationService);
+      context.registerService(UiLibraryCacheService.class, uiLibraryCacheService);
+      context.registerService(UiLibraryRetrievalService.class, uiLibraryRetrievalService);
+
+      context.registerInjectActivateService(servlet);
+
+      assertEquals(ScriptTypes.JAVASCRIPT, servlet.getScriptType());
   }
 }

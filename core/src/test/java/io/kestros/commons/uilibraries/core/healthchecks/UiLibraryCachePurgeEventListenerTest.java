@@ -19,7 +19,7 @@
 
 package io.kestros.commons.uilibraries.core.healthchecks;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
 import io.kestros.commons.uilibraries.api.services.UiLibraryCacheService;
@@ -61,6 +61,11 @@ public class UiLibraryCachePurgeEventListenerTest {
   @Test
   public void testGetCacheServices() {
     assertEquals(3, eventListener.getCacheServices().size());
+  }
+
+  @Test
+  public void testGetResourceResolverFactory() {
+    assertNotNull(eventListener.getResourceResolverFactory());
   }
 
 }

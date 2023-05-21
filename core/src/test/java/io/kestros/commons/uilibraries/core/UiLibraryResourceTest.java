@@ -78,6 +78,18 @@ public class UiLibraryResourceTest {
   public void testGetSupportedScriptTypes() {
   }
 
+
+  @Test
+  public void testGetIncludedFileNamesWhenCssFolderIsMissing() {
+    resource = context.create().resource("/ui-library", properties);
+    cssFolderProperties.put("include", new String[]{"file-1.css", "file-2.css"});
+
+    uiLibrary = resource.adaptTo(UiLibraryResource.class);
+
+    assertEquals(0,
+           uiLibrary.getIncludedFileNames(ScriptTypes.CSS).size());
+  }
+
   @Test
   public void testGetScriptFilesCss() {
     resource = context.create().resource("/ui-library", properties);
@@ -97,6 +109,19 @@ public class UiLibraryResourceTest {
     assertEquals("file-2.css", uiLibrary.getScriptFiles(Collections.singletonList(ScriptTypes.CSS),
         "css").get(1).getName());
   }
+
+  @Test
+  public void testGetScriptFilesCssWhenFileDoesNotExist() {
+    resource = context.create().resource("/ui-library", properties);
+    cssFolderProperties.put("include", new String[]{"file-1.css", "file-2.css"});
+    context.create().resource("/ui-library/css", cssFolderProperties);
+
+    uiLibrary = resource.adaptTo(UiLibraryResource.class);
+
+    assertEquals(0,
+            uiLibrary.getScriptFiles(Collections.singletonList(ScriptTypes.CSS), "css").size());
+  }
+
 
   @Test
   public void testGetScriptFilesCssWhenNotAllFilesAreIncluded() {
