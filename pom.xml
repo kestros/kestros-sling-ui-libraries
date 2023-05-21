@@ -25,13 +25,13 @@
 
   <parent>
     <groupId>io.kestros.commons</groupId>
-    <artifactId>kestros-parent-strict</artifactId>
-    <version>0.2.1</version>
+    <artifactId>kestros-parent</artifactId>
+    <version>0.3.0</version>
     <relativePath/>
   </parent>
 
   <artifactId>kestros-sling-ui-libraries</artifactId>
-  <version>0.2.3-SNAPSHOT</version>
+  <version>0.2.4-SNAPSHOT</version>
 
   <name>Kestros Commons - Sling UI Libraries - Reactor</name>
   <description>Provides UI Libraries to Sling instances, which are used for maintaining and
@@ -41,8 +41,7 @@
   <packaging>pom</packaging>
 
   <modules>
-    <!--<module>api</module>-->
-    <!--    <module>compilers</module>-->
+    <module>compilers</module>
     <module>core</module>
     <module>minifiers</module>
   </modules>

@@ -42,10 +42,31 @@ import org.slf4j.LoggerFactory;
 @SuppressFBWarnings("RI_REDUNDANT_INTERFACES")
 @KestrosModel
 @Model(adaptables = Resource.class,
-       resourceType = "nt:file")
+    resourceType = "nt:file")
 public class LessCssFile extends BaseScriptFile implements ScriptFile {
 
   private static final Logger LOG = LoggerFactory.getLogger(LessCssFile.class);
+
+  static String getFileNameFromImport(final String importLine) {
+    final String[] importLineParts = importLine.split("@import \"");
+    if (importLineParts.length == 2) {
+      if (importLineParts[1].contains("\";")) {
+        return importLineParts[1].split("\";")[0];
+      } else {
+        LOG.error("Syntax while getting file name from import line. {} is invalid.", importLine);
+      }
+    } else {
+      LOG.trace("LESS line {} is not an import line.", importLine);
+    }
+    return StringUtils.EMPTY;
+  }
+
+  static boolean isImportLine(final String line) {
+    if (line.contains("//")) {
+      return false;
+    }
+    return StringUtils.isNotEmpty(getFileNameFromImport(line));
+  }
 
   @Override
   public FileType getFileType() {
@@ -75,6 +96,12 @@ public class LessCssFile extends BaseScriptFile implements ScriptFile {
       }
     } catch (final IOException exception) {
       LOG.error("Unable to build output for LessFile {} due to IOException", getPath());
+    } finally {
+      try {
+        bufferedReader.close();
+      } catch (final IOException exception) {
+        LOG.error("Unable to close BufferedReader for LessFile {} due to IOException", getPath());
+      }
     }
     return builder.toString();
   }
@@ -93,26 +120,5 @@ public class LessCssFile extends BaseScriptFile implements ScriptFile {
           exception.getMessage());
     }
     return line;
-  }
-
-  static String getFileNameFromImport(final String importLine) {
-    final String[] importLineParts = importLine.split("@import \"");
-    if (importLineParts.length == 2) {
-      if (importLineParts[1].contains("\";")) {
-        return importLineParts[1].split("\";")[0];
-      } else {
-        LOG.error("Syntax while getting file name from import line. {} is invalid.", importLine);
-      }
-    } else {
-      LOG.trace("LESS line {} is not an import line.", importLine);
-    }
-    return StringUtils.EMPTY;
-  }
-
-  static boolean isImportLine(final String line) {
-    if (line.contains("//")) {
-      return false;
-    }
-    return StringUtils.isNotEmpty(getFileNameFromImport(line));
   }
 }

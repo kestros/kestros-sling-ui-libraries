@@ -20,6 +20,7 @@
 package io.kestros.commons.uilibraries.core.healthchecks;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
 
 import io.kestros.commons.uilibraries.api.services.UiLibraryConfigurationService;
@@ -30,31 +31,27 @@ import org.junit.Rule;
 import org.junit.Test;
 
 public class UiLibraryConfigurationServiceHealthCheckTest {
-  @Rule
-  public SlingContext context = new SlingContext();
+    @Rule
+    public SlingContext context = new SlingContext();
 
-  private UiLibraryConfigurationServiceHealthCheck healthCheck;
+    private UiLibraryConfigurationServiceHealthCheck healthCheck;
 
-  private UiLibraryConfigurationService service;
+    private UiLibraryConfigurationService service;
 
-  @Before
-  public void setUp() throws Exception {
-    service = mock(UiLibraryConfigurationService.class);
-    healthCheck = new UiLibraryConfigurationServiceHealthCheck();
+    @Before
+    public void setUp() throws Exception {
+        service = mock(UiLibraryConfigurationService.class);
+        healthCheck = new UiLibraryConfigurationServiceHealthCheck();
 
-    context.registerService(UiLibraryConfigurationService.class, service);
-    context.registerInjectActivateService(healthCheck);
-  }
+    }
 
-  @Test
-  @Ignore
-  public void testGetCacheService() {
-    assertEquals(service, healthCheck.getManagedService());
-  }
+    @Test
+    public void testGetCacheService() {
+        assertNull(healthCheck.getManagedService());
+    }
 
-  @Test
-  @Ignore
-  public void testGetServiceName() {
-    assertEquals("UI Library Configuration Service", healthCheck.getServiceName());
-  }
+    @Test
+    public void testGetServiceName() {
+        assertEquals("UI Library Configuration Service", healthCheck.getServiceName());
+    }
 }

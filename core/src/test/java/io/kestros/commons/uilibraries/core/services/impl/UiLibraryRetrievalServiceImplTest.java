@@ -88,7 +88,7 @@ public class UiLibraryRetrievalServiceImplTest {
 
   @Test
   public void testGetServiceUserName() {
-    assertEquals("ui-library-retrieval", uiLibraryRetrievalService.getServiceUserName());
+    assertEquals("ui-library-manager", uiLibraryRetrievalService.getServiceUserName());
   }
 
   @Test

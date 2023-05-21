@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
  * Looks up compiler services to provide compiled CSS or JavaScript output for UiLibraries.
  */
 @Component(immediate = true,
-           service = UiLibraryCompilationService.class)
+    service = UiLibraryCompilationService.class)
 public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationService {
 
   private static final Logger LOG = LoggerFactory.getLogger(UiLibraryCompilationServiceImpl.class);
@@ -167,6 +167,9 @@ public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationServ
   @Override
   public String getUiLibraryOutput(FrontendLibrary uiLibrary, ScriptType scriptType)
       throws InvalidResourceTypeException, NoMatchingCompilerException {
+    LOG.warn(
+        "getUiLibraryOutput(FrontendLibrary, ScriptType) is deprecated. Use getUiLibraryOutput"
+        + "(FrontendLibrary, ScriptType, ResourceResolver) instead.");
     ScriptTypeCompiler compiler = getCompiler(
         getLibraryScriptTypes(uiLibrary, scriptType.getRootResourceName()), getCompilers());
     return compiler.getOutput(getUiLibrarySource(uiLibrary, scriptType));
@@ -203,6 +206,7 @@ public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationServ
   @Deprecated
   public String getUiLibrarySource(FrontendLibrary library, ScriptType scriptType)
       throws InvalidResourceTypeException, NoMatchingCompilerException {
+    LOG.warn("getUiLibrarySource(FrontendLibrary, ScriptType) is deprecated.");
     ScriptTypeCompiler compiler = getCompiler(
         getLibraryScriptTypes(library, scriptType.getRootResourceName()), getCompilers());
     StringBuilder rawOutputStringBuilder = new StringBuilder();
