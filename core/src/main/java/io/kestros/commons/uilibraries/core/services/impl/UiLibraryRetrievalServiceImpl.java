@@ -28,6 +28,7 @@ import io.kestros.commons.uilibraries.api.services.UiLibraryRetrievalService;
 import io.kestros.commons.uilibraries.core.UiLibraryResource;
 import java.util.Collections;
 import java.util.List;
+import javax.annotation.Nonnull;
 import org.apache.sling.api.resource.LoginException;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ResourceResolverFactory;
@@ -53,8 +54,9 @@ public class UiLibraryRetrievalServiceImpl extends BaseServiceResolverService
 
   private static final Logger LOG = LoggerFactory.getLogger(UiLibraryRetrievalServiceImpl.class);
 
+  @Nonnull
   @Override
-  public UiLibrary getUiLibrary(String path, ResourceResolver resourceResolver)
+  public UiLibrary getUiLibrary(@Nonnull String path, @Nonnull ResourceResolver resourceResolver)
       throws LibraryRetrievalException {
     try {
       return getResourceAsType(path, resourceResolver, UiLibraryResource.class);
@@ -63,8 +65,9 @@ public class UiLibraryRetrievalServiceImpl extends BaseServiceResolverService
     }
   }
 
+  @Nonnull
   @Override
-  public UiLibrary getUiLibrary(String path) throws LibraryRetrievalException {
+  public UiLibrary getUiLibrary(@Nonnull String path) throws LibraryRetrievalException {
     try (ResourceResolver resourceResolver = getServiceResourceResolver()) {
       return getUiLibrary(path, resourceResolver);
     } catch (LoginException e) {
@@ -73,16 +76,19 @@ public class UiLibraryRetrievalServiceImpl extends BaseServiceResolverService
 
   }
 
+  @Nonnull
   @Override
   protected String getServiceUserName() {
     return "ui-library-manager";
   }
 
+  @Nonnull
   @Override
   protected Logger getLogger() {
     return LOG;
   }
 
+  @Nonnull
   @Override
   protected List<String> getRequiredResourcePaths() {
     return Collections.emptyList();
@@ -93,6 +99,7 @@ public class UiLibraryRetrievalServiceImpl extends BaseServiceResolverService
     return resourceResolverFactory;
   }
 
+  @Nonnull
   @Override
   public String getDisplayName() {
     return "UI Library Retrieval Service";

@@ -25,6 +25,7 @@ import io.kestros.commons.osgiserviceutils.services.eventlisteners.impl.BaseCach
 import io.kestros.commons.uilibraries.api.services.UiLibraryCacheService;
 import java.util.Collections;
 import java.util.List;
+import javax.annotation.Nonnull;
 import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.apache.sling.api.resource.observation.ResourceChangeListener;
 import org.osgi.service.component.ComponentContext;
@@ -58,26 +59,30 @@ public class UiLibraryCachePurgeEventListener extends BaseCachePurgeOnResourceCh
              policyOption = ReferencePolicyOption.GREEDY)
   private ResourceResolverFactory resourceResolverFactory;
 
+  @Nonnull
   @Override
   public String getDisplayName() {
     return "UI Library Cache Purge Event Listener";
   }
 
   @Override
-  public void deactivate(ComponentContext componentContext) {
+  public void deactivate(@Nonnull ComponentContext componentContext) {
     LOG.info("Deactivating UiLibraryCachePurgeEventListener.");
   }
 
+  @Nonnull
   @Override
   protected Logger getLogger() {
     return LOG;
   }
 
+  @Nonnull
   @Override
   protected String getServiceUserName() {
     return "ui-library-cache-purge";
   }
 
+  @Nonnull
   @Override
   protected List<String> getRequiredResourcePaths() {
     return Collections.emptyList();
@@ -88,6 +93,7 @@ public class UiLibraryCachePurgeEventListener extends BaseCachePurgeOnResourceCh
     return false;
   }
 
+  @Nonnull
   @Override
   public List<UiLibraryCacheService> getCacheServices() {
     return getAllOsgiServicesOfType(getComponentContext(), UiLibraryCacheService.class);

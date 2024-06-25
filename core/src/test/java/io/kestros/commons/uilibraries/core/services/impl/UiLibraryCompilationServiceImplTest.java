@@ -31,6 +31,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import io.kestros.commons.structuredslingmodels.exceptions.InvalidResourceTypeException;
+import io.kestros.commons.structuredslingmodels.exceptions.JcrFileReadException;
 import io.kestros.commons.uilibraries.api.exceptions.NoMatchingCompilerException;
 import io.kestros.commons.uilibraries.api.models.ScriptFile;
 import io.kestros.commons.uilibraries.api.models.ScriptType;
@@ -154,7 +155,8 @@ public class UiLibraryCompilationServiceImplTest {
 
   @Test
   public void testGetUiLibraryOutputWhenCss()
-      throws InvalidResourceTypeException, NoMatchingCompilerException, IOException {
+          throws InvalidResourceTypeException, NoMatchingCompilerException, IOException,
+          JcrFileReadException {
     context.registerInjectActivateService(cssCompilerService);
     context.registerInjectActivateService(javaScriptCompilerService);
     context.registerInjectActivateService(compilationService);
@@ -184,7 +186,8 @@ public class UiLibraryCompilationServiceImplTest {
 
   @Test
   public void testGetUiLibraryOutputWhenJavaScript()
-      throws InvalidResourceTypeException, NoMatchingCompilerException, IOException {
+          throws InvalidResourceTypeException, NoMatchingCompilerException, IOException,
+          JcrFileReadException {
     context.registerInjectActivateService(cssCompilerService);
     context.registerInjectActivateService(javaScriptCompilerService);
     context.registerInjectActivateService(compilationService);
@@ -214,7 +217,8 @@ public class UiLibraryCompilationServiceImplTest {
 
   @Test
   public void testGetUiLibraryOutputWhenIoException()
-      throws InvalidResourceTypeException, NoMatchingCompilerException, IOException {
+          throws InvalidResourceTypeException, NoMatchingCompilerException, IOException,
+          JcrFileReadException {
     context.registerInjectActivateService(cssCompilerService);
     context.registerInjectActivateService(javaScriptCompilerService);
     context.registerInjectActivateService(compilationService);
@@ -225,9 +229,11 @@ public class UiLibraryCompilationServiceImplTest {
     when(scriptFile1.getFileContent()).thenReturn("body{}");
     when(scriptFile1.getFileType()).thenReturn(
         ScriptTypes.CSS);
+    when(scriptFile1.getName()).thenReturn("file1.css");
     ScriptFile scriptFile2 = mock(ScriptFile.class);
     when(scriptFile2.getFileType()).thenReturn(
         ScriptTypes.CSS);
+    when(scriptFile2.getName()).thenReturn("file2.css");
     when(scriptFile2.getFileContent()).thenThrow(new IOException());
 
     List<ScriptFile> scriptFileList = new ArrayList<>();

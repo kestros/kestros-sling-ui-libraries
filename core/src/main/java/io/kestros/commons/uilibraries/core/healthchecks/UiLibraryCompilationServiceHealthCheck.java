@@ -23,6 +23,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.kestros.commons.osgiserviceutils.healthchecks.BaseManagedServiceHealthCheck;
 import io.kestros.commons.osgiserviceutils.services.ManagedService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryCompilationService;
+import javax.annotation.Nonnull;
 import org.apache.felix.hc.annotation.Async;
 import org.apache.felix.hc.annotation.HealthCheckMBean;
 import org.apache.felix.hc.annotation.HealthCheckService;
@@ -57,6 +58,7 @@ public class UiLibraryCompilationServiceHealthCheck extends BaseManagedServiceHe
     return uiLibraryCompilationService;
   }
 
+  @Nonnull
   @Override
   public String getServiceName() {
     return "UI Library Compilation Service";

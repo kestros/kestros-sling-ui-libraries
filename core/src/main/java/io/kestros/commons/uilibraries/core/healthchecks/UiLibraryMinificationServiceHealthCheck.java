@@ -23,6 +23,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.kestros.commons.osgiserviceutils.healthchecks.BaseManagedServiceHealthCheck;
 import io.kestros.commons.osgiserviceutils.services.ManagedService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryMinificationService;
+import javax.annotation.Nonnull;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
@@ -48,6 +49,7 @@ public class UiLibraryMinificationServiceHealthCheck extends BaseManagedServiceH
     return uiLibraryMinificationService;
   }
 
+  @Nonnull
   @Override
   public String getServiceName() {
     return "UI Library Minification Service";

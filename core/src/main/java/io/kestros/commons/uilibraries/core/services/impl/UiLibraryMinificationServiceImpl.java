@@ -30,6 +30,7 @@ import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptTypes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.annotation.Nonnull;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.felix.hc.api.FormattingResultLog;
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -52,23 +53,24 @@ public class UiLibraryMinificationServiceImpl implements UiLibraryMinificationSe
 
   private ComponentContext componentContext;
 
+  @Nonnull
   @Override
   public String getDisplayName() {
     return "UI Library Minification Service";
   }
 
   @Override
-  public void activate(ComponentContext componentContext) {
+  public void activate(@Nonnull ComponentContext componentContext) {
     this.componentContext = componentContext;
   }
 
   @Override
-  public void deactivate(ComponentContext componentContext) {
+  public void deactivate(@Nonnull ComponentContext componentContext) {
 
   }
 
   @Override
-  public void runAdditionalHealthChecks(FormattingResultLog log) {
+  public void runAdditionalHealthChecks(@Nonnull FormattingResultLog log) {
     if (getCssMinificationServices().size() == 0) {
       log.warn("No CSS minification services have been registered.");
     }
@@ -83,25 +85,29 @@ public class UiLibraryMinificationServiceImpl implements UiLibraryMinificationSe
     return selectors.contains("min");
   }
 
+  @Nonnull
   @Override
   public List<ScriptMinifierService> getMinificationServices() {
     return getAllOsgiServicesOfType(componentContext, ScriptMinifierService.class);
   }
 
+  @Nonnull
   @Override
   public List<ScriptMinifierService> getCssMinificationServices() {
     return getMinificationServicesForScriptType(
         ScriptTypes.CSS);
   }
 
+  @Nonnull
   @Override
   public List<ScriptMinifierService> getJavaScriptMinificationServices() {
     return getMinificationServicesForScriptType(
         ScriptTypes.JAVASCRIPT);
   }
 
+  @Nonnull
   @Override
-  public String getMinifiedOutput(String scriptOutput, ScriptType scriptType)
+  public String getMinifiedOutput(@Nonnull String scriptOutput, @Nonnull ScriptType scriptType)
       throws ScriptCompressionException {
     List<ScriptMinifierService> minifierServices = getMinificationServicesForScriptType(scriptType);
     if (CollectionUtils.isNotEmpty(minifierServices)) {

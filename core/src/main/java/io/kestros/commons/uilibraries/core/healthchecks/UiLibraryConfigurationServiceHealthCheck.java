@@ -22,6 +22,7 @@ package io.kestros.commons.uilibraries.core.healthchecks;
 import io.kestros.commons.osgiserviceutils.healthchecks.BaseManagedServiceHealthCheck;
 import io.kestros.commons.osgiserviceutils.services.ManagedService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryConfigurationService;
+import javax.annotation.Nonnull;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
@@ -47,6 +48,7 @@ public class UiLibraryConfigurationServiceHealthCheck extends BaseManagedService
     return uiLibraryConfigurationService;
   }
 
+  @Nonnull
   @Override
   public String getServiceName() {
     return "UI Library Configuration Service";

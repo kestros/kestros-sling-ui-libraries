@@ -23,6 +23,7 @@ package io.kestros.commons.uilibraries.lesscss.filetypes;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.kestros.commons.structuredslingmodels.BaseResource;
 import io.kestros.commons.structuredslingmodels.annotation.KestrosModel;
+import io.kestros.commons.structuredslingmodels.exceptions.JcrFileReadException;
 import io.kestros.commons.structuredslingmodels.exceptions.ModelAdaptionException;
 import io.kestros.commons.structuredslingmodels.filetypes.FileType;
 import io.kestros.commons.structuredslingmodels.utils.FileModelUtils;
@@ -74,7 +75,7 @@ public class LessCssFile extends BaseScriptFile implements ScriptFile {
   }
 
   @Override
-  public String getFileContent() {
+  public String getFileContent() throws JcrFileReadException {
     final StringBuilder builder = new StringBuilder();
 
     final BufferedReader bufferedReader = getBufferedReader();
@@ -106,7 +107,7 @@ public class LessCssFile extends BaseScriptFile implements ScriptFile {
     return builder.toString();
   }
 
-  private String getResolvedImportLine(String line) {
+  String getResolvedImportLine(String line) {
     final String filename = getFileNameFromImport(line);
     try {
       final BaseResource parentResource = getParent();
@@ -118,6 +119,9 @@ public class LessCssFile extends BaseScriptFile implements ScriptFile {
     } catch (final ModelAdaptionException exception) {
       LOG.error("Unable to import Less script {} for {}. {}", filename, getPath(),
           exception.getMessage());
+    } catch (JcrFileReadException e) {
+      LOG.error("Unable to import Less script {} for {}. {}", filename, getPath(),
+          e.getMessage());
     }
     return line;
   }

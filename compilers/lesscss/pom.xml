@@ -26,9 +26,10 @@
   <parent>
     <groupId>io.kestros.commons</groupId>
     <artifactId>kestros-parent</artifactId>
-    <version>0.3.1</version>
+    <version>0.3.3</version>
   </parent>
 
+  <groupId>io.kestros.commons</groupId>
   <artifactId>kestros-sling-ui-libraries-lesscss</artifactId>
   <version>0.0.4-SNAPSHOT</version>
 
@@ -49,13 +50,13 @@
     <dependency>
       <groupId>io.kestros.commons</groupId>
       <artifactId>kestros-structured-sling-models</artifactId>
-      <version>0.2.4</version>
+      <version>[0.2.5,0.2.99]</version>
     </dependency>
 
     <dependency>
       <groupId>io.kestros.commons</groupId>
       <artifactId>kestros-sling-ui-libraries-api</artifactId>
-      <version>0.0.4</version>
+      <version>0.1.0</version>
     </dependency>
 
     <dependency>
@@ -68,14 +69,14 @@
     <dependency>
       <groupId>io.kestros.commons</groupId>
       <artifactId>kestros-osgi-service-utils</artifactId>
-      <version>0.1.9</version>
+      <version>[0.1.10,0.1.99]</version>
     </dependency>
 
     <!-- Kestros Validation -->
     <dependency>
       <groupId>io.kestros.commons</groupId>
       <artifactId>kestros-validation-api</artifactId>
-      <version>0.2.0</version>
+      <version>[0.2.1,0.2.99]</version>
     </dependency>
 
     <!-- LESS Compiler -->
@@ -92,6 +93,8 @@
     </dependency>
   </dependencies>
 
+
+
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>
     <testSourceDirectory>src/test/java</testSourceDirectory>
@@ -100,6 +103,41 @@
         <directory>src/main/resources</directory>
       </resource>
     </resources>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.rat</groupId>
+          <artifactId>apache-rat-plugin</artifactId>
+          <version>0.13</version>
+          <configuration>
+            <excludes>
+              <!-- don't check anything in target -->
+              <exclude>**/test/resources/*</exclude>
+              <exclude>target/*</exclude>
+              <!-- Fixing issues with deleted modules -->
+              <exclude>**/target/*</exclude>
+              <exclude>**/target/**/*</exclude>
+              <exclude>node/**/*</exclude>
+              <exclude>node_modules/**/*</exclude>
+              <exclude>**/README.md</exclude>
+              <exclude>package.json</exclude>
+              <exclude>package-lock.json</exclude>
+              <exclude>*-maven-settings.xml</exclude>
+              <exclude>src/main/resources/content/ROOT.json</exclude>
+              <exclude>src/main/resources/startup/favicon.svg</exclude>
+            </excludes>
+          </configuration>
+          <executions>
+            <execution>
+              <phase>verify</phase>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.apache.felix</groupId>
@@ -112,37 +150,7 @@
           </instructions>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.apache.rat</groupId>
-        <artifactId>apache-rat-plugin</artifactId>
-        <version>0.13</version>
-        <configuration>
-          <excludes>
-            <!-- don't check anything in target -->
-            <exclude>**/test/resources/*</exclude>
-            <exclude>target/*</exclude>
-            <!-- Fixing issues with deleted modules -->
-            <exclude>**/target/*</exclude>
-            <exclude>**/target/**/*</exclude>
-            <exclude>node/**/*</exclude>
-            <exclude>node_modules/**/*</exclude>
-            <exclude>**/README.md</exclude>
-            <exclude>package.json</exclude>
-            <exclude>package-lock.json</exclude>
-            <exclude>*-maven-settings.xml</exclude>
-            <exclude>src/main/resources/content/ROOT.json</exclude>
-            <exclude>src/main/resources/startup/favicon.svg</exclude>
-          </excludes>
-        </configuration>
-        <executions>
-          <execution>
-            <phase>verify</phase>
-            <goals>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
+
     </plugins>
   </build>
 
