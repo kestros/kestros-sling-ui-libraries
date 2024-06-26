@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.apache.sling.event.jobs.JobManager;
@@ -52,6 +53,7 @@ import org.slf4j.LoggerFactory;
  * Service for managing, building, retrieving and purging UiLibrary output caches.  Saves output as
  * nt:file Resources under /var/cache/ui-libraries.
  */
+@SuppressFBWarnings({"FCBL_FIELD_COULD_BE_LOCAL","IMC_IMMATURE_CLASS_NO_TOSTRING"})
 @Component(immediate = true, service = {ManagedCacheService.class, UiLibraryCacheService.class},
         property = "service.ranking:Integer=100")
 public class JcrFileUiLibraryCacheService extends JcrFileCacheService implements
@@ -79,6 +81,7 @@ public class JcrFileUiLibraryCacheService extends JcrFileCacheService implements
   @Reference
   private JobManager jobManager;
 
+  @Nullable
   @SuppressFBWarnings("MALICIOUS_CODE")
   @Override
   public JobManager getJobManager() {
@@ -125,6 +128,7 @@ public class JcrFileUiLibraryCacheService extends JcrFileCacheService implements
     return LOG;
   }
 
+  @Nullable
   @Override
   protected ResourceResolverFactory getResourceResolverFactory() {
     return resourceResolverFactory;
@@ -152,7 +156,7 @@ public class JcrFileUiLibraryCacheService extends JcrFileCacheService implements
               scriptType.getFileModelClass());
       return file.getFileContent();
     } catch (ModelAdaptionException | IOException | JcrFileReadException e) {
-      throw new CacheRetrievalException(e.getMessage());
+      throw new CacheRetrievalException(e.getMessage(), e);
     }
   }
 

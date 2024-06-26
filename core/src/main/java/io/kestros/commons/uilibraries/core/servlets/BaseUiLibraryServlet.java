@@ -29,6 +29,7 @@ import io.kestros.commons.uilibraries.api.services.UiLibraryMinificationService;
 import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptTypes;
 import java.io.IOException;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
@@ -43,22 +44,29 @@ import org.slf4j.LoggerFactory;
 public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
 
   private static final Logger LOG = LoggerFactory.getLogger(BaseUiLibraryServlet.class);
-  private static final long serialVersionUID = 6096929924192138730L;
+  private static final long serialVersionUID = 1L;
 
+  @Nullable
   protected abstract <T extends FrontendLibrary> T getLibrary(@Nonnull final String libraryPath,
           @Nonnull final ResourceResolver resourceResolver);
 
+  @Nullable
   @Deprecated
   protected abstract <T extends FrontendLibrary> T getLibrary(@Nonnull final String libraryPath);
 
+  @Nullable
   protected abstract UiLibraryCompilationService getUiLibraryCompilationService();
 
+  @Nullable
   protected abstract UiLibraryConfigurationService getUiLibraryConfigurationService();
 
+  @Nullable
   protected abstract UiLibraryMinificationService getUiLibraryMinificationService();
 
+  @Nullable
   protected abstract UiLibraryCacheService getUiLibraryCacheService();
 
+  @Nonnull
   protected abstract ScriptTypes getScriptType();
 
   /**
@@ -71,7 +79,7 @@ public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
   public void doGet(@Nonnull final SlingHttpServletRequest request,
           @Nonnull final SlingHttpServletResponse response) {
     String libraryPath = request.getResource().getPath();
-    Boolean isMinified = false;
+    Boolean isMinified = Boolean.FALSE;
     LOG.debug("Building {} response for library {}.",
             getScriptType().getName().replaceAll("[\r\n]", ""),
             libraryPath.replaceAll("[\r\n]", ""));

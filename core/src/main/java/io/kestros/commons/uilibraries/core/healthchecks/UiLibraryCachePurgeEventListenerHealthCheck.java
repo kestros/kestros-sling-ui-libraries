@@ -24,6 +24,7 @@ import io.kestros.commons.osgiserviceutils.healthchecks.BaseManagedServiceHealth
 import io.kestros.commons.osgiserviceutils.services.ManagedService;
 import io.kestros.commons.uilibraries.core.eventlisteners.UiLibraryCachePurgeEventListener;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.apache.felix.hc.annotation.Async;
 import org.apache.felix.hc.annotation.HealthCheckMBean;
 import org.apache.felix.hc.annotation.HealthCheckService;
@@ -38,21 +39,22 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * Health Check for {@link UiLibraryCachePurgeEventListener}.
  */
-@SuppressFBWarnings("RI_REDUNDANT_INTERFACES")
+@SuppressFBWarnings({"RI_REDUNDANT_INTERFACES", "IMC_IMMATURE_CLASS_NO_TOSTRING"})
 @Component
 @HealthCheckService(name = "UI Library Cache Purge Event ListenerHealth Check",
-                    tags = {"kestros", "ui-libraries"})
+        tags = {"kestros", "ui-libraries"})
 @Async(intervalInSec = 60)
 @ResultTTL(resultCacheTtlInMs = 10000)
 @HealthCheckMBean(name = "UiLibraryCachePurgeEventListenerServiceHealthCheck")
 @Sticky(keepNonOkResultsStickyForSec = 10)
 public class UiLibraryCachePurgeEventListenerHealthCheck extends BaseManagedServiceHealthCheck
-    implements HealthCheck {
+        implements HealthCheck {
 
   @Reference(cardinality = ReferenceCardinality.OPTIONAL,
-             policyOption = ReferencePolicyOption.GREEDY)
+          policyOption = ReferencePolicyOption.GREEDY)
   private UiLibraryCachePurgeEventListener uiLibraryCachePurgeEventListener;
 
+  @Nullable
   @Override
   public ManagedService getManagedService() {
     return uiLibraryCachePurgeEventListener;

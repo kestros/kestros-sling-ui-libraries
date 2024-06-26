@@ -29,6 +29,7 @@ import io.kestros.commons.uilibraries.api.services.UiLibraryMinificationService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryRetrievalService;
 import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptTypes;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.servlet.Servlet;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.osgi.service.component.annotations.Component;
@@ -41,6 +42,7 @@ import org.slf4j.LoggerFactory;
 /**
  * UiLibrary js endpoint servlet.
  */
+@SuppressFBWarnings("IMC_IMMATURE_CLASS_NO_TOSTRING")
 @Component(immediate = true,
         service = Servlet.class,
         property = {"sling.servlet.resourceTypes=kes:UiLibrary", "sling.servlet.extensions=js",
@@ -48,7 +50,7 @@ import org.slf4j.LoggerFactory;
 public class UiLibraryJavaScriptServlet extends BaseUiLibraryServlet {
 
   private static final Logger LOG = LoggerFactory.getLogger(UiLibraryJavaScriptServlet.class);
-  private static final long serialVersionUID = 8601302941665570784L;
+  private static final long serialVersionUID = 1L;
 
   @SuppressFBWarnings({"SE_TRANSIENT_FIELD_NOT_RESTORED", "SE_BAD_FIELD"})
   @Reference(cardinality = ReferenceCardinality.OPTIONAL,
@@ -75,6 +77,8 @@ public class UiLibraryJavaScriptServlet extends BaseUiLibraryServlet {
           policyOption = ReferencePolicyOption.GREEDY)
   private UiLibraryMinificationService uiLibraryMinificationService;
 
+  @Nullable
+
   @Override
   protected <T extends FrontendLibrary> T getLibrary(@Nonnull String libraryPath,
           @Nonnull ResourceResolver resourceResolver) {
@@ -89,8 +93,9 @@ public class UiLibraryJavaScriptServlet extends BaseUiLibraryServlet {
     return null;
   }
 
+  @Nullable
   @Override
-  protected <T extends FrontendLibrary> T getLibrary(String libraryPath) {
+  protected <T extends FrontendLibrary> T getLibrary(@Nonnull String libraryPath) {
     if (uiLibraryRetrievalService != null) {
       try {
         return ((T) (uiLibraryRetrievalService.getUiLibrary(libraryPath)));
@@ -102,26 +107,31 @@ public class UiLibraryJavaScriptServlet extends BaseUiLibraryServlet {
     return null;
   }
 
+  @Nullable
   @Override
   protected UiLibraryCompilationService getUiLibraryCompilationService() {
     return uiLibraryCompilationService;
   }
 
+  @Nullable
   @Override
   protected UiLibraryConfigurationService getUiLibraryConfigurationService() {
     return uiLibraryConfigurationService;
   }
 
+  @Nullable
   @Override
   protected UiLibraryMinificationService getUiLibraryMinificationService() {
     return uiLibraryMinificationService;
   }
 
+  @Nullable
   @Override
   protected UiLibraryCacheService getUiLibraryCacheService() {
     return uiLibraryCacheService;
   }
 
+  @Nonnull
   @Override
   protected ScriptTypes getScriptType() {
     return ScriptTypes.JAVASCRIPT;

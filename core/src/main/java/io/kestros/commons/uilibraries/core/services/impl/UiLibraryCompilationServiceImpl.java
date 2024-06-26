@@ -21,6 +21,7 @@ package io.kestros.commons.uilibraries.core.services.impl;
 
 import static io.kestros.commons.osgiserviceutils.utils.OsgiServiceUtils.getAllOsgiServicesOfType;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.kestros.commons.structuredslingmodels.exceptions.InvalidResourceTypeException;
 import io.kestros.commons.structuredslingmodels.exceptions.JcrFileReadException;
 import io.kestros.commons.uilibraries.api.exceptions.NoMatchingCompilerException;
@@ -48,6 +49,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Looks up compiler services to provide compiled CSS or JavaScript output for UiLibraries.
  */
+@SuppressFBWarnings({"IMC_IMMATURE_CLASS_NO_TOSTRING"})
 @Component(immediate = true, service = UiLibraryCompilationService.class)
 public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationService {
 
@@ -155,7 +157,7 @@ public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationServ
     StringBuilder scriptTypesStringBuilder = new StringBuilder();
     for (ScriptType scriptType : scriptTypes) {
       if (StringUtils.isNotEmpty(scriptTypesStringBuilder.toString())) {
-        scriptTypesStringBuilder.append(" ");
+        scriptTypesStringBuilder.append(' ');
       }
       scriptTypesStringBuilder.append(scriptType.getName());
     }
@@ -202,7 +204,7 @@ public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationServ
         String fileContent = scriptFile.getFileContent();
         if (StringUtils.isNotEmpty(rawOutputStringBuilder.toString()) && StringUtils.isNotEmpty(
                 fileContent)) {
-          rawOutputStringBuilder.append("\n");
+          rawOutputStringBuilder.append('\n');
         }
         rawOutputStringBuilder.append(scriptFile.getFileContent());
 
@@ -232,7 +234,7 @@ public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationServ
         String fileContent = scriptFile.getFileContent();
         if (StringUtils.isNotEmpty(rawOutputStringBuilder.toString()) && StringUtils.isNotEmpty(
                 fileContent)) {
-          rawOutputStringBuilder.append("\n");
+          rawOutputStringBuilder.append('\n');
         }
         rawOutputStringBuilder.append(scriptFile.getFileContent());
 

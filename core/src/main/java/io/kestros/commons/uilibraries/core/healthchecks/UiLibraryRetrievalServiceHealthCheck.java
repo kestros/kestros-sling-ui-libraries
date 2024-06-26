@@ -24,6 +24,7 @@ import io.kestros.commons.osgiserviceutils.healthchecks.BaseManagedServiceHealth
 import io.kestros.commons.osgiserviceutils.services.ManagedService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryRetrievalService;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.apache.felix.hc.annotation.Async;
 import org.apache.felix.hc.annotation.HealthCheckMBean;
 import org.apache.felix.hc.annotation.HealthCheckService;
@@ -38,7 +39,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * Health Check for {@link UiLibraryRetrievalService}.
  */
-@SuppressFBWarnings("RI_REDUNDANT_INTERFACES")
+@SuppressFBWarnings({"RI_REDUNDANT_INTERFACES", "IMC_IMMATURE_CLASS_NO_TOSTRING"})
 @Component
 @HealthCheckService(name = "UI Library Retrieval Service Health Check",
                     tags = {"kestros", "ui-libraries"})
@@ -53,6 +54,7 @@ public class UiLibraryRetrievalServiceHealthCheck extends BaseManagedServiceHeal
              policyOption = ReferencePolicyOption.GREEDY)
   private UiLibraryRetrievalService uiLibraryRetrievalService;
 
+  @Nullable
   @Override
   public ManagedService getManagedService() {
     return uiLibraryRetrievalService;

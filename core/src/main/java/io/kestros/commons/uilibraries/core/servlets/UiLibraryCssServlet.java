@@ -29,6 +29,7 @@ import io.kestros.commons.uilibraries.api.services.UiLibraryMinificationService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryRetrievalService;
 import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptTypes;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.servlet.Servlet;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.osgi.service.component.annotations.Component;
@@ -41,6 +42,7 @@ import org.slf4j.LoggerFactory;
 /**
  * UiLibrary CSS endpoint servlet.
  */
+@SuppressFBWarnings("IMC_IMMATURE_CLASS_NO_TOSTRING")
 @Component(immediate = true,
         service = Servlet.class,
         property = {"sling.servlet.resourceTypes=kes:UiLibrary", "sling.servlet.extensions=css",
@@ -48,8 +50,9 @@ import org.slf4j.LoggerFactory;
 public class UiLibraryCssServlet extends BaseUiLibraryServlet {
 
   private static final Logger LOG = LoggerFactory.getLogger(UiLibraryCssServlet.class);
-  private static final long serialVersionUID = -3258550726901179862L;
+  private static final long serialVersionUID = 1L;
 
+  @SuppressFBWarnings({"SE_TRANSIENT_FIELD_NOT_RESTORED", "SE_BAD_FIELD"})
   @Reference(cardinality = ReferenceCardinality.OPTIONAL,
           policyOption = ReferencePolicyOption.GREEDY)
   private UiLibraryCacheService uiLibraryCacheService;
@@ -74,6 +77,7 @@ public class UiLibraryCssServlet extends BaseUiLibraryServlet {
           policyOption = ReferencePolicyOption.GREEDY)
   private UiLibraryMinificationService uiLibraryMinificationService;
 
+  @Nullable
   @Override
   protected <T extends FrontendLibrary> T getLibrary(@Nonnull String libraryPath,
           @Nonnull ResourceResolver resourceResolver) {
@@ -88,8 +92,9 @@ public class UiLibraryCssServlet extends BaseUiLibraryServlet {
     return null;
   }
 
+  @Nullable
   @Override
-  protected <T extends FrontendLibrary> T getLibrary(String libraryPath) {
+  protected <T extends FrontendLibrary> T getLibrary(@Nonnull String libraryPath) {
     if (uiLibraryRetrievalService != null) {
       try {
         return (T) uiLibraryRetrievalService.getUiLibrary(libraryPath);
@@ -101,26 +106,31 @@ public class UiLibraryCssServlet extends BaseUiLibraryServlet {
     return null;
   }
 
+  @Nullable
   @Override
   protected UiLibraryCompilationService getUiLibraryCompilationService() {
     return uiLibraryCompilationService;
   }
 
+  @Nullable
   @Override
   protected UiLibraryConfigurationService getUiLibraryConfigurationService() {
     return uiLibraryConfigurationService;
   }
 
+  @Nullable
   @Override
   protected UiLibraryMinificationService getUiLibraryMinificationService() {
     return uiLibraryMinificationService;
   }
 
+  @Nullable
   @Override
   protected UiLibraryCacheService getUiLibraryCacheService() {
     return uiLibraryCacheService;
   }
 
+  @Nonnull
   @Override
   protected ScriptTypes getScriptType() {
     return ScriptTypes.CSS;

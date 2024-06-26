@@ -24,6 +24,7 @@ import io.kestros.commons.osgiserviceutils.healthchecks.BaseManagedServiceHealth
 import io.kestros.commons.osgiserviceutils.services.cache.CacheService;
 import io.kestros.commons.uilibraries.api.services.UiLibraryCacheService;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.apache.felix.hc.annotation.Async;
 import org.apache.felix.hc.annotation.HealthCheckMBean;
 import org.apache.felix.hc.annotation.HealthCheckService;
@@ -38,7 +39,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * Health Check that looks to see if the UiLibraryCacheService is active and running properly.
  */
-@SuppressFBWarnings("RI_REDUNDANT_INTERFACES")
+@SuppressFBWarnings({"RI_REDUNDANT_INTERFACES","IMC_IMMATURE_CLASS_NO_TOSTRING"})
 @Component
 @HealthCheckService(name = "UI Library Cache Service Health Check",
                     tags = {"kestros", "ui-libraries"})
@@ -53,6 +54,7 @@ public class UiLibraryCacheServiceHealthCheck extends BaseManagedServiceHealthCh
              policyOption = ReferencePolicyOption.GREEDY)
   private UiLibraryCacheService uiLibraryCacheService;
 
+  @Nullable
   @Override
   public CacheService getManagedService() {
     return uiLibraryCacheService;

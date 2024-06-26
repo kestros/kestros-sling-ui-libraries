@@ -62,7 +62,7 @@ public class UiLibraryResource extends BaseResource implements UiLibrary {
 
   @Nonnull
   @Override
-  public List<String> getIncludedFileNames(ScriptType scriptType) {
+  public List<String> getIncludedFileNames(@Nonnull ScriptType scriptType) {
     try {
       BaseResource folderResource = getChildAsBaseResource(scriptType.getName(),
           this);
