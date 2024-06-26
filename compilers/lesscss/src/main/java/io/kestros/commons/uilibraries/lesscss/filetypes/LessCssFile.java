@@ -31,6 +31,7 @@ import io.kestros.commons.uilibraries.api.models.ScriptFile;
 import io.kestros.commons.uilibraries.basecompilers.filetypes.BaseScriptFile;
 import java.io.BufferedReader;
 import java.io.IOException;
+import javax.annotation.Nonnull;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Model;
@@ -43,37 +44,41 @@ import org.slf4j.LoggerFactory;
 @SuppressFBWarnings("RI_REDUNDANT_INTERFACES")
 @KestrosModel
 @Model(adaptables = Resource.class,
-    resourceType = "nt:file")
+        resourceType = "nt:file")
 public class LessCssFile extends BaseScriptFile implements ScriptFile {
 
   private static final Logger LOG = LoggerFactory.getLogger(LessCssFile.class);
 
-  static String getFileNameFromImport(final String importLine) {
+  @Nonnull
+  static String getFileNameFromImport(@Nonnull final String importLine) {
     final String[] importLineParts = importLine.split("@import \"");
     if (importLineParts.length == 2) {
       if (importLineParts[1].contains("\";")) {
         return importLineParts[1].split("\";")[0];
       } else {
-        LOG.error("Syntax while getting file name from import line. {} is invalid.", importLine);
+        LOG.error("Syntax while getting file name from import line. {} is invalid.",
+                importLine.replaceAll("[\r\n]", ""));
       }
     } else {
-      LOG.trace("LESS line {} is not an import line.", importLine);
+      LOG.trace("LESS line {} is not an import line.", importLine.replaceAll("[\r\n]", ""));
     }
     return StringUtils.EMPTY;
   }
 
-  static boolean isImportLine(final String line) {
+  static boolean isImportLine(@Nonnull final String line) {
     if (line.contains("//")) {
       return false;
     }
     return StringUtils.isNotEmpty(getFileNameFromImport(line));
   }
 
+  @Nonnull
   @Override
   public FileType getFileType() {
     return LessCssScriptType.LESS;
   }
 
+  @Nonnull
   @Override
   public String getFileContent() throws JcrFileReadException {
     final StringBuilder builder = new StringBuilder();
@@ -96,32 +101,37 @@ public class LessCssFile extends BaseScriptFile implements ScriptFile {
         firstLine = false;
       }
     } catch (final IOException exception) {
-      LOG.error("Unable to build output for LessFile {} due to IOException", getPath());
+      LOG.error("Unable to build output for LessFile {} due to IOException",
+              getPath().replaceAll("[\r\n]", ""));
     } finally {
       try {
         bufferedReader.close();
       } catch (final IOException exception) {
-        LOG.error("Unable to close BufferedReader for LessFile {} due to IOException", getPath());
+        LOG.error("Unable to close BufferedReader for LessFile {} due to IOException",
+                getPath().replaceAll("[\r\n]", ""));
       }
     }
     return builder.toString();
   }
 
-  String getResolvedImportLine(String line) {
+  @Nonnull
+  String getResolvedImportLine(@Nonnull String line) {
     final String filename = getFileNameFromImport(line);
     try {
       final BaseResource parentResource = getParent();
 
       final LessCssFile importedFile = FileModelUtils.getChildAsFileType(filename, parentResource,
-          LessCssFile.class);
+              LessCssFile.class);
 
       line = importedFile.getFileContent();
     } catch (final ModelAdaptionException exception) {
-      LOG.error("Unable to import Less script {} for {}. {}", filename, getPath(),
-          exception.getMessage());
+      LOG.error("Unable to import Less script {} for {}. {}", filename.replaceAll("[\r\n]", ""),
+              getPath().replaceAll("[\r\n]", ""),
+              exception.getMessage().replaceAll("[\r\n]", ""));
     } catch (JcrFileReadException e) {
-      LOG.error("Unable to import Less script {} for {}. {}", filename, getPath(),
-          e.getMessage());
+      LOG.error("Unable to import Less script {} for {}. {}", filename.replaceAll("[\r\n]", ""),
+              getPath().replaceAll("[\r\n]", ""),
+              e.getMessage().replaceAll("[\r\n]", ""));
     }
     return line;
   }
