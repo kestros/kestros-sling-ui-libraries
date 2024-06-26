@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import javax.annotation.Nonnull;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Model;
 import org.slf4j.Logger;
@@ -47,31 +48,36 @@ public class UiLibraryResource extends BaseResource implements UiLibrary {
 
   private static final Logger LOG = LoggerFactory.getLogger(UiLibraryResource.class);
 
+  @Nonnull
   @Override
   public String getCssPath() {
     return getPath() + ScriptTypes.CSS.getExtension();
   }
 
+  @Nonnull
   @Override
   public String getJsPath() {
     return getPath() + ScriptTypes.JAVASCRIPT.getExtension();
   }
 
+  @Nonnull
   @Override
-  public List<String> getIncludedFileNames(ScriptType scriptType) {
+  public List<String> getIncludedFileNames(@Nonnull ScriptType scriptType) {
     try {
       BaseResource folderResource = getChildAsBaseResource(scriptType.getName(),
           this);
       return Arrays.asList(folderResource.getProperty("include", new String[]{}));
     } catch (ChildResourceNotFoundException e) {
-      LOG.debug("Failed to find folder resource {} for {}.", scriptType.getName(), getPath());
+      LOG.debug("Failed to find folder resource {} for {}.",
+              scriptType.getName().replaceAll("[\r\n]", ""), getPath().replaceAll("[\r\n]", ""));
     }
     return Collections.emptyList();
   }
 
+  @Nonnull
   @Override
-  public <T extends ScriptFile> List<T> getScriptFiles(List<ScriptType> scriptTypes,
-      String folderName) {
+  public <T extends ScriptFile> List<T> getScriptFiles(@Nonnull List<ScriptType> scriptTypes,
+      @Nonnull String folderName) {
     List<T> scriptFileList = new ArrayList<>();
 
     BaseResource folderResource = null;
@@ -85,14 +91,14 @@ public class UiLibraryResource extends BaseResource implements UiLibrary {
                 scriptType.getFileModelClass());
             scriptFileList.add(script);
           } catch (ChildResourceNotFoundException e) {
-            LOG.trace(e.getMessage());
+            LOG.trace(e.getMessage().replaceAll("[\r\n]", ""));
           } catch (InvalidResourceTypeException e) {
-            LOG.trace(e.getMessage());
+            LOG.trace(e.getMessage().replaceAll("[\r\n]", ""));
           }
         }
       }
     } catch (ChildResourceNotFoundException e) {
-      LOG.debug(e.getMessage());
+      LOG.debug(e.getMessage().replaceAll("[\r\n]", ""));
     }
     return scriptFileList;
   }

@@ -29,6 +29,7 @@ import io.kestros.commons.uilibraries.api.services.UiLibraryMinificationService;
 import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptTypes;
 import java.io.IOException;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
@@ -43,43 +44,52 @@ import org.slf4j.LoggerFactory;
 public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
 
   private static final Logger LOG = LoggerFactory.getLogger(BaseUiLibraryServlet.class);
-  private static final long serialVersionUID = 6096929924192138730L;
+  private static final long serialVersionUID = 1L;
 
-  protected abstract <T extends FrontendLibrary> T getLibrary(String libraryPath,
-      ResourceResolver resourceResolver);
+  @Nullable
+  protected abstract <T extends FrontendLibrary> T getLibrary(@Nonnull final String libraryPath,
+          @Nonnull final ResourceResolver resourceResolver);
 
+  @Nullable
   @Deprecated
-  protected abstract <T extends FrontendLibrary> T getLibrary(String libraryPath);
+  protected abstract <T extends FrontendLibrary> T getLibrary(@Nonnull final String libraryPath);
 
+  @Nullable
   protected abstract UiLibraryCompilationService getUiLibraryCompilationService();
 
+  @Nullable
   protected abstract UiLibraryConfigurationService getUiLibraryConfigurationService();
 
+  @Nullable
   protected abstract UiLibraryMinificationService getUiLibraryMinificationService();
 
+  @Nullable
   protected abstract UiLibraryCacheService getUiLibraryCacheService();
 
+  @Nonnull
   protected abstract ScriptTypes getScriptType();
 
   /**
    * Writes the GET response for the current UiLibrary.
    *
-   * @param request  SlingHttpServletRequest
+   * @param request SlingHttpServletRequest
    * @param response SlingHttpServletResponse to write to.
    */
   @Override
   public void doGet(@Nonnull final SlingHttpServletRequest request,
-      @Nonnull final SlingHttpServletResponse response) {
+          @Nonnull final SlingHttpServletResponse response) {
     String libraryPath = request.getResource().getPath();
-    Boolean isMinified = false;
-    LOG.debug("Building {} response for library {}.", getScriptType().getName(), libraryPath);
+    Boolean isMinified = Boolean.FALSE;
+    LOG.debug("Building {} response for library {}.",
+            getScriptType().getName().replaceAll("[\r\n]", ""),
+            libraryPath.replaceAll("[\r\n]", ""));
 
     if (getUiLibraryMinificationService() != null) {
       isMinified = getUiLibraryMinificationService().isMinifiedRequest(request);
     }
 
     String output = getCachedOutputOrEmptyString(libraryPath, isMinified,
-        request.getResourceResolver());
+            request.getResourceResolver());
     if (StringUtils.isNotEmpty(output)) {
       try {
         response.setContentType(getScriptType().getOutputContentType());
@@ -87,7 +97,9 @@ public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
         return;
       } catch (IOException e) {
         LOG.error("Unable to write cached script output for {}, script type: {}. IOException: {}",
-            libraryPath, getScriptType().getName(), e.getMessage());
+                libraryPath.replaceAll("[\r\n]", ""),
+                getScriptType().getName().replaceAll("[\r\n]", ""),
+                e.getMessage().replaceAll("[\r\n]", ""));
       }
 
     }
@@ -95,7 +107,7 @@ public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
     if (library != null) {
       try {
         output = getUiLibraryCompilationService().getUiLibraryOutput(library, getScriptType(),
-            request.getResourceResolver());
+                request.getResourceResolver());
 
         if (isMinified) {
           output = getUiLibraryMinificationService().getMinifiedOutput(output, getScriptType());
@@ -108,49 +120,60 @@ public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
           cacheOutput(library, output, getScriptType(), isMinified, request.getResourceResolver());
           return;
         } catch (Exception e) {
-          LOG.error("Could not cache {} script for {}. {}.", getScriptType().getName(), libraryPath,
-              e.getMessage());
+          LOG.error("Could not cache {} script for {}. {}.",
+                  getScriptType().getName().replaceAll("[\r\n]", ""),
+                  libraryPath.replaceAll("[\r\n]", ""),
+                  e.getMessage().replaceAll("[\r\n]", ""));
           return;
         }
       } catch (Exception e) {
-        LOG.error("Could not render {} script for {}. {}.", getScriptType().getName(), libraryPath,
-            e.getMessage());
+        LOG.error("Could not render {} script for {}. {}.",
+                getScriptType().getName().replaceAll("[\r\n]", ""),
+                libraryPath.replaceAll("[\r\n]", ""),
+                e.getMessage().replaceAll("[\r\n]", ""));
       }
     }
     response.setStatus(SlingHttpServletResponse.SC_BAD_REQUEST);
     response.setContentType("text/plain");
   }
 
-  void cacheOutput(FrontendLibrary library, String content, ScriptTypes scriptType,
-      boolean minified, ResourceResolver resourceResolver) {
+  void cacheOutput(@Nonnull final FrontendLibrary library, @Nonnull final String content,
+          @Nonnull final ScriptTypes scriptType,
+          boolean minified, @Nonnull final ResourceResolver resourceResolver) {
     if (getUiLibraryCacheService() != null) {
       try {
         getUiLibraryCacheService().cacheUiLibraryScript(library.getPath(), content, scriptType,
-            minified, resourceResolver);
+                minified, resourceResolver);
       } catch (CacheBuilderException e) {
-        LOG.warn("Unable to build cache for library {}. {}", library.getPath(), e.getMessage());
+        LOG.warn("Unable to build cache for library {}. {}",
+                library.getPath().replaceAll("[\r\n]", ""),
+                e.getMessage().replaceAll("[\r\n]", ""));
       }
     }
   }
 
-  String getCachedOutputOrEmptyString(String libraryPath, Boolean isMinified,
-      ResourceResolver resourceResolver) {
+  @Nonnull
+  String getCachedOutputOrEmptyString(@Nonnull final String libraryPath,
+          @Nonnull final Boolean isMinified,
+          @Nonnull final ResourceResolver resourceResolver) {
     if (getUiLibraryCacheService() != null) {
       try {
         return getUiLibraryCacheService().getCachedOutput(libraryPath, getScriptType(), isMinified,
-            resourceResolver);
+                resourceResolver);
       } catch (CacheRetrievalException e) {
-        LOG.debug("Unable to retrieve cached value for {}. {}", libraryPath, e.getMessage());
+        LOG.debug("Unable to retrieve cached value for {}. {}",
+                libraryPath.replaceAll("[\r\n]", ""), e.getMessage().replaceAll("[\r\n]", ""));
       }
     } else {
       LOG.warn("Unable to retrieve cached scripts for {}.  UiLibrary cache service not detected.",
-          libraryPath);
+              libraryPath.replaceAll("[\r\n]", ""));
     }
     return StringUtils.EMPTY;
   }
 
-  void writeResponse(String output, int responseStatus, SlingHttpServletResponse response)
-      throws IOException {
+  void writeResponse(@Nonnull final String output, final int responseStatus,
+          @Nonnull final SlingHttpServletResponse response)
+          throws IOException {
     response.getWriter().write(output);
     response.setContentType(getScriptType().getOutputContentType());
     if (responseStatus != SlingHttpServletResponse.SC_OK) {

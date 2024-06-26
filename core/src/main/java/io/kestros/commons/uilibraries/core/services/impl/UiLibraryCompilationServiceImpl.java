@@ -21,7 +21,9 @@ package io.kestros.commons.uilibraries.core.services.impl;
 
 import static io.kestros.commons.osgiserviceutils.utils.OsgiServiceUtils.getAllOsgiServicesOfType;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.kestros.commons.structuredslingmodels.exceptions.InvalidResourceTypeException;
+import io.kestros.commons.structuredslingmodels.exceptions.JcrFileReadException;
 import io.kestros.commons.uilibraries.api.exceptions.NoMatchingCompilerException;
 import io.kestros.commons.uilibraries.api.models.FrontendLibrary;
 import io.kestros.commons.uilibraries.api.models.ScriptFile;
@@ -35,6 +37,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.annotation.Nonnull;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.felix.hc.api.FormattingResultLog;
 import org.apache.sling.api.resource.ResourceResolver;
@@ -46,30 +49,31 @@ import org.slf4j.LoggerFactory;
 /**
  * Looks up compiler services to provide compiled CSS or JavaScript output for UiLibraries.
  */
-@Component(immediate = true,
-    service = UiLibraryCompilationService.class)
+@SuppressFBWarnings({"IMC_IMMATURE_CLASS_NO_TOSTRING"})
+@Component(immediate = true, service = UiLibraryCompilationService.class)
 public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationService {
 
   private static final Logger LOG = LoggerFactory.getLogger(UiLibraryCompilationServiceImpl.class);
 
   protected ComponentContext context;
 
+  @Nonnull
   @Override
   public String getDisplayName() {
     return "UI Library Compilation Service";
   }
 
   @Override
-  public void activate(ComponentContext componentContext) {
+  public void activate(@Nonnull ComponentContext componentContext) {
     this.context = componentContext;
   }
 
   @Override
-  public void deactivate(ComponentContext componentContext) {
+  public void deactivate(@Nonnull ComponentContext componentContext) {
   }
 
   @Override
-  public void runAdditionalHealthChecks(FormattingResultLog log) {
+  public void runAdditionalHealthChecks(@Nonnull FormattingResultLog log) {
     try {
       getCompiler(Collections.singletonList(ScriptTypes.CSS), getCssCompilers());
     } catch (NoMatchingCompilerException e) {
@@ -82,6 +86,7 @@ public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationServ
     }
   }
 
+  @Nonnull
   @Override
   public List<ScriptType> getAllRegisteredScriptTypes() {
     List<ScriptType> scriptTypeList = new ArrayList<>();
@@ -90,6 +95,7 @@ public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationServ
     return scriptTypeList;
   }
 
+  @Nonnull
   @Override
   public List<ScriptType> getRegisteredCssScriptTypes() {
     List<ScriptType> scriptTypeList = new ArrayList<>();
@@ -103,6 +109,7 @@ public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationServ
     return scriptTypeList;
   }
 
+  @Nonnull
   @Override
   public List<ScriptType> getRegisteredJavaScriptScriptTypes() {
     List<ScriptType> scriptTypeList = new ArrayList<>();
@@ -116,28 +123,33 @@ public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationServ
     return scriptTypeList;
   }
 
+  @Nonnull
   @Override
   public List<CssScriptTypeCompilerService> getCssCompilers() {
     return getAllOsgiServicesOfType(context, CssScriptTypeCompilerService.class);
   }
 
+  @Nonnull
   @Override
   public List<JavaScriptScriptTypeCompilerService> getJavaScriptCompilers() {
     return getAllOsgiServicesOfType(context, JavaScriptScriptTypeCompilerService.class);
   }
 
+  @Nonnull
   @Override
   public List<ScriptTypeCompiler> getCompilers() {
     return getAllOsgiServicesOfType(context, ScriptTypeCompiler.class);
   }
 
+  @Nonnull
   @Override
-  public <T extends ScriptTypeCompiler> ScriptTypeCompiler getCompiler(List<ScriptType> scriptTypes,
-      List<T> registeredCompilers) throws NoMatchingCompilerException {
+  public <T extends ScriptTypeCompiler> ScriptTypeCompiler getCompiler(
+          @Nonnull List<ScriptType> scriptTypes, List<T> registeredCompilers) throws
+          NoMatchingCompilerException {
     for (ScriptTypeCompiler compiler : registeredCompilers) {
       List<ScriptType> compilerScriptTypes = compiler.getScriptTypes();
       if (compilerScriptTypes.size() >= scriptTypes.size() && compilerScriptTypes.containsAll(
-          scriptTypes)) {
+              scriptTypes)) {
         return compiler;
       }
     }
@@ -145,97 +157,104 @@ public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationServ
     StringBuilder scriptTypesStringBuilder = new StringBuilder();
     for (ScriptType scriptType : scriptTypes) {
       if (StringUtils.isNotEmpty(scriptTypesStringBuilder.toString())) {
-        scriptTypesStringBuilder.append(" ");
+        scriptTypesStringBuilder.append(' ');
       }
       scriptTypesStringBuilder.append(scriptType.getName());
     }
     throw new NoMatchingCompilerException(
-        String.format("No compiler registered for ScriptType(s): %s.",
-            scriptTypesStringBuilder.toString()));
+            String.format("No compiler registered for ScriptType(s): %s.",
+                    scriptTypesStringBuilder.toString()));
   }
 
+  @Nonnull
   @Override
-  public String getUiLibraryOutput(FrontendLibrary library, ScriptType scriptType,
-      ResourceResolver resourceResolver)
-      throws InvalidResourceTypeException, NoMatchingCompilerException {
+  public String getUiLibraryOutput(@Nonnull FrontendLibrary library, ScriptType scriptType,
+          @Nonnull ResourceResolver resourceResolver) throws InvalidResourceTypeException,
+          NoMatchingCompilerException {
     ScriptTypeCompiler compiler = getCompiler(
-        getLibraryScriptTypes(library, scriptType.getRootResourceName()), getCompilers());
+            getLibraryScriptTypes(library, scriptType.getRootResourceName()), getCompilers());
     String uiLibrarySource = getUiLibrarySource(library, scriptType, resourceResolver);
     return compiler.getOutput(uiLibrarySource);
   }
 
+  @Nonnull
   @Override
-  public String getUiLibraryOutput(FrontendLibrary uiLibrary, ScriptType scriptType)
-      throws InvalidResourceTypeException, NoMatchingCompilerException {
-    LOG.warn(
-        "getUiLibraryOutput(FrontendLibrary, ScriptType) is deprecated. Use getUiLibraryOutput"
-        + "(FrontendLibrary, ScriptType, ResourceResolver) instead.");
+  public String getUiLibraryOutput(@Nonnull FrontendLibrary uiLibrary, ScriptType scriptType) throws
+          InvalidResourceTypeException, NoMatchingCompilerException {
+    LOG.warn("getUiLibraryOutput(FrontendLibrary, ScriptType) is deprecated. Use getUiLibraryOutput"
+            + "(FrontendLibrary, ScriptType, ResourceResolver) instead.");
     ScriptTypeCompiler compiler = getCompiler(
-        getLibraryScriptTypes(uiLibrary, scriptType.getRootResourceName()), getCompilers());
+            getLibraryScriptTypes(uiLibrary, scriptType.getRootResourceName()), getCompilers());
     return compiler.getOutput(getUiLibrarySource(uiLibrary, scriptType));
   }
 
+  @Nonnull
   @Override
-  public String getUiLibrarySource(FrontendLibrary library, ScriptType scriptType,
-      ResourceResolver resourceResolver)
-      throws InvalidResourceTypeException, NoMatchingCompilerException {
+  public String getUiLibrarySource(@Nonnull FrontendLibrary library, ScriptType scriptType,
+          @Nonnull ResourceResolver resourceResolver) throws InvalidResourceTypeException,
+          NoMatchingCompilerException {
     ScriptTypeCompiler compiler = getCompiler(
-        getLibraryScriptTypes(library, scriptType.getRootResourceName()), getCompilers());
+            getLibraryScriptTypes(library, scriptType.getRootResourceName()), getCompilers());
     StringBuilder rawOutputStringBuilder = new StringBuilder();
 
     for (ScriptFile scriptFile : library.getScriptFiles(compiler.getScriptTypes(),
-        scriptType.getRootResourceName())) {
+            scriptType.getRootResourceName())) {
 
       try {
         String fileContent = scriptFile.getFileContent();
         if (StringUtils.isNotEmpty(rawOutputStringBuilder.toString()) && StringUtils.isNotEmpty(
-            fileContent)) {
-          rawOutputStringBuilder.append("\n");
+                fileContent)) {
+          rawOutputStringBuilder.append('\n');
         }
         rawOutputStringBuilder.append(scriptFile.getFileContent());
 
-      } catch (IOException e) {
+      } catch (IOException | JcrFileReadException e) {
         LOG.error("Unable to append {} file {} to UiLibrary output due to IOException",
-            scriptFile.getFileType().getFileModelClass(), scriptFile.getName());
+                scriptFile.getFileType().getFileModelClass().getName().replaceAll("[\r\n]", ""),
+                scriptFile.getName().replaceAll("[\r\n]", ""));
       }
     }
     return rawOutputStringBuilder.toString();
   }
 
+  @Nonnull
   @Override
   @Deprecated
-  public String getUiLibrarySource(FrontendLibrary library, ScriptType scriptType)
-      throws InvalidResourceTypeException, NoMatchingCompilerException {
+  public String getUiLibrarySource(@Nonnull FrontendLibrary library, ScriptType scriptType) throws
+          InvalidResourceTypeException, NoMatchingCompilerException {
     LOG.warn("getUiLibrarySource(FrontendLibrary, ScriptType) is deprecated.");
     ScriptTypeCompiler compiler = getCompiler(
-        getLibraryScriptTypes(library, scriptType.getRootResourceName()), getCompilers());
+            getLibraryScriptTypes(library, scriptType.getRootResourceName()), getCompilers());
     StringBuilder rawOutputStringBuilder = new StringBuilder();
 
     for (ScriptFile scriptFile : library.getScriptFiles(compiler.getScriptTypes(),
-        scriptType.getRootResourceName())) {
+            scriptType.getRootResourceName())) {
 
       try {
         String fileContent = scriptFile.getFileContent();
         if (StringUtils.isNotEmpty(rawOutputStringBuilder.toString()) && StringUtils.isNotEmpty(
-            fileContent)) {
-          rawOutputStringBuilder.append("\n");
+                fileContent)) {
+          rawOutputStringBuilder.append('\n');
         }
         rawOutputStringBuilder.append(scriptFile.getFileContent());
 
-      } catch (IOException e) {
+      } catch (IOException | JcrFileReadException e) {
         LOG.error("Unable to append {} file {} to UiLibrary output due to IOException",
-            scriptFile.getFileType().getFileModelClass(), scriptFile.getName());
+                scriptFile.getFileType().getFileModelClass().getName().replaceAll("[\r\n]", ""),
+                scriptFile.getName().replaceAll("[\r\n]", ""));
       }
     }
     return rawOutputStringBuilder.toString();
   }
 
+  @Nonnull
   @Override
-  public List<ScriptType> getLibraryScriptTypes(FrontendLibrary library, String folderName) {
+  public List<ScriptType> getLibraryScriptTypes(FrontendLibrary library,
+          @Nonnull String folderName) {
     List<ScriptType> scriptTypes = new ArrayList<>();
 
     for (ScriptFile scriptFile : library.getScriptFiles(getAllRegisteredScriptTypes(),
-        folderName)) {
+            folderName)) {
       if (!scriptTypes.contains(scriptFile.getFileType())) {
         scriptTypes.add((ScriptType) scriptFile.getFileType());
       }

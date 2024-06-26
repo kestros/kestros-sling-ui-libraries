@@ -21,6 +21,7 @@ package io.kestros.commons.uilibraries.core.services.impl;
 
 import static io.kestros.commons.structuredslingmodels.utils.SlingModelUtils.getResourceAsType;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.kestros.commons.osgiserviceutils.services.BaseServiceResolverService;
 import io.kestros.commons.uilibraries.api.exceptions.LibraryRetrievalException;
 import io.kestros.commons.uilibraries.api.models.UiLibrary;
@@ -28,6 +29,8 @@ import io.kestros.commons.uilibraries.api.services.UiLibraryRetrievalService;
 import io.kestros.commons.uilibraries.core.UiLibraryResource;
 import java.util.Collections;
 import java.util.List;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.apache.sling.api.resource.LoginException;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ResourceResolverFactory;
@@ -42,57 +45,64 @@ import org.slf4j.LoggerFactory;
 /**
  * Retrieve {@link UiLibraryResource} Sling Models.
  */
+@SuppressFBWarnings({"IMC_IMMATURE_CLASS_NO_TOSTRING"})
 @Component(immediate = true,
-    service = UiLibraryRetrievalService.class)
+        service = UiLibraryRetrievalService.class)
 public class UiLibraryRetrievalServiceImpl extends BaseServiceResolverService
-    implements UiLibraryRetrievalService {
-
-  @Reference(cardinality = ReferenceCardinality.OPTIONAL,
-      policyOption = ReferencePolicyOption.GREEDY)
-  private ResourceResolverFactory resourceResolverFactory;
+        implements UiLibraryRetrievalService {
 
   private static final Logger LOG = LoggerFactory.getLogger(UiLibraryRetrievalServiceImpl.class);
+  @Reference(cardinality = ReferenceCardinality.OPTIONAL,
+          policyOption = ReferencePolicyOption.GREEDY)
+  private ResourceResolverFactory resourceResolverFactory;
 
+  @Nonnull
   @Override
-  public UiLibrary getUiLibrary(String path, ResourceResolver resourceResolver)
-      throws LibraryRetrievalException {
+  public UiLibrary getUiLibrary(@Nonnull String path, @Nonnull ResourceResolver resourceResolver)
+          throws LibraryRetrievalException {
     try {
       return getResourceAsType(path, resourceResolver, UiLibraryResource.class);
     } catch (Exception e) {
-      throw new LibraryRetrievalException(e.getMessage());
+      throw new LibraryRetrievalException(e.getMessage(), e);
     }
   }
 
+  @Nonnull
   @Override
-  public UiLibrary getUiLibrary(String path) throws LibraryRetrievalException {
+  public UiLibrary getUiLibrary(@Nonnull String path) throws LibraryRetrievalException {
     try (ResourceResolver resourceResolver = getServiceResourceResolver()) {
       return getUiLibrary(path, resourceResolver);
     } catch (LoginException e) {
-      throw new LibraryRetrievalException(e.getMessage());
+      throw new LibraryRetrievalException(e.getMessage(), e);
     }
 
   }
 
+  @Nonnull
   @Override
   protected String getServiceUserName() {
     return "ui-library-manager";
   }
 
+  @Nonnull
   @Override
   protected Logger getLogger() {
     return LOG;
   }
 
+  @Nonnull
   @Override
   protected List<String> getRequiredResourcePaths() {
     return Collections.emptyList();
   }
 
+  @Nullable
   @Override
   protected ResourceResolverFactory getResourceResolverFactory() {
     return resourceResolverFactory;
   }
 
+  @Nonnull
   @Override
   public String getDisplayName() {
     return "UI Library Retrieval Service";

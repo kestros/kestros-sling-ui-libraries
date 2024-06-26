@@ -21,6 +21,7 @@ package io.kestros.commons.uilibraries.core.services.impl;
 
 import static io.kestros.commons.osgiserviceutils.utils.OsgiServiceUtils.getAllOsgiServicesOfType;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.kestros.commons.uilibraries.api.exceptions.ScriptCompressionException;
 import io.kestros.commons.uilibraries.api.models.ScriptType;
 import io.kestros.commons.uilibraries.api.services.ScriptMinifierService;
@@ -30,6 +31,7 @@ import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptTypes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.annotation.Nonnull;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.felix.hc.api.FormattingResultLog;
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -42,67 +44,73 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * Finds registered {@link ScriptMinifierService} instances to minify CSS and JavaScript.
  */
+@SuppressFBWarnings({"FCBL_FIELD_COULD_BE_LOCAL", "IMC_IMMATURE_CLASS_NO_TOSTRING"})
 @Component(immediate = true,
-           service = UiLibraryMinificationService.class)
+        service = UiLibraryMinificationService.class)
 public class UiLibraryMinificationServiceImpl implements UiLibraryMinificationService {
 
   @Reference(cardinality = ReferenceCardinality.OPTIONAL,
-             policyOption = ReferencePolicyOption.GREEDY)
+          policyOption = ReferencePolicyOption.GREEDY)
   private UiLibraryCompilationService uiLibraryCompilationService;
 
   private ComponentContext componentContext;
 
+  @Nonnull
   @Override
   public String getDisplayName() {
     return "UI Library Minification Service";
   }
 
   @Override
-  public void activate(ComponentContext componentContext) {
+  public void activate(@Nonnull ComponentContext componentContext) {
     this.componentContext = componentContext;
   }
 
   @Override
-  public void deactivate(ComponentContext componentContext) {
+  public void deactivate(@Nonnull ComponentContext componentContext) {
 
   }
 
   @Override
-  public void runAdditionalHealthChecks(FormattingResultLog log) {
-    if (getCssMinificationServices().size() == 0) {
+  public void runAdditionalHealthChecks(@Nonnull FormattingResultLog log) {
+    if (getCssMinificationServices().isEmpty()) {
       log.warn("No CSS minification services have been registered.");
     }
-    if (getJavaScriptMinificationServices().size() == 0) {
+    if (getJavaScriptMinificationServices().isEmpty()) {
       log.warn("No JavaScript minification services have been registered.");
     }
   }
 
   @Override
-  public boolean isMinifiedRequest(SlingHttpServletRequest request) {
+  public boolean isMinifiedRequest(@Nonnull SlingHttpServletRequest request) {
     List<String> selectors = Arrays.asList(request.getRequestPathInfo().getSelectors());
     return selectors.contains("min");
   }
 
+  @Nonnull
   @Override
   public List<ScriptMinifierService> getMinificationServices() {
     return getAllOsgiServicesOfType(componentContext, ScriptMinifierService.class);
   }
 
+  @Nonnull
   @Override
   public List<ScriptMinifierService> getCssMinificationServices() {
     return getMinificationServicesForScriptType(
-        ScriptTypes.CSS);
+            ScriptTypes.CSS);
   }
 
+  @Nonnull
   @Override
   public List<ScriptMinifierService> getJavaScriptMinificationServices() {
     return getMinificationServicesForScriptType(
-        ScriptTypes.JAVASCRIPT);
+            ScriptTypes.JAVASCRIPT);
   }
 
+  @Nonnull
   @Override
-  public String getMinifiedOutput(String scriptOutput, ScriptType scriptType)
-      throws ScriptCompressionException {
+  public String getMinifiedOutput(@Nonnull String scriptOutput, @Nonnull ScriptType scriptType)
+          throws ScriptCompressionException {
     List<ScriptMinifierService> minifierServices = getMinificationServicesForScriptType(scriptType);
     if (CollectionUtils.isNotEmpty(minifierServices)) {
       return minifierServices.get(0).getMinifiedScript(scriptOutput, scriptType);
@@ -110,8 +118,9 @@ public class UiLibraryMinificationServiceImpl implements UiLibraryMinificationSe
     return scriptOutput;
   }
 
+  @Nonnull
   private List<ScriptMinifierService> getMinificationServicesForScriptType(
-      ScriptType scriptType) {
+          @Nonnull ScriptType scriptType) {
     List<ScriptMinifierService> scriptMinifierServiceList = new ArrayList<>();
     for (ScriptMinifierService minifierService : getMinificationServices()) {
       if (minifierService.getSupportedScriptTypes().contains(scriptType)) {

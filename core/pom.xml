@@ -26,11 +26,12 @@
   <parent>
     <groupId>io.kestros.commons</groupId>
     <artifactId>kestros-parent</artifactId>
-    <version>0.3.0</version>
+    <version>0.3.3</version>
   </parent>
 
+  <groupId>io.kestros.commons</groupId>
   <artifactId>kestros-sling-ui-libraries-core</artifactId>
-  <version>0.2.4</version>
+  <version>0.2.5</version>
 
   <name>Kestros Commons - Sling UI Libraries - Core</name>
   <description>Provides UI Libraries to Sling instances, which are used for maintaining and
@@ -49,27 +50,27 @@
     <dependency>
       <groupId>io.kestros.commons</groupId>
       <artifactId>kestros-structured-sling-models</artifactId>
-      <version>0.2.4</version>
+      <version>[0.2.5,0.2.99]</version>
     </dependency>
 
     <!-- OSGI Service Utils -->
     <dependency>
       <groupId>io.kestros.commons</groupId>
       <artifactId>kestros-osgi-service-utils</artifactId>
-      <version>0.1.8</version>
+      <version>[0.1.10,0.1.99]</version>
     </dependency>
 
     <!-- Kestros Validation -->
     <dependency>
       <groupId>io.kestros.commons</groupId>
       <artifactId>kestros-validation-api</artifactId>
-      <version>0.0.4</version>
+      <version>[0.2.1,0.2.99]</version>
     </dependency>
 
     <dependency>
       <groupId>io.kestros.commons</groupId>
       <artifactId>kestros-sling-ui-libraries-api</artifactId>
-      <version>0.0.4</version>
+      <version>[0.1.0,0.1.99]</version>
     </dependency>
 
     <dependency>
