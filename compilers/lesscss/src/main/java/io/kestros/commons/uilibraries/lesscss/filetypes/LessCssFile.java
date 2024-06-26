@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Sling Model for .less files.
  */
-@SuppressFBWarnings("RI_REDUNDANT_INTERFACES")
+@SuppressFBWarnings({"RI_REDUNDANT_INTERFACES", "IMC_IMMATURE_CLASS_NO_TOSTRING"})
 @KestrosModel
 @Model(adaptables = Resource.class,
         resourceType = "nt:file")
