@@ -109,6 +109,13 @@ public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
         output = getUiLibraryCompilationService().getUiLibraryOutput(library, getScriptType(),
                 request.getResourceResolver());
 
+        if(output.startsWith("<h1>")) {
+          response.setStatus(SlingHttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+          response.setContentType("text/html");
+          writeResponse(output, SlingHttpServletResponse.SC_INTERNAL_SERVER_ERROR, response);
+          return;
+        }
+
         if (isMinified) {
           output = getUiLibraryMinificationService().getMinifiedOutput(output, getScriptType());
         }
@@ -127,6 +134,7 @@ public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
           return;
         }
       } catch (Exception e) {
+
         LOG.error("Could not render {} script for {}. {}.",
                 getScriptType().getName().replaceAll("[\r\n]", ""),
                 libraryPath.replaceAll("[\r\n]", ""),

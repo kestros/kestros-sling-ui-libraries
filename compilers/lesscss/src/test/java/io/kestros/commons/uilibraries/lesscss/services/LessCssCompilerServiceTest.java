@@ -52,6 +52,16 @@ public class LessCssCompilerServiceTest {
   }
 
   @Test
+  public void testGetOutputWhenException() {
+    assertEquals(
+            "<h1>Undefined mixin: adfsdf/.dsa.f/asd.f/ads.f/asd./f.asd/f.ads/f.asd/f/adf/dsa.f\n"
+                    + "\t on line 1, column 60</h1><code>1:\tadfsdf/.dsa.f/asd.f/ads.f/asd./f"
+                    + ".asd/f.ads/f.asd/f/adf/dsa.f<br></code>",
+            lessCssCompilerService.getOutput(
+                    "adfsdf/.dsa.f/asd.f/ads.f/asd./f.asd/f.ads/f.asd/f/adf/dsa.f"));
+  }
+
+  @Test
   @Ignore("This test is failing because the Less library is not able to parse the HSL color.")
   public void testGetOutputWhenUsingHsl() {
     assertEquals("body {\n  color: hsl(120, 100%, 50%);\n}\n",

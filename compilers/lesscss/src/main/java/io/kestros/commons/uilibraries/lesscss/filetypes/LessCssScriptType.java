@@ -35,7 +35,7 @@ import javax.annotation.Nonnull;
 @SuppressFBWarnings({"ENMI_ONE_ENUM_VALUE"})
 public enum LessCssScriptType implements ScriptType, FileType {
   LESS("less", "css", Arrays.asList("css", "less"), "text/css",
-      Arrays.asList("text/css", "text/less", "application/octet-stream"), LessCssFile.class);
+          Arrays.asList("text/css", "text/less", "application/octet-stream"), LessCssFile.class);
 
   private final String name;
   private final String rootResourceName;
@@ -46,8 +46,8 @@ public enum LessCssScriptType implements ScriptType, FileType {
   private final Class<?> scriptFileType;
 
   <S extends ScriptFile> LessCssScriptType(final String name, final String rootResourceName,
-      final List<String> readableExtensions, final String outputContentType,
-      final List<String> readableContentTypes, final Class<S> scriptFileType) {
+          final List<String> readableExtensions, final String outputContentType,
+          final List<String> readableContentTypes, final Class<S> scriptFileType) {
     this.name = name;
     this.rootResourceName = rootResourceName;
     this.readableExtensions = readableExtensions;
@@ -84,10 +84,12 @@ public enum LessCssScriptType implements ScriptType, FileType {
    *
    * @return Extensions that can be interpreted by this FileType and its associated Model.
    */
+  @Nonnull
   public List<String> getReadableExtensions() {
     return new ArrayList<>(this.readableExtensions);
   }
 
+  @Nonnull
   @Override
   public String getOutputContentType() {
     return this.outputContentType;
