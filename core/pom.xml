@@ -76,7 +76,7 @@
     <dependency>
       <groupId>io.kestros.commons</groupId>
       <artifactId>kestros-sling-ui-libraries-base-compilers</artifactId>
-      <version>0.0.4</version>
+      <version>[0.0.4,0.0.99]</version>
     </dependency>
   </dependencies>
 
