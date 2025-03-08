@@ -27,6 +27,7 @@ import io.kestros.commons.uilibraries.basecompilers.filetypes.ScriptTypes;
 import io.kestros.commons.uilibraries.lesscss.filetypes.LessCssScriptType;
 import java.util.Arrays;
 import java.util.List;
+import javax.annotation.Nonnull;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -37,13 +38,15 @@ import org.osgi.service.component.annotations.Component;
            property = "service.ranking:Integer=100")
 public class LessCssCompilerService implements ScriptTypeCompiler, CssScriptTypeCompilerService {
 
+  @Nonnull
   @Override
   public List<ScriptType> getScriptTypes() {
     return Arrays.asList(ScriptTypes.CSS, LessCssScriptType.LESS);
   }
 
+  @Nonnull
   @Override
-  public String getOutput(String source) {
+  public String getOutput(@Nonnull final String source) {
     return Less.compile(null, source, false);
   }
 

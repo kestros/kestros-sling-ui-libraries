@@ -19,10 +19,12 @@
 
 package io.kestros.commons.uilibraries.lesscss.filetypes;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.kestros.commons.structuredslingmodels.filetypes.BaseFile;
 import io.kestros.commons.structuredslingmodels.filetypes.FileType;
 import io.kestros.commons.uilibraries.api.models.ScriptFile;
 import io.kestros.commons.uilibraries.api.models.ScriptType;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.annotation.Nonnull;
@@ -30,6 +32,7 @@ import javax.annotation.Nonnull;
 /**
  * Script {@link FileType} implementations used by UiLibraries for LessCSS.
  */
+@SuppressFBWarnings({"ENMI_ONE_ENUM_VALUE"})
 public enum LessCssScriptType implements ScriptType, FileType {
   LESS("less", "css", Arrays.asList("css", "less"), "text/css",
       Arrays.asList("text/css", "text/less", "application/octet-stream"), LessCssFile.class);
@@ -82,7 +85,7 @@ public enum LessCssScriptType implements ScriptType, FileType {
    * @return Extensions that can be interpreted by this FileType and its associated Model.
    */
   public List<String> getReadableExtensions() {
-    return this.readableExtensions;
+    return new ArrayList<>(this.readableExtensions);
   }
 
   @Override
@@ -93,7 +96,7 @@ public enum LessCssScriptType implements ScriptType, FileType {
   @Nonnull
   @Override
   public List<String> getReadableContentTypes() {
-    return this.readableContentTypes;
+    return new ArrayList<>(this.readableContentTypes);
   }
 
   @Nonnull
