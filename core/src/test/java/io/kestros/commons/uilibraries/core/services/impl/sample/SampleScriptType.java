@@ -17,26 +17,20 @@
  * under the License.
  */
 
-package io.kestros.commons.uilibraries.lesscss.filetypes;
+package io.kestros.commons.uilibraries.core.services.impl.sample;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.kestros.commons.structuredslingmodels.filetypes.BaseFile;
-import io.kestros.commons.structuredslingmodels.filetypes.FileType;
 import io.kestros.commons.uilibraries.api.models.ScriptFile;
 import io.kestros.commons.uilibraries.api.models.ScriptType;
+import io.kestros.commons.uilibraries.basecompilers.filetypes.javascript.JavaScriptFile;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.annotation.Nonnull;
 
-/**
- * Script {@link FileType} implementations used by UiLibraries for LessCSS.
- */
-@SuppressFBWarnings({"ENMI_ONE_ENUM_VALUE"})
-public enum LessCssScriptType implements ScriptType, FileType {
-  LESS("less", "css", Arrays.asList("css", "less"), "text/css",
-          Arrays.asList("text/css", "text/less", "application/octet-stream"), LessCssFile.class);
-
+public enum SampleScriptType implements ScriptType {
+  SAMPLE_SCRIPT_TYPE("sample", "css", Arrays.asList("css", "sample"), "text/css",
+          Arrays.asList("text/css", "text/less", "application/octet-stream"), JavaScriptFile.class);
   private final String name;
   private final String rootResourceName;
   private final String outputContentType;
@@ -45,7 +39,7 @@ public enum LessCssScriptType implements ScriptType, FileType {
   private final String extension;
   private final Class<?> scriptFileType;
 
-  <S extends ScriptFile> LessCssScriptType(final String name, final String rootResourceName,
+  <S extends ScriptFile> SampleScriptType(final String name, final String rootResourceName,
           final List<String> readableExtensions, final String outputContentType,
           final List<String> readableContentTypes, final Class<S> scriptFileType) {
     this.name = name;
@@ -84,12 +78,10 @@ public enum LessCssScriptType implements ScriptType, FileType {
    *
    * @return Extensions that can be interpreted by this FileType and its associated Model.
    */
-  @Nonnull
   public List<String> getReadableExtensions() {
     return new ArrayList<>(this.readableExtensions);
   }
 
-  @Nonnull
   @Override
   public String getOutputContentType() {
     return this.outputContentType;

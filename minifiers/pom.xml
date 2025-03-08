@@ -29,6 +29,7 @@
     <version>0.3.3</version>
   </parent>
 
+  <groupId>io.kestros.commons</groupId>
   <artifactId>kestros-sling-ui-library-minifiers</artifactId>
   <version>0.0.3-SNAPSHOT</version>
 

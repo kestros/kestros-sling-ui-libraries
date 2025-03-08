@@ -146,12 +146,26 @@ public class UiLibraryCompilationServiceImpl implements UiLibraryCompilationServ
   public <T extends ScriptTypeCompiler> ScriptTypeCompiler getCompiler(
           @Nonnull List<ScriptType> scriptTypes, List<T> registeredCompilers) throws
           NoMatchingCompilerException {
+    List<ScriptTypeCompiler> compatibleCompilers = new ArrayList<>();
     for (ScriptTypeCompiler compiler : registeredCompilers) {
       List<ScriptType> compilerScriptTypes = compiler.getScriptTypes();
       if (compilerScriptTypes.size() >= scriptTypes.size() && compilerScriptTypes.containsAll(
               scriptTypes)) {
-        return compiler;
+        compatibleCompilers.add(compiler);
       }
+    }
+    // find the best matching, so that CSS only libraries will never be run through compilers that
+    // could break them.
+    ScriptTypeCompiler compiler = null;
+    int bestMatch = 999;
+    for (ScriptTypeCompiler compatibleCompiler : compatibleCompilers) {
+      if (compatibleCompiler.getScriptTypes().size() < bestMatch) {
+        bestMatch = compatibleCompiler.getScriptTypes().size();
+        compiler = compatibleCompiler;
+      }
+    }
+    if (compiler != null) {
+      return compiler;
     }
 
     StringBuilder scriptTypesStringBuilder = new StringBuilder();

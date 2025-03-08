@@ -19,10 +19,11 @@
 
 package io.kestros.commons.uilibraries.lesscss.services;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.apache.sling.testing.mock.sling.junit.SlingContext;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -48,5 +49,25 @@ public class LessCssCompilerServiceTest {
   @Test
   public void testGetOutput() {
     assertEquals("", lessCssCompilerService.getOutput(""));
+  }
+
+  @Test
+  public void testGetOutputWhenException() {
+    assertEquals(
+            "<h1>Undefined mixin: adfsdf/.dsa.f/asd.f/ads.f/asd./f.asd/f.ads/f.asd/f/adf/dsa.f\n"
+                    + "\t on line 1, column 60</h1><code>1:\tadfsdf/.dsa.f/asd.f/ads.f/asd./f"
+                    + ".asd/f.ads/f.asd/f/adf/dsa.f<br></code>",
+            lessCssCompilerService.getOutput(
+                    "adfsdf/.dsa.f/asd.f/ads.f/asd./f.asd/f.ads/f.asd/f/adf/dsa.f"));
+  }
+
+  @Test
+  @Ignore("This test is failing because the Less library is not able to parse the HSL color.")
+  public void testGetOutputWhenUsingHsl() {
+    assertEquals("body {\n  color: hsl(120, 100%, 50%);\n}\n",
+            lessCssCompilerService.getOutput(""
+                    + ":root {"
+                    + "--color-white: hsl(0 0% 100%);"
+                    + "}"));
   }
 }

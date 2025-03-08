@@ -173,12 +173,12 @@ public class JcrFileUiLibraryCacheService extends JcrFileCacheService implements
           @Nonnull ScriptType scriptType, boolean isMinified,
           ResourceResolver resourceResolver) throws CacheBuilderException {
     if (isMinified) {
-      LOG.info("Attempting to cache minified script for library {}",
+      LOG.debug("Attempting to cache minified script for library {}",
               libraryPath.replaceAll("[\r\n]", ""));
       createCacheFile(content, String.format("%s.min%s", libraryPath, scriptType.getExtension()),
               scriptType, resourceResolver);
     } else {
-      LOG.info("Attempting to cache non-minified script for library {}",
+      LOG.debug("Attempting to cache non-minified script for library {}",
               libraryPath.replaceAll("[\r\n]", ""));
       createCacheFile(content, String.format("%s%s", libraryPath, scriptType.getExtension()),
               scriptType, resourceResolver);
