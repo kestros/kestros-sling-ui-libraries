@@ -20,6 +20,7 @@
 package io.kestros.commons.uilibraries.lesscss.services;
 
 import com.inet.lib.less.Less;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.kestros.commons.uilibraries.api.models.ScriptType;
 import io.kestros.commons.uilibraries.api.services.CssScriptTypeCompilerService;
 import io.kestros.commons.uilibraries.api.services.ScriptTypeCompiler;
@@ -29,14 +30,18 @@ import java.util.Arrays;
 import java.util.List;
 import javax.annotation.Nonnull;
 import org.osgi.service.component.annotations.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * LessCSS Compiler Service.
  */
-@Component(immediate = true,
-           service = {CssScriptTypeCompilerService.class, ScriptTypeCompiler.class},
-           property = "service.ranking:Integer=100")
+@SuppressFBWarnings("IMC_IMMATURE_CLASS_NO_TOSTRING")
+@Component(immediate = true, service = {CssScriptTypeCompilerService.class,
+        ScriptTypeCompiler.class}, property = "service.ranking:Integer=100")
 public class LessCssCompilerService implements ScriptTypeCompiler, CssScriptTypeCompilerService {
+
+  private Logger LOG = LoggerFactory.getLogger(LessCssCompilerService.class);
 
   @Nonnull
   @Override
@@ -47,7 +52,21 @@ public class LessCssCompilerService implements ScriptTypeCompiler, CssScriptType
   @Nonnull
   @Override
   public String getOutput(@Nonnull final String source) {
-    return Less.compile(null, source, false);
+    try {
+      return Less.compile(null, source, false);
+    } catch (Exception e) {
+      // log the error, with line numbers
+      List<String> sourceLines = Arrays.asList(source.split("\n"));
+      String loggedOutput = "<h1>" + e.getMessage() + "</h1>";
+      loggedOutput += "<code>";
+      for (int i = 0; i < sourceLines.size(); i++) {
+        loggedOutput += i + 1 + ":\t" + sourceLines.get(i);
+        loggedOutput += "<br>";
+      }
+      loggedOutput += "</code>";
+      LOG.error("Error compiling LESS: " + loggedOutput.replaceAll("[\r\n]", ""), e);
+      return loggedOutput;
+    }
   }
 
 }

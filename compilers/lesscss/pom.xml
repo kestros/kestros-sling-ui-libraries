@@ -31,7 +31,7 @@
 
   <groupId>io.kestros.commons</groupId>
   <artifactId>kestros-sling-ui-libraries-lesscss</artifactId>
-  <version>0.0.4</version>
+  <version>0.0.5-SNAPSHOT</version>
 
   <name>Kestros Commons - Sling UI Libraries - Less CSS</name>
   <description>Provides UI Libraries to Sling instances, which are used for maintaining and
@@ -62,7 +62,7 @@
     <dependency>
       <groupId>io.kestros.commons</groupId>
       <artifactId>kestros-sling-ui-libraries-base-compilers</artifactId>
-      <version>0.0.4</version>
+      <version>[0.0.4,0.0.99]</version>
     </dependency>
 
     <!-- OSGI Service Utils -->
