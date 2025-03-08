@@ -109,7 +109,7 @@ public abstract class BaseUiLibraryServlet extends SlingSafeMethodsServlet {
         output = getUiLibraryCompilationService().getUiLibraryOutput(library, getScriptType(),
                 request.getResourceResolver());
 
-        if(output.startsWith("<h1>")) {
+        if (output.startsWith("<h1>")) {
           response.setStatus(SlingHttpServletResponse.SC_INTERNAL_SERVER_ERROR);
           response.setContentType("text/html");
           writeResponse(output, SlingHttpServletResponse.SC_INTERNAL_SERVER_ERROR, response);
