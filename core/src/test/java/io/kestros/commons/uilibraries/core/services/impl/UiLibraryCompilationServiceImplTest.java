@@ -128,16 +128,37 @@ public class UiLibraryCompilationServiceImplTest {
     context.registerInjectActivateService(compilationService);
 
     assertNotNull(compilationService.getCompiler(Collections.singletonList(
-                    ScriptTypes.CSS),
+            ScriptTypes.CSS),
+        compilationService.getCompilers()));
+    assertEquals(cssCompilerService,
+        compilationService.getCompiler(Collections.singletonList(
+                ScriptTypes.CSS),
+            compilationService.getCompilers()));
+    assertEquals(javaScriptCompilerService,
+        compilationService.getCompiler(Collections.singletonList(
+                ScriptTypes.JAVASCRIPT),
+            compilationService.getCompilers()));
+  }
+
+  @Test
+  public void testGetCompilerWhenScriptTypesIsEmpty() throws NoMatchingCompilerException {
+    sampleCompilerService = mock(SampleCompilerService.class);
+    when(sampleCompilerService.getScriptTypes()).thenReturn(
+        Arrays.asList(ScriptTypes.CSS, ScriptTypes.JAVASCRIPT));
+    context.registerService(SampleCompilerService.class, sampleCompilerService);
+
+    context.registerInjectActivateService(cssCompilerService);
+    context.registerInjectActivateService(javaScriptCompilerService);
+    context.registerInjectActivateService(compilationService);
+
+    assertNotNull(compilationService.getCompiler(Collections.emptyList(),
+        compilationService.getCompilers()));
+    assertEquals(cssCompilerService,
+        compilationService.getCompiler(Collections.emptyList(),
             compilationService.getCompilers()));
     assertEquals(cssCompilerService,
-            compilationService.getCompiler(Collections.singletonList(
-                            ScriptTypes.CSS),
-                    compilationService.getCompilers()));
-    assertEquals(javaScriptCompilerService,
-            compilationService.getCompiler(Collections.singletonList(
-                            ScriptTypes.JAVASCRIPT),
-                    compilationService.getCompilers()));
+        compilationService.getCompiler(Collections.emptyList(),
+            compilationService.getCompilers()));
   }
 
   @Test
@@ -151,7 +172,7 @@ public class UiLibraryCompilationServiceImplTest {
     when(scriptType.getName()).thenReturn("abc");
     try {
       compilationService.getCompiler(Collections.singletonList(scriptType),
-              compilationService.getCompilers());
+          compilationService.getCompilers());
     } catch (NoMatchingCompilerException e) {
       exception = e;
     }
@@ -161,8 +182,8 @@ public class UiLibraryCompilationServiceImplTest {
 
   @Test
   public void testGetUiLibraryOutputWhenCss()
-          throws InvalidResourceTypeException, NoMatchingCompilerException, IOException,
-          JcrFileReadException {
+      throws InvalidResourceTypeException, NoMatchingCompilerException, IOException,
+      JcrFileReadException {
     context.registerInjectActivateService(cssCompilerService);
     context.registerInjectActivateService(javaScriptCompilerService);
     context.registerInjectActivateService(compilationService);
@@ -172,11 +193,11 @@ public class UiLibraryCompilationServiceImplTest {
     ScriptFile scriptFile1 = mock(ScriptFile.class);
     when(scriptFile1.getFileContent()).thenReturn("body{}");
     when(scriptFile1.getFileType()).thenReturn(
-            ScriptTypes.CSS);
+        ScriptTypes.CSS);
     ScriptFile scriptFile2 = mock(ScriptFile.class);
     when(scriptFile2.getFileContent()).thenReturn("p{}");
     when(scriptFile2.getFileType()).thenReturn(
-            ScriptTypes.CSS);
+        ScriptTypes.CSS);
 
     List<ScriptFile> scriptFileList = new ArrayList<>();
     scriptFileList.add(scriptFile1);
@@ -185,15 +206,15 @@ public class UiLibraryCompilationServiceImplTest {
     when(uiLibrary.getScriptFiles(any(), eq("css"))).thenReturn(scriptFileList);
 
     assertEquals("body{}\np{}",
-            compilationService.getUiLibraryOutput(uiLibrary, ScriptTypes.CSS));
+        compilationService.getUiLibraryOutput(uiLibrary, ScriptTypes.CSS));
     verify(cssCompilerService, times(1)).getOutput(any());
     verify(javaScriptCompilerService, never()).getOutput(any());
   }
 
   @Test
   public void testGetUiLibraryOutputWhenJavaScript()
-          throws InvalidResourceTypeException, NoMatchingCompilerException, IOException,
-          JcrFileReadException {
+      throws InvalidResourceTypeException, NoMatchingCompilerException, IOException,
+      JcrFileReadException {
     context.registerInjectActivateService(cssCompilerService);
     context.registerInjectActivateService(javaScriptCompilerService);
     context.registerInjectActivateService(compilationService);
@@ -203,11 +224,11 @@ public class UiLibraryCompilationServiceImplTest {
     ScriptFile scriptFile1 = mock(ScriptFile.class);
     when(scriptFile1.getFileContent()).thenReturn("console.log('1')");
     when(scriptFile1.getFileType()).thenReturn(
-            ScriptTypes.JAVASCRIPT);
+        ScriptTypes.JAVASCRIPT);
     ScriptFile scriptFile2 = mock(ScriptFile.class);
     when(scriptFile2.getFileContent()).thenReturn("console.log('2')");
     when(scriptFile2.getFileType()).thenReturn(
-            ScriptTypes.JAVASCRIPT);
+        ScriptTypes.JAVASCRIPT);
 
     List<ScriptFile> scriptFileList = new ArrayList<>();
     scriptFileList.add(scriptFile1);
@@ -216,15 +237,15 @@ public class UiLibraryCompilationServiceImplTest {
     when(uiLibrary.getScriptFiles(any(), eq("js"))).thenReturn(scriptFileList);
 
     assertEquals("console.log('1')\nconsole.log('2')",
-            compilationService.getUiLibraryOutput(uiLibrary, ScriptTypes.JAVASCRIPT));
+        compilationService.getUiLibraryOutput(uiLibrary, ScriptTypes.JAVASCRIPT));
     verify(cssCompilerService, never()).getOutput(any());
     verify(javaScriptCompilerService, times(1)).getOutput(any());
   }
 
   @Test
   public void testGetUiLibraryOutputWhenIoException()
-          throws InvalidResourceTypeException, NoMatchingCompilerException, IOException,
-          JcrFileReadException {
+      throws InvalidResourceTypeException, NoMatchingCompilerException, IOException,
+      JcrFileReadException {
     context.registerInjectActivateService(cssCompilerService);
     context.registerInjectActivateService(javaScriptCompilerService);
     context.registerInjectActivateService(compilationService);
@@ -234,11 +255,11 @@ public class UiLibraryCompilationServiceImplTest {
     ScriptFile scriptFile1 = mock(ScriptFile.class);
     when(scriptFile1.getFileContent()).thenReturn("body{}");
     when(scriptFile1.getFileType()).thenReturn(
-            ScriptTypes.CSS);
+        ScriptTypes.CSS);
     when(scriptFile1.getName()).thenReturn("file1.css");
     ScriptFile scriptFile2 = mock(ScriptFile.class);
     when(scriptFile2.getFileType()).thenReturn(
-            ScriptTypes.CSS);
+        ScriptTypes.CSS);
     when(scriptFile2.getName()).thenReturn("file2.css");
     when(scriptFile2.getFileContent()).thenThrow(new IOException());
 
@@ -247,7 +268,7 @@ public class UiLibraryCompilationServiceImplTest {
     scriptFileList.add(scriptFile2);
 
     when(uiLibrary.getScriptFiles(any(), eq("css"))).thenReturn(
-            scriptFileList);
+        scriptFileList);
 
     assertEquals("body{}", compilationService.getUiLibraryOutput(uiLibrary, ScriptTypes.CSS));
     verify(cssCompilerService, times(1)).getOutput(any());
@@ -262,21 +283,21 @@ public class UiLibraryCompilationServiceImplTest {
     context.registerInjectActivateService(compilationService);
 
     assertEquals(cssCompilerService,
-            compilationService.getCompiler(Arrays.asList(ScriptTypes.CSS),
-                    Arrays.asList(cssCompilerService, sampleCompilerService)));
+        compilationService.getCompiler(Arrays.asList(ScriptTypes.CSS),
+            Arrays.asList(cssCompilerService, sampleCompilerService)));
   }
 
   @Test
   public void testGetCompilerWhenNoLessFilesAreUsedAndSampleCompilerRegisteredFirst() throws
-          NoMatchingCompilerException {
+      NoMatchingCompilerException {
     context.registerService(CssScriptTypeCompilerService.class, sampleCompilerService);
     context.registerInjectActivateService(cssCompilerService);
     context.registerInjectActivateService(javaScriptCompilerService);
     context.registerInjectActivateService(compilationService);
 
     assertEquals(cssCompilerService,
-            compilationService.getCompiler(Arrays.asList(ScriptTypes.CSS),
-                    Arrays.asList(sampleCompilerService, cssCompilerService)));
+        compilationService.getCompiler(Arrays.asList(ScriptTypes.CSS),
+            Arrays.asList(sampleCompilerService, cssCompilerService)));
   }
 
 
@@ -288,8 +309,8 @@ public class UiLibraryCompilationServiceImplTest {
     context.registerInjectActivateService(compilationService);
 
     assertEquals(sampleCompilerService,
-            compilationService.getCompiler(
-                    Arrays.asList(ScriptTypes.CSS, SampleScriptType.SAMPLE_SCRIPT_TYPE),
-                    Arrays.asList(cssCompilerService, sampleCompilerService)));
+        compilationService.getCompiler(
+            Arrays.asList(ScriptTypes.CSS, SampleScriptType.SAMPLE_SCRIPT_TYPE),
+            Arrays.asList(cssCompilerService, sampleCompilerService)));
   }
 }
