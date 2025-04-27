@@ -31,7 +31,7 @@
 
   <groupId>io.kestros.commons</groupId>
   <artifactId>kestros-sling-ui-libraries-core</artifactId>
-  <version>0.2.7</version>
+  <version>0.2.8</version>
 
   <name>Kestros Commons - Sling UI Libraries - Core</name>
   <description>Provides UI Libraries to Sling instances, which are used for maintaining and
