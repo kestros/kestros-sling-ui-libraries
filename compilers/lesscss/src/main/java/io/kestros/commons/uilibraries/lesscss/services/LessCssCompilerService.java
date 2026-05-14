@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
         ScriptTypeCompiler.class}, property = "service.ranking:Integer=100")
 public class LessCssCompilerService implements ScriptTypeCompiler, CssScriptTypeCompilerService {
 
-  private Logger LOG = LoggerFactory.getLogger(LessCssCompilerService.class);
+  private static final Logger LOG = LoggerFactory.getLogger(LessCssCompilerService.class);
 
   @Nonnull
   @Override
