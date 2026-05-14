@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 /**
  * LessCSS Compiler Service.
  */
-@SuppressFBWarnings({"IMC_IMMATURE_CLASS_NO_TOSTRING", "CRLF_INJECTION_LOGS"})
+@SuppressFBWarnings("IMC_IMMATURE_CLASS_NO_TOSTRING")
 @Component(immediate = true, service = {CssScriptTypeCompilerService.class,
         ScriptTypeCompiler.class}, property = "service.ranking:Integer=100")
 public class LessCssCompilerService implements ScriptTypeCompiler, CssScriptTypeCompilerService {
