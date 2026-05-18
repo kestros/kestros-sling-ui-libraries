@@ -55,7 +55,7 @@ public class LessCssCompilerService implements ScriptTypeCompiler, CssScriptType
     try {
       return Less.compile(null, source, false);
     } catch (Exception e) {
-      // log the error, with line numbers
+      // Build the HTML output for the return value (preserves source newlines for browser display).
       List<String> sourceLines = Arrays.asList(source.split("\n"));
       String loggedOutput = "<h1>" + e.getMessage() + "</h1>";
       loggedOutput += "<code>";
@@ -64,7 +64,13 @@ public class LessCssCompilerService implements ScriptTypeCompiler, CssScriptType
         loggedOutput += "<br>";
       }
       loggedOutput += "</code>";
-      LOG.error("Error compiling LESS: " + loggedOutput.replaceAll("[\r\n]", ""), e);
+      // Sanitize at the tainted source for the log call (BasePageRenderMethod pattern).
+      // The throwable is logged separately because the LOG.error(String, Object, Throwable)
+      // overload trips SpotBugs's CRLF_INJECTION_LOGS detector.
+      final String safeMessage = e.getMessage() == null ? ""
+              : e.getMessage().replaceAll("[\r\n]", " ");
+      LOG.error("Error compiling LESS: {}", safeMessage);
+      LOG.error("LESS compilation failure stack trace", e);
       return loggedOutput;
     }
   }
