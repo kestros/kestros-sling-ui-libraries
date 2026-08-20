@@ -28,6 +28,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.commons.io.FileUtils;
@@ -74,9 +75,9 @@ public class LessCssFileTest {
   }
 
   @Test
-  public void getFileContent() throws IOException, JcrFileReadException {
+  public void getFileContent() throws IOException, JcrFileReadException, URISyntaxException {
     context.create().resource("/content/test.less", "jcr:primaryType", "nt:file");
-    File testLessFile = new File(getClass().getResource("/test.less").getFile());
+    File testLessFile = new File(getClass().getResource("/test.less").toURI());
     String contents = FileUtils.readFileToString(testLessFile, "UTF-8");
     InputStream inputStream = new ByteArrayInputStream(contents.getBytes());
     jcrContentProperties.put("jcr:data", inputStream);
@@ -92,17 +93,18 @@ public class LessCssFileTest {
   }
 
   @Test
-  public void testGetResolvedImportLine() throws IOException, JcrFileReadException {
+  public void testGetResolvedImportLine() throws IOException, JcrFileReadException,
+          URISyntaxException {
     context.create().resource("/content/imported.less", "jcr:primaryType", "nt:file");
     context.create().resource("/content/test.less", "jcr:primaryType", "nt:file");
 
-    File testLessFile = new File(getClass().getResource("/test-with-imports.less").getFile());
+    File testLessFile = new File(getClass().getResource("/test-with-imports.less").toURI());
     String contents = FileUtils.readFileToString(testLessFile, "UTF-8");
     InputStream inputStream = new ByteArrayInputStream(contents.getBytes());
     jcrContentProperties.put("jcr:data", inputStream);
     context.create().resource("/content/test.less/jcr:content", jcrContentProperties);
 
-    File importedLessFile = new File(getClass().getResource("/imported.less").getFile());
+    File importedLessFile = new File(getClass().getResource("/imported.less").toURI());
     String importedContents = FileUtils.readFileToString(importedLessFile, "UTF-8");
     InputStream importedInputStream = new ByteArrayInputStream(importedContents.getBytes());
     jcrContentProperties.put("jcr:data", importedInputStream);
@@ -127,17 +129,17 @@ public class LessCssFileTest {
 
   @Test
   public void testGetResolvedImportLineTestWhenJcrFileReadException() throws IOException,
-          JcrFileReadException {
+          JcrFileReadException, URISyntaxException {
     context.create().resource("/content/imported.less", "jcr:primaryType", "nt:file");
     context.create().resource("/content/test.less", "jcr:primaryType", "nt:file");
 
-    File testLessFile = new File(getClass().getResource("/test-with-imports.less").getFile());
+    File testLessFile = new File(getClass().getResource("/test-with-imports.less").toURI());
     String contents = FileUtils.readFileToString(testLessFile, "UTF-8");
     InputStream inputStream = new ByteArrayInputStream(contents.getBytes());
 //    jcrContentProperties.put("jcr:data", inputStream);
     context.create().resource("/content/test.less/jcr:content", jcrContentProperties);
 
-    File importedLessFile = new File(getClass().getResource("/imported.less").getFile());
+    File importedLessFile = new File(getClass().getResource("/imported.less").toURI());
     String importedContents = FileUtils.readFileToString(importedLessFile, "UTF-8");
     InputStream importedInputStream = new ByteArrayInputStream(importedContents.getBytes());
     jcrContentProperties.put("jcr:data", importedInputStream);
