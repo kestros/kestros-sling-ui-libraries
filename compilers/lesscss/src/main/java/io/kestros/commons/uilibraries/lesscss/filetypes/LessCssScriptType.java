@@ -32,7 +32,11 @@ import javax.annotation.Nonnull;
 /**
  * Script {@link FileType} implementations used by UiLibraries for LessCSS.
  */
-@SuppressFBWarnings({"ENMI_ONE_ENUM_VALUE"})
+@SuppressFBWarnings(value = {"ENMI_ONE_ENUM_VALUE", "METHOD_NULLABILITY"},
+    justification = "METHOD_NULLABILITY: javac 15+ generates a synthetic $values() method on every "
+        + "enum, which source cannot annotate, and the Kestros nullability detector exempts "
+        + "values/valueOf but not $values. Remove once MethodNullabilityAnnotationDetector "
+        + "exempts $values.")
 public enum LessCssScriptType implements ScriptType, FileType {
   LESS("less", "css", Arrays.asList("css", "less"), "text/css",
           Arrays.asList("text/css", "text/less", "application/octet-stream"), LessCssFile.class);
